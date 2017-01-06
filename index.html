@@ -2,43 +2,23 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,user-scalable=no">
     <title>test demo</title>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/flipclock.css">
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/vue.js"></script>
-    <script src="js/Chart.js"></script>
     <script src="js/flipclock.js"></script>
+    <script src="js/howler.js"></script>
     <script src="js/main.js"></script>
 </head>
     <body>
-        <!--<div id="appDiv">
-            <div>
-            readyTime:{{initTimerObj.readyTime}}</div>
-            <div>
-            gameTime:{{initTimerObj.gameTime}}</div>
-            <div>
-            Caution:{{initTimerObj.sign.caution}}</div>
-            <div>
-            warn:{{initTimerObj.sign.warn}}</div>
-            <div>
-            minits:{{display.min}}</div>
-            <div>
-            mm:{{display.mmin}}</div>
-            <div>
-            status:{{status.gameStatus}}</div>
-            <div>
-            stand:{{display.stand}}</div>
-        </div>-->
-        
 <div id="container">
 	<div id="timebox">
 		<div id="inner">
 			<svg width="150" height="150" xmlns="http://www.w3.org/2000/svg" id="mmc">
 				 <g>
 				  <ellipse ry="55" rx="55" id="svg_1" cy="75" cx="75" stroke-width="10" stroke="#333333" fill="none"></ellipse>
-                   <ellipse ry="45" rx="45" id="svg_a" cy="75" cx="75" stroke-width="0" stroke="none" fill="#333333" style="transform:scale(1);transform-origin: 50% 75px;"></ellipse>
+                   <circle v-bind:r="display.mmin/100*35+10" cy="75" cx="75" stroke-width="0" stroke="none" fill="#333333"></circle>
 				 </g>
 			</svg>
 			<div class="clock"></div>
@@ -48,9 +28,11 @@
 			<div class="subd">END</div>
 			<div id="endnum">{{display.end}}</div>
 		</div>
+        <div id="configbut" v-on:click="showConfig=true">
+        </div>
 	</div>
 	<ul id="standset">
-        <li v-for="(item, index) in initGameProperty.standOrder" v-bind:class="{byRignt:initGameProperty.standOrder.length==2&&index==1,active:status.stand==index+1}"><span v-bind:class="{active:status.stand==index+1}">{{item}}</span>
+        <li v-for="(item, index) in initGameProperty.orderOfPlay" v-bind:class="{byRignt:initGameProperty.orderOfPlay.length==2&&index==1,active:status.stand==index+1}"><span v-bind:class="{active:status.stand==index+1}">{{item}}</span>
         </li>
         
 	</ul>
@@ -58,8 +40,136 @@
         <li v-for="n in initGameProperty.arrowsUp" v-bind:class="{active:((status.time%initGameProperty.arrowsUp==0?initGameProperty.arrowsUp:status.time%initGameProperty.arrowsUp) == n)&&status.time!=0}">
         </li>
     </ul>
-    <div id="belt">
-        {{status.gameStatus}}
+    <div id="belt" v-if="status.visibleBelt">
+        <div id="appDiv">
+            <div>
+            readyTime:{{initTimerObj.readyTime}}</div>
+            <div>
+            gameTime:{{initTimerObj.gameTime}}</div>
+            <div>
+            Caution:{{initTimerObj.sign.caution}}</div>
+            <div>
+            warn:{{initTimerObj.sign.warn}}</div>
+            <div>
+            sec:{{display.min}}</div>
+            <div>
+            mm:{{display.mmin}}</div>
+            <div>
+            status:{{status.gameStatus}}</div>
+            <div>
+            stand:{{display.stand}}</div>
+        </div>
+    </div>
+    <div id="console" v-show="showConfig">
+        <ul id="timeAndEnd">
+            <li>
+                <dl>
+                <dt>
+            競技時間
+                </dt>
+                <dd id="gametime">
+                    <ul>
+                        <li v-for="n in 3" v-bind:id="'time'+n">
+                            <div class="flipup">
+                            </div>
+                            <div class="flipnum">
+                                0
+                            </div>
+                            <div class="flipdown">
+                            </div>
+                        </li>
+                    </ul>
+                </dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                <dt>
+            用意時間
+                </dt>
+                <dd id="gametime">
+                    <ul>
+                        <li v-for="n in 2" v-bind:id="'readytime'+n">
+                            <div class="flipup">
+                            </div>
+                            <div class="flipnum">
+                                0
+                            </div>
+                            <div class="flipdown">
+                            </div>
+                        </li>
+                    </ul>
+                </dd>
+                </dl>
+            </li>
+            <li>
+            <dl>
+            <dt>
+            エンド数
+            </dt>
+            <dd id="endnums">
+                <ul>
+                    <li>
+                        <div class="flipup">
+                        </div>
+                        <div style="text-align:center">
+                        <div class="flipnum" id="end10">
+                            0
+                        </div>
+                        <div class="flipnum" id="end1">
+                            0
+                        </div>
+                        </div>
+                        <div class="flipdown">
+                        </div>
+                    </li>
+                </ul>
+            </dd>
+            </dl>
+            </li>
+        
+        </ul>
+        <hr>
+        <dl>
+            <dt>
+                立ち順序
+            </dt>
+            <dd id="orderofplay">
+            <ul>
+                <li>
+                    1Play
+                </li>
+                <li>
+                    AB : CD
+                </li>
+                <li>
+                    AB : CD : EF
+                </li>
+            </ul>
+            </dd>
+            <dt>
+                矢取り間隔
+            </dt>
+            <dd id="arrowsup">
+                <ul>
+                    <li>
+                        Par 1play
+                    </li>
+                    <li>
+                        Par 2play
+                    </li>
+                </ul>
+            </dd>
+            <dt>オンディスプレイ・コントローラ</dt>
+            <dd>
+            <div id="ctrltoggle" class="togglebase" v-bind:class="{active:onCtrl}" v-on:click="onCtrl=!onCtrl">
+                <div class="togglenob"></div>
+            </div>
+            </dd>
+        </dl>
+        <div id="setConfigbut"></div>
+        <div id="closeconfig" v-on:click="showConfig=false">
+        </div>
     </div>
 </div>
 </body>

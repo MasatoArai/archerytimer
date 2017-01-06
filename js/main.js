@@ -21,7 +21,7 @@ function initializationAll(){
                 
                 initGameProperty:{
                     arrowsUp:0,
-                    standOrder:[]
+                    orderOfPlay:[]
                 },
                 
                 status:{
@@ -29,7 +29,8 @@ function initializationAll(){
                     gameStatus:"",
                     stand:0,
                     auxTimer:false,
-                    time:0
+                    time:0,
+                    visibleBelt:false
                 },
                 display:{
                     min:0,
@@ -38,8 +39,11 @@ function initializationAll(){
                     end:1,
                     stand:''
                 },
+                onCtrl:false,
+                showConfig:false,
                 timerCore:{},
-                flipclock:{}
+                flipclock:{},
+                sound:{}
             },
             watch: {
                 'display.flipmin':function (val){
@@ -52,7 +56,15 @@ function initializationAll(){
             mounted:function(){
                 this.flipclock = new FlipClock($('.clock'), 999, {
                     clockFace: 'Counter'
-                })
+                });
+                this.sound=new Howl({
+                  src: ["hone.mp3"],
+                  sprite: {
+                    ready: [4000, 3000],
+                    start: [8000, 2400],
+                    end: [0, 4000]
+                  }
+                });
                 this.timerCore = new TimerCore(this)
             }
             
@@ -82,14 +94,14 @@ TimerCore.prototype.setGameinfo = function(obj){
     caution:
     warn:
     arrowsUp:
-    standOrder
+    orderOfPlay
     */
     this.initTimerObj.gameTime = obj.gameTime;
     this.initTimerObj.readyTime = obj.readyTime;
     this.initTimerObj.sign.caution = obj.caution;
     this.initTimerObj.sign.warn = obj.warn;
     this.initGameProperty.arrowsUp = obj.arrowsUp;
-    this.initGameProperty.standOrder = obj.standOrder;
+    this.initGameProperty.orderOfPlay = obj.orderOfPlay;
     this.status.stand=0;
     this.status.time=0;
     this.display.min = 0;
@@ -119,18 +131,18 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
         this.countConf.warn = this.initTimerObj.sign.warn;
         
         this.status.time++;
-        if(this.status.time%this.initGameProperty.standOrder.length == 1){
+        if(this.status.time%this.initGameProperty.orderOfPlay.length == 1){
             this.display.end++
         }
         //立ち位置
         if(this.status.time==1||this.status.time%this.initGameProperty.arrowsUp != 1){
             this.status.stand++;
-            if(this.status.stand > this.initGameProperty.standOrder.length){
+            if(this.status.stand > this.initGameProperty.orderOfPlay.length){
                 this.status.stand=1;
             }
         }
         
-        this.display.stand = this.initGameProperty.standOrder[this.status.stand-1];
+        this.display.stand = this.initGameProperty.orderOfPlay[this.status.stand-1];
     }
     if(bool){
         this.countDo();
@@ -167,10 +179,10 @@ TimerCore.prototype.countDo = function(){
                 self.status.gameStatus = "ArrowsUp";
             }
         }
-        if(self.countConf.readyTime>count+500){
-            fliplag = self.countConf.readyTime-(count+500);
+        if(self.countConf.readyTime>count+600){
+            fliplag = self.countConf.readyTime-(count+600);
         }else{
-            fliplag = self.countConf.gameTime-(count+500-self.countConf.readyTime);
+            fliplag = self.countConf.gameTime-(count+600-self.countConf.readyTime);
         }
         var min = ingameTime/1000;
         var flipmin = fliplag/1000;
