@@ -3,6 +3,23 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(opensans.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(.woff2) format('opensanseb.woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
 ::selection {
     background:rgba(0,0,0,0);
 }
@@ -12,7 +29,7 @@ dl,ul{
 }
 #body{
     overflow: hidden;
-    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-family: "Open Sans","Hiragino Kaku Gothic ProN",YuGothic,Meiryo,sans-serif;
 }
 #container{
     width: 1280px;
@@ -57,12 +74,15 @@ dl,ul{
     color: #fff;
     padding-top: 10px;
     border-radius: 0 30px;
+    font-family: 'Open sans';
     .subd{
     font-size: 40px;
     font-weight: bold;
     }
     #endnum{
-    font-size: 200px;
+    height: 200px;
+    line-height: 200px;
+    font-size: 150px;
     }
 }
 ul#standset{
@@ -143,7 +163,9 @@ ul#dotindex{
     box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.35);
 
     dl dt{
-        padding: 20px 0;
+        padding: 20px 0 10px;
+        font-size: 25px;
+        line-height: 25px;
     }
     hr{
         margin: 20px 0 0;
@@ -188,6 +210,8 @@ ul#dotindex{
                     position: relative;
                     overflow: hidden;
                     display: inline-block;
+                    font-family: 'Open Sans';
+                    font-weight: 800;
                     &:after{
                         content: "";
                         position: absolute;
