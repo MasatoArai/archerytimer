@@ -12,9 +12,12 @@ dl,ul{
 }
 #body{
     overflow: hidden;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 #container{
     width: 1280px;
+    height: 720px;
+    position: relative;
 }
 #timebox{
     white-space: nowrap;
@@ -199,12 +202,12 @@ ul#dotindex{
     
 .togglebase{
     display: inline-block;
-    width: 80px;
-    height: 40px;
+    width: 120px;
+    height: 60px;
     background-color: #343434;
-    border-radius: 20px;
-    border: 2px solid #fff;
-    padding-left: 40px;
+    border-radius: 30px;
+    border: 4px solid #fff;
+    padding-left: 30px;
     position: relative;
     transition:background-color 0.3s ease 0s;
 }
@@ -213,13 +216,13 @@ ul#dotindex{
 }
 .togglebase .togglenob{
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     background-color: #fff;
     border-radius: 50%;
     border: 1px solid #ccc;
     left: 50%;
-    top: -2px;
+    top: -4px;
     transition:left 0.3s ease 0s;
     box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.23);
 }
