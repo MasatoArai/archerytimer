@@ -10,6 +10,12 @@ function initializationAll(){
         vueApp = new Vue({
             el:'#container',
             data:{
+                consoleObj:{
+                    gametime:[0,0,0],
+                    readytime:[0,0],
+                    endnum:[0,0]
+                },
+                
                 initTimerObj:{
                     gameTime:0,
                     readyTime:0,
@@ -51,6 +57,34 @@ function initializationAll(){
                 }
             },
             methods: {
+                incredecre:function(bool,key,n){
+                    switch(key){
+                        case 'gametime':
+                            countTime.call(this,bool,key,n);
+                            break;
+                        case 'readytime':
+                            countTime.call(this,bool,key,n);
+                            break;
+                        case 'endnum':
+                            var endnum=this.consoleObj.endnum[1]*10+this.consoleObj.endnum[0];
+                            endnum = bool?endnum+1:endnum-1;
+                            endnum = (endnum<0)?0:endnum;
+                            endnum = (endnum>99)?99:endnum;
+                            this.consoleObj.endnum[0]=endnum%10;
+                            this.consoleObj.endnum[1]=Math.floor(endnum/10);
+                            break;
+                    }
+                    function countTime(bool,key,n){
+                        if(bool){//incre
+                            this.consoleObj[key][n-1]++;
+                            if(this.consoleObj[key][n-1]>9)this.consoleObj[key][n-1]=9;
+                        }else{
+                            this.consoleObj[key][n-1]--;
+                            if(this.consoleObj[key][n-1]>9)this.consoleObj[key][n-1]=0;
+                        }
+                    }
+                    
+                }
                 
             },
             mounted:function(){

@@ -99,7 +99,7 @@ ul#standset {
     ul#standset li.byRignt {
       text-align: right; }
     ul#standset li.active {
-      border-bottom: 10px solid #f8ff52; }
+      border-bottom: 10px solid #333333; }
     ul#standset li span.active {
       color: #333333; }
 
@@ -125,8 +125,7 @@ ul#dotindex {
   height: 300px;
   width: 100%;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 130px;
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
   font-size: 20px;
