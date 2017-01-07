@@ -23,9 +23,12 @@
 dl, ul {
   list-style: none; }
 
+dl dt {
+  font-family: "Helvetica Neue", Helvetica, sans-serif, "Hiragino Kaku Gothic ProN",YuGothic,Meiryo; }
+
 #body {
   overflow: hidden;
-  font-family: "Open Sans","Hiragino Kaku Gothic ProN",YuGothic,Meiryo,sans-serif; }
+  font-family: "Helvetica Neue", Helvetica, sans-serif, "Hiragino Kaku Gothic ProN",YuGothic,Meiryo; }
 
 #container {
   width: 1280px;
@@ -67,14 +70,14 @@ dl, ul {
   color: #fff;
   padding-top: 10px;
   border-radius: 0 30px;
-  font-family: 'Open sans'; }
+  font-family: "Helvetica Neue", Helvetica, sans-serif; }
   #endbox .subd {
-    font-size: 40px;
-    font-weight: bold; }
+    font-size: 40px; }
   #endbox #endnum {
     height: 200px;
     line-height: 200px;
-    font-size: 150px; }
+    font-size: 150px;
+    font-weight: 600; }
 
 ul#standset {
   display: flex;
@@ -181,8 +184,8 @@ ul#dotindex {
     position: relative;
     overflow: hidden;
     display: inline-block;
-    font-family: 'Open Sans';
-    font-weight: 800; }
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 600; }
     #console .flipnum:after {
       content: "";
       position: absolute;
