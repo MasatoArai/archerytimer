@@ -41,8 +41,8 @@
         <li v-for="n in initGameProperty.arrowsUp" v-bind:class="{active:((status.time%initGameProperty.arrowsUp==0?initGameProperty.arrowsUp:status.time%initGameProperty.arrowsUp) == n)&&status.time!=0}">
         </li>
     </ul>
-    <div id="belt" v-if="status.visibleBelt">
-        <div id="appDiv">
+    <div id="belt" v-if="toast.visibleBelt">
+        <!--<div id="appDiv">
             <div>
             readyTime:{{initTimerObj.readyTime}}</div>
             <div>
@@ -59,6 +59,8 @@
             status:{{status.gameStatus}}</div>
             <div>
             stand:{{display.stand}}</div>
+        </div>-->
+        <div v-html="toast.toastMessage">
         </div>
     </div>
     <div id="console" v-show="showConfig">
@@ -173,9 +175,9 @@
             <ul>
                 <li class="back">
                 </li>
-                <li class="playpause" v-on:click="timerCore.countDo()">
+                <li class="playpause" v-bind:class="playbut" v-on:click="playpause()">
                 </li>
-                <li class="next" v-on:click="timerCore.setReady()">
+                <li class="next" v-on:click="getReady()">
                 </li>
             </ul>
         </div>

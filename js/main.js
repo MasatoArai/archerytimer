@@ -45,18 +45,25 @@ function initializationAll(){
                 
                 status:{
                     inCount:false,
+                    inReady:false,
+                    timerStatus:"timeup",
                     gameStatus:"",
                     stand:0,
                     auxTimer:false,
-                    time:0,
-                    visibleBelt:false
+                    time:0
                 },
+                
                 display:{
                     min:0,
                     flipmin:0,
                     mmin:0,
-                    end:1,
+                    end:0,
                     stand:''
+                },
+                toast:{
+                    toastMessage:'',
+                    timeoutId:0,
+                    visibleBelt:false
                 },
                 onCtrl:false,
                 showConfig:false,
@@ -64,13 +71,61 @@ function initializationAll(){
                 flipclock:{},
                 sound:{}
             },
+            computed: {
+                playbut:function(){
+                    if(this.status.gameStatus=="Standby"&&this.status.timerStatus=="timeup")return "play";
+                    if(this.status.timerStatus == "counting")return "pause";
+                    if(this.status.timerStatus == "pause")return "redume";
+                    return "disable"
+                }
+            },
             watch: {
                 'display.flipmin':function (val){
                     this.flipclock.setTime(val);
+                },
+                'toast.toastMessage':function(val){
+                    if(this.toast.toastMessage==="")return;
+                    this.showToast();
                 }
             },
             methods: {
+                showToast:function(ss){
+                    clearTimeout(this.toast.timeoutId);
+                    var ct = 3000;
+                    if(typeof ss === 'number')ct = ss;
+                    this.toast.visibleBelt = true;
+                    var self = this;
+                    this.toast.timeoutId = setTimeout(function(){
+                        self.toast.visibleBelt = false;
+                        self.toast.toastMessage='';
+                    },ct);
+                },
+                playpause:function(){
+                    if(this.playbut == "play"){
+                        this.timerCore.countDo();
+                        return;
+                    }
+                    if(this.playbut == "pause"){
+                        this.timerCore.pause();
+                        return;
+                    }
+                    if(this.playbut == "redume"){
+                        this.timerCore.redume();
+                        return;
+                    }
+                },
+                nextEnd:function(){
+                    if(!this.status.inReady)return;
+                    this.timerCore.setReady();
+                },
+                backEnd:function(){
+                    if(!this.status.inReady)return;
+                },
+                setSpecialTimer:function(obj){
+                    this.timerCore.setready(false,obj)
+                },
                 setConfig:function(){
+                    this.showConfig=false;
                     var c=this.consoleObj;
                     var temp={
                         gameTime:getNum([c.gametime.digit1,c.gametime.digit2,c.gametime.digit3]),
@@ -84,6 +139,10 @@ function initializationAll(){
                     if(temp.gameTime<temp.caution){
                         temp.caution=0;
                         temp.warn=0;
+                    }
+                    if(temp.gameTime<10){
+                        this.toast.toastMessage="設定値が不正です。<br>10秒以上を設定してください。"
+                        return;
                     }
                     this.timerCore.setGameinfo(temp);
                     function getOrder(n){
@@ -143,6 +202,7 @@ function initializationAll(){
                 this.flipclock = new FlipClock($('.clock'), 999, {
                     clockFace: 'Counter'
                 });
+                this.flipclock.setTime(0);
                 this.sound=new Howl({
                   src: ["hone.mp3"],
                   sprite: {
@@ -174,14 +234,6 @@ function TimerCore(vueIns){
 }
 
 TimerCore.prototype.setGameinfo = function(obj){
-    /*
-    gameTime:
-    readyTime:
-    caution:
-    warn:
-    arrowsUp:
-    orderOfPlay
-    */
     this.initTimerObj.gameTime = obj.gameTime;
     this.initTimerObj.readyTime = obj.readyTime;
     this.initTimerObj.sign.caution = obj.caution;
@@ -205,6 +257,8 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
     clearInterval(self.intervalID);
     this.counterObj = new DateCount();
     this.status.gameStatus = "Standby";
+    this.status.timerStatus = "timeup";
+    this.status.inReady=true;
     if(typeof obj === "object"){//直タイマー
         this.status.auxTimer = true;
         this.countConf.readyTime = obj.readyTime;
@@ -241,6 +295,7 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
 TimerCore.prototype.countDo = function(){
     this.counterObj.start();
     this.status.inCount = true;
+    this.status.timerStatus = "counting"
     var self = this;
     this.intervalID=setInterval(function(){
         var count = self.counterObj.getElapsedTime();
@@ -265,6 +320,7 @@ TimerCore.prototype.countDo = function(){
                     self.setReady(true);
                     return;
                 }
+                self.status.timerStatus = "timeup"
                 self.status.gameStatus = "ArrowsUp";
             }
         }
@@ -301,9 +357,11 @@ TimerCore.prototype.countDo = function(){
     },10);
 }
 TimerCore.prototype.pause = function(){
+    this.status.timerStatus = "pause";
     this.counterObj.pause();
 }
 TimerCore.prototype.redume = function(){
+    this.status.timerStatus = "counting";
     this.counterObj.redume();
 }
 

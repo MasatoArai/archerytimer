@@ -72,6 +72,7 @@ body{
     top: 90px;
     left: 5px;
     width: 205px;
+    height: 255px;
     text-align: center;
     background-color: #333333;
     color: #fff;
@@ -107,9 +108,13 @@ ul#standset{
         color: rgba(51, 51, 51, 0.2);
         &.byRignt{
             text-align: right;
+            &.active{
+                background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.15) 100%);
+            }
         }
         &.active{
             border-bottom: 10px solid #333333;
+            background: linear-gradient(to right, rgba(0,0,0,0.15) 0%,rgba(0,0,0,0) 100%);
         }
         span.active{
             color: #333333;
@@ -143,10 +148,23 @@ ul#dotindex{
     top: 130px;
     background-color: rgba(0,0,0,0.8);
     color: #fff;
-    font-size: 20px;
     text-align: center;
-    //line-height: 300px;
-    z-index: 100;
+    z-index: 300;
+    animation: toast 0.5s cubic-bezier(.13, .6, .25, 1) 0s;
+    &>div{
+        font-size:70px;
+        line-height: 130%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        transform:translate(-50%,-50%);
+    }
+}
+
+@keyframes toast {
+0% {opacity: 0;}
+100% {opacity: 1;}
 }
 #console{
     position: absolute;
@@ -383,11 +401,22 @@ ul#dotindex{
                 background-image: url(../images/previous.svg);
             }
             &.playpause{
+                &.play{
                 background-image: url(../images/play-button.svg);
+                }
+                &.pause{
+                background-image: url(../images/pause.svg);
+                }
+                &.redume{
+                background-image: url(../images/play-button.svg);
+                }
             }
             &.next{
                 background-image: url(../images/next.svg);
             }
         }
     }
+}
+#appDiv{
+    font-size: 20px;
 }
