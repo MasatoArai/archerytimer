@@ -11,9 +11,21 @@ function initializationAll(){
             el:'#container',
             data:{
                 consoleObj:{
-                    gametime:[0,0,0],
-                    readytime:[0,0],
-                    endnum:[0,0]
+                    gametime:{
+                        digit1:0,
+                        digit2:0,
+                        digit3:0
+                    },
+                    readytime:{
+                        digit1:0,
+                        digit2:0
+                    },
+                    endnum:{
+                        digit1:0,
+                        digit2:0
+                    },
+                    orderOfPlay:2,
+                    arrowsUp:2
                 },
                 
                 initTimerObj:{
@@ -27,7 +39,8 @@ function initializationAll(){
                 
                 initGameProperty:{
                     arrowsUp:0,
-                    orderOfPlay:[]
+                    orderOfPlay:[],
+                    endnum:0
                 },
                 
                 status:{
@@ -57,6 +70,45 @@ function initializationAll(){
                 }
             },
             methods: {
+                setConfig:function(){
+                    var c=this.consoleObj;
+                    var temp={
+                        gameTime:getNum([c.gametime.digit1,c.gametime.digit2,c.gametime.digit3]),
+                        readyTime:getNum([c.readytime.digit1,c.readytime.digit2]),
+                        caution:45000,
+                        warn:30000,
+                        arrowsUp:c.arrowsUp,
+                        orderOfPlay:getOrder(c.orderOfPlay),
+                        endnum:getNum([c.endnum.digit1,c.endnum.digit2])
+                    };
+                    if(temp.gameTime<temp.caution){
+                        temp.caution=0;
+                        temp.warn=0;
+                    }
+                    this.timerCore.setGameinfo(temp);
+                    function getOrder(n){
+                        var ret=[];
+                        switch(n){
+                            case 1:
+                                ret=[""];
+                                break;
+                            case 2:
+                                ret=["AB","CD"];
+                                break;
+                            case 3:
+                                ret=["AB","CD","EF"];
+                                break;
+                        }
+                        return ret;
+                    }
+                    function getNum(arr){
+                        var total=0;
+                        for(var i=0;i<arr.length;i++){
+                           total += arr[i]*Math.pow(10,i);
+                        }
+                        return total*1000;
+                    }
+                },
                 incredecre:function(bool,key,n){
                     switch(key){
                         case 'gametime':
@@ -66,21 +118,21 @@ function initializationAll(){
                             countTime.call(this,bool,key,n);
                             break;
                         case 'endnum':
-                            var endnum=this.consoleObj.endnum[1]*10+this.consoleObj.endnum[0];
+                            var endnum=this.consoleObj.endnum.digit2*10+this.consoleObj.endnum.digit1;
                             endnum = bool?endnum+1:endnum-1;
                             endnum = (endnum<0)?0:endnum;
                             endnum = (endnum>99)?99:endnum;
-                            this.consoleObj.endnum[0]=endnum%10;
-                            this.consoleObj.endnum[1]=Math.floor(endnum/10);
+                            this.consoleObj.endnum.digit1=endnum%10;
+                            this.consoleObj.endnum.digit2=Math.floor(endnum/10);
                             break;
                     }
                     function countTime(bool,key,n){
                         if(bool){//incre
-                            this.consoleObj[key][n-1]++;
-                            if(this.consoleObj[key][n-1]>9)this.consoleObj[key][n-1]=9;
+                            this.consoleObj[key]['digit'+n]++;
+                            if(this.consoleObj[key]['digit'+n]>9)this.consoleObj[key]['digit'+n]=9;
                         }else{
-                            this.consoleObj[key][n-1]--;
-                            if(this.consoleObj[key][n-1]>9)this.consoleObj[key][n-1]=0;
+                            this.consoleObj[key]['digit'+n]--;
+                            if(this.consoleObj[key]['digit'+n]<0)this.consoleObj[key]['digit'+n]=0;
                         }
                     }
                     
@@ -136,6 +188,7 @@ TimerCore.prototype.setGameinfo = function(obj){
     this.initTimerObj.sign.warn = obj.warn;
     this.initGameProperty.arrowsUp = obj.arrowsUp;
     this.initGameProperty.orderOfPlay = obj.orderOfPlay;
+    this.initGameProperty.endnum = obj.endnum;
     this.status.stand=0;
     this.status.time=0;
     this.display.min = 0;
@@ -143,6 +196,8 @@ TimerCore.prototype.setGameinfo = function(obj){
     this.display.mmin = 0;
     this.display.stand = '';
     this.display.end = 0;
+    
+    this.setReady();
 }
 
 TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停止状態で起動するか

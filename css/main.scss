@@ -45,7 +45,7 @@ dl dt{
     width: 100%;
     height: 580px;
     #mmc{
-    margin-left: 30px;
+    margin-left: 35px;
     }
     #configbut{
         position: absolute;
@@ -70,7 +70,7 @@ dl dt{
 #endbox{
     position: absolute;
     top: 90px;
-    left: 0;
+    left: 5px;
     width: 205px;
     text-align: center;
     background-color: #333333;
@@ -267,6 +267,7 @@ ul#dotindex{
         ul{
             display: flex;
             justify-content: center;
+            flex-direction: row-reverse;
             li{
             }
         }
@@ -282,6 +283,10 @@ ul#dotindex{
                 line-height: 50px;
                 text-align: center;
                 border-left: none;
+                &.active{
+                    background-color: #fff;
+                    color: #333333;
+                }
                 &:first-child{
                    border-left: 2px solid #fff;
                     border-radius: 10px 0 0 10px;
@@ -303,6 +308,10 @@ ul#dotindex{
                 line-height: 50px;
                 text-align: center;
                 border-left: none;
+                &.active{
+                    background-color: #fff;
+                    color: #333333;
+                }
                 &:first-child{
                    border-left: 2px solid #fff;
                     border-radius: 10px 0 0 10px;
@@ -347,6 +356,38 @@ ul#dotindex{
         &:active,&:focus{
             outline: 0;
             opacity: 0.3;
+        }
+    }
+}
+#ondisplayCtrl{
+    position: absolute;
+    z-index: 10000;
+    top: 347px;
+    left: 5px;
+    width: 205px;
+    height: 70px;
+    border-radius: 30px 0;
+    background-color: rgb(51, 51, 51);
+    ul{
+        display: flex;
+        justify-content:space-around;
+        padding: 15px;
+        li{
+            height: 40px;
+            width: 40px;
+            border-radius: 5px;
+            background-repeat: no-repeat;
+            background-size: 50%;
+            background-position: center;
+            &.back{
+                background-image: url(../images/previous.svg);
+            }
+            &.playpause{
+                background-image: url(../images/play-button.svg);
+            }
+            &.next{
+                background-image: url(../images/next.svg);
+            }
         }
     }
 }

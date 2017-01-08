@@ -70,10 +70,10 @@
                 </dt>
                 <dd id="gametime">
                     <ul>
-                        <li v-for="n in consoleObj.gametime.length" v-bind:id="'gametime'+n">
+                        <li v-for="n in 3" v-bind:id="'gametime'+n">
                             <div class="flipup" v-on:click="incredecre(true,'gametime',n)">
                             </div>
-                            <div class="flipnum" v-text="consoleObj.gametime[n-1]">
+                            <div class="flipnum" v-text="consoleObj.gametime['digit'+n]">
                                 0
                             </div>
                             <div class="flipdown" v-on:click="incredecre(false,'gametime',n)">
@@ -90,10 +90,10 @@
                 </dt>
                 <dd id="gametime">
                     <ul>
-                        <li v-for="n in consoleObj.readytime.length" v-bind:id="'readytime'+n">
+                        <li v-for="n in 2" v-bind:id="'readytime'+n">
                             <div class="flipup" v-on:click="incredecre(true,'readytime',n)">
                             </div>
-                            <div class="flipnum" v-text="consoleObj.readytime[n-1]">
+                            <div class="flipnum" v-text="consoleObj.readytime['digit'+n]">
                                 0
                             </div>
                             <div class="flipdown" v-on:click="incredecre(false,'readytime',n)">
@@ -114,9 +114,8 @@
                     <div class="flipup" v-on:click="incredecre(true,'endnum',0)">
                     </div>
                     <div style="text-align:center">
-                    <div class="flipnum" v-text="consoleObj.endnum[1]">
-                    </div>
-                    <div class="flipnum" v-text="consoleObj.endnum[0]">
+                    <div class="flipnum" v-text="consoleObj.endnum.digit2">
+                    </div><div class="flipnum" v-text="consoleObj.endnum.digit1">
                     </div>
                     </div>
                     <div class="flipdown" v-on:click="incredecre(false,'endnum',0)">
@@ -135,13 +134,13 @@
             </dt>
             <dd id="orderofplay">
             <ul>
-                <li>
-                    1Play
+                <li :class="{active:consoleObj.orderOfPlay==1}" v-on:click="consoleObj.orderOfPlay=1">
+                    No split
                 </li>
-                <li>
+                <li :class="{active:consoleObj.orderOfPlay==2}" v-on:click="consoleObj.orderOfPlay=2">
                     AB : CD
                 </li>
-                <li>
+                <li :class="{active:consoleObj.orderOfPlay==3}" v-on:click="consoleObj.orderOfPlay=3">
                     AB : CD : EF
                 </li>
             </ul>
@@ -151,10 +150,10 @@
             </dt>
             <dd id="arrowsup">
                 <ul>
-                    <li>
+                    <li :class="{active:consoleObj.arrowsUp==1}" v-on:click="consoleObj.arrowsUp=1">
                         Par 1play
                     </li>
-                    <li>
+                    <li :class="{active:consoleObj.arrowsUp==2}" v-on:click="consoleObj.arrowsUp=2">
                         Par 2play
                     </li>
                 </ul>
@@ -166,10 +165,20 @@
             </div>
             </dd>
         </dl>
-        <div id="setConfigbut"></div>
+        <div id="setConfigbut" v-on:click="setConfig()"></div>
         <div id="closeconfig" v-on:click="showConfig=false">
         </div>
     </div>
+        <div id="ondisplayCtrl">
+            <ul>
+                <li class="back">
+                </li>
+                <li class="playpause" v-on:click="timerCore.countDo()">
+                </li>
+                <li class="next" v-on:click="timerCore.setReady()">
+                </li>
+            </ul>
+        </div>
 </div>
 </body>
 </html>
