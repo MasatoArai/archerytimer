@@ -31,6 +31,8 @@
 		</div>
         <div id="configbut" v-on:click="showConfig=true">
         </div>
+        <div id="timerconfigbut" v-on:click="showTimerConfig=true">
+        </div>
 	</div>
 	<ul id="standset">
         <li v-for="(item, index) in initGameProperty.orderOfPlay" v-bind:class="{byRignt:initGameProperty.orderOfPlay.length==2&&index==1,active:status.stand==index+1}"><span v-bind:class="{active:status.stand==index+1}">{{item}}</span>
@@ -173,11 +175,11 @@
     </div>
         <div id="ondisplayCtrl">
             <ul>
-                <li class="back">
+                <li class="rep" v-show="status.time>0" v-on:click="setConfig()">
                 </li>
                 <li class="playpause" v-bind:class="playbut" v-on:click="playpause()">
                 </li>
-                <li class="next" v-on:click="getReady()">
+                <li class="next" v-bind:class="nextbut" v-on:click="nextEnd()">
                 </li>
             </ul>
         </div>

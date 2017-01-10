@@ -67,6 +67,7 @@ function initializationAll(){
                 },
                 onCtrl:false,
                 showConfig:false,
+                showTimerConfig:false,
                 timerCore:{},
                 flipclock:{},
                 sound:{}
@@ -77,6 +78,15 @@ function initializationAll(){
                     if(this.status.timerStatus == "counting")return "pause";
                     if(this.status.timerStatus == "pause")return "redume";
                     return "disable"
+                },
+                nextbut:function(){
+                    if(this.status.time==0)return ""; if(this.status.gameStatus=="ArrowsUp"||this.status.gameStatus=="Standby"){
+                        return "nextend";
+                    }else if(this.status.time%this.initGameProperty.arrowsUp != 0){
+                        return "forward";
+                    }else {
+                        return "stop";
+                    }
                 }
             },
             watch: {
@@ -115,8 +125,19 @@ function initializationAll(){
                     }
                 },
                 nextEnd:function(){
-                    if(!this.status.inReady)return;
-                    this.timerCore.setReady();
+                    if(this.status.time==0)return;
+                    if(this.status.time%this.initGameProperty.arrowsUp != 0){
+                        //this.timerCore.stop();
+                        if(this.status.gameStatus=="Standby"){
+                        this.timerCore.setReady();
+                        }else{
+                        this.timerCore.setReady(true);
+                        }
+                    }else if(this.status.gameStatus == "ArrowsUp"||this.status.gameStatus=="Standby"){
+                        this.timerCore.setReady();
+                    }else{
+                        this.timerCore.stop();
+                    }
                 },
                 backEnd:function(){
                     if(!this.status.inReady)return;
@@ -221,8 +242,10 @@ function TimerCore(vueIns){
     this.initGameProperty=vueIns.initGameProperty;
     this.status=vueIns.status;
     this.display = vueIns.display;
+    this.toast = vueIns.toast;
     this.counterObj={};
     this.intervalID = 0;
+    this.standCounter = [];
     
     this.countConf = {
         readyTime:0,
@@ -249,6 +272,11 @@ TimerCore.prototype.setGameinfo = function(obj){
     this.display.stand = '';
     this.display.end = 0;
     
+    this.standCounter = new Array(this.initGameProperty.orderOfPlay.length);
+    for(var i=0;i<this.standCounter.length;i++){
+        this.standCounter[i]=0;
+    }
+    
     this.setReady();
 }
 
@@ -274,21 +302,30 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
         this.countConf.warn = this.initTimerObj.sign.warn;
         
         this.status.time++;
-        if(this.status.time%this.initGameProperty.orderOfPlay.length == 1){
-            this.display.end++
-        }
-        //立ち位置
+        
+        //立ち位置表示
         if(this.status.time==1||this.status.time%this.initGameProperty.arrowsUp != 1){
             this.status.stand++;
             if(this.status.stand > this.initGameProperty.orderOfPlay.length){
                 this.status.stand=1;
             }
         }
+      //playorderが１か２立
+        if((this.initGameProperty.orderOfPlay.length==2&&this.status.time%this.initGameProperty.orderOfPlay.length == 1)||this.initGameProperty.orderOfPlay.length==1){
+            this.display.end++
+        }
+        //3立
+        if(this.initGameProperty.orderOfPlay.length==3){
+            this.standCounter[this.status.stand-1]++;
+            this.display.end=this.standCounter[this.status.stand-1];
+        }
         
         this.display.stand = this.initGameProperty.orderOfPlay[this.status.stand-1];
     }
     if(bool){
         this.countDo();
+    }else{
+        this.toast.toastMessage = "STANDBY!!"
     }
 }
 
@@ -314,14 +351,11 @@ TimerCore.prototype.countDo = function(){
             }else if(self.countConf.readyTime + self.countConf.gameTime > count){
                 self.status.gameStatus = "Warn";
             }else if(self.countConf.readyTime + self.countConf.gameTime <= count){
-                clearInterval(self.intervalID);
-                this.status.inCount = false;
                 if(self.status.time%self.initGameProperty.arrowsUp != 0){
                     self.setReady(true);
                     return;
                 }
-                self.status.timerStatus = "timeup"
-                self.status.gameStatus = "ArrowsUp";
+                self.stop();
             }
         }
         if(self.countConf.readyTime>count+600){
@@ -354,7 +388,16 @@ TimerCore.prototype.countDo = function(){
         }else{
             self.display.mmin = Math.round((min%1)*100);
         }
-    },10);
+    },5);
+}
+TimerCore.prototype.stop = function(){
+    clearInterval(this.intervalID);
+    this.status.inCount = false;
+    this.status.timerStatus = "timeup"
+    this.status.gameStatus = "ArrowsUp";
+    this.display.flipmin=0;
+    this.display.mmin=0;
+    this.display.min=0;
 }
 TimerCore.prototype.pause = function(){
     this.status.timerStatus = "pause";
