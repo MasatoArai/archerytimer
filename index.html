@@ -13,7 +13,7 @@
     <script src="js/main.js"></script>
 </head>
     <body>
-<div id="container">
+<div id="container" v-bind:class="status.statusColor">
 	<div id="timebox">
 		<div id="inner">
 			<svg width="150" height="150" xmlns="http://www.w3.org/2000/svg" id="mmc">
@@ -29,7 +29,7 @@
 			<div class="subd">END</div>
 			<div id="endnum">{{display.end}}</div>
 		</div>
-        <div id="configbut" v-on:click="showConfig=true">
+        <div id="configbut" v-on:click="showConfig=!showConfig" v-bind:class="{active:showConfig}">
         </div>
         <div id="timerconfigbut" v-on:click="showTimerConfig=true">
         </div>

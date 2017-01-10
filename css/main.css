@@ -33,7 +33,14 @@ body {
 #container {
   width: 1280px;
   height: 720px;
-  position: relative; }
+  position: relative;
+  transition: background 0.4s ease 0s; }
+  #container.warn {
+    background-color: #ff4f4f; }
+  #container.caution {
+    background-color: #ffe44f; }
+  #container.shoot {
+    background-color: white; }
 
 #timebox {
   white-space: nowrap;
@@ -56,7 +63,7 @@ body {
     cursor: pointer;
     border-radius: 50%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; }
-    #timebox #configbut:active, #timebox #configbut:focus {
+    #timebox #configbut:active, #timebox #configbut:focus, #timebox #configbut.active {
       outline: 0;
       opacity: 1; }
   #timebox #timerconfigbut {

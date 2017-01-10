@@ -38,6 +38,16 @@ body{
     width: 1280px;
     height: 720px;
     position: relative;
+    transition: background 0.4s ease 0s;
+    &.warn{
+        background-color: #ff4f4f;
+    }
+    &.caution{
+        background-color: #ffe44f;
+    }
+    &.shoot{
+        background-color: white;
+    }
 }
 #timebox{
     white-space: nowrap;
@@ -61,7 +71,7 @@ body{
         cursor: pointer;
         border-radius: 50%;
         -webkit-tap-highlight-color:rgba(0, 0, 0, 0)!important;
-        &:active,&:focus{
+        &:active,&:focus,&.active{
             outline: 0;
             opacity: 1;
         }

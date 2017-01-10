@@ -48,6 +48,7 @@ function initializationAll(){
                     inReady:false,
                     timerStatus:"timeup",
                     gameStatus:"",
+                    statusColor:"",
                     stand:0,
                     auxTimer:false,
                     time:0
@@ -96,6 +97,67 @@ function initializationAll(){
                 'toast.toastMessage':function(val){
                     if(this.toast.toastMessage==="")return;
                     this.showToast();
+                },
+                'status.gameStatus':function(val){
+                    switch(val){
+                        case "Standby":
+                            this.status.statusColor = "shoot";
+                            break;
+                        case "Ready":
+                            this.sound.play("ready");
+                            this.status.statusColor = "warn";
+                            break;
+                        case "Shoot":
+                            this.sound.play("start");
+                            this.status.statusColor="shoot";
+                            break;
+                        case "Caution":
+                            this.status.statusColor = "caution";
+                            break;
+                        case "Warn":
+                            this.status.statusColor = "warn";
+                            break;
+                        case "ArrowsUp":
+                            this.sound.play("end");
+                            this.status.statusColor = "warn";
+                            break;
+                    }
+                },
+                'status.timerStatus':function(val){
+                    var inShooting = (this.status.gameStatus==="Shoot"||
+                                      this.status.gameStatus==="Ready"||
+                                     this.status.gameStatus==="Worn"||
+                                     this.status.gameStatus==="Caution");
+                    if(val === "pause"&&inShooting){
+                        this.sound.play("end");
+                        this.status.statusColor = "warn";
+                    }
+                    if(val === "counting"&&inShooting){
+                        this.sound.play("start");
+                        reColor.call(this);
+                    }
+                    function reColor(){
+                    switch(this.status.gameStatus){
+                        case "Standby":
+                            this.status.statusColor = "shoot";
+                            break;
+                        case "Ready":
+                            this.status.statusColor = "warn";
+                            break;
+                        case "Shoot":
+                            this.status.statusColor="shoot";
+                            break;
+                        case "Caution":
+                            this.status.statusColor = "caution";
+                            break;
+                        case "Warn":
+                            this.status.statusColor = "warn";
+                            break;
+                        case "ArrowsUp":
+                            this.status.statusColor = "warn";
+                            break;
+                    }
+                    }
                 }
             },
             methods: {
@@ -228,7 +290,7 @@ function initializationAll(){
                   src: ["hone.mp3"],
                   sprite: {
                     ready: [4000, 3000],
-                    start: [8000, 2400],
+                    start: [8500, 2400],
                     end: [0, 4000]
                   }
                 });
