@@ -56,6 +56,8 @@ function initializationAll(){
                     statusColor:"",
                     stand:0,
                     auxTimer:false,
+                    lastPosition:"",
+                    gameover:false,
                     time:0
                 },
                 
@@ -267,7 +269,7 @@ function initializationAll(){
                         warn:30000,
                         arrowsUp:c.arrowsUp,
                         orderOfPlay:getOrder(c.orderOfPlay),
-                        endnum:getNum([c.endnum.digit1,c.endnum.digit2])
+                        endnum:getNum([c.endnum.digit1,c.endnum.digit2])/1000
                     };
                     if(temp.gameTime<temp.caution){
                         temp.caution=0;
@@ -355,6 +357,9 @@ function initializationAll(){
 function TimerCore(vueIns){
     this.initTimerObj=vueIns.initTimerObj;
     this.initGameProperty=vueIns.initGameProperty;
+    this.sound = vueIns.sound;
+    this.toast = vueIns.toast;
+    this.reset = vueIns.setConfig;
     this.status=vueIns.status;
     this.display = vueIns.display;
     this.toast = vueIns.toast;
@@ -381,8 +386,8 @@ TimerCore.prototype.setGameinfo = function(obj){
     this.initGameProperty.endnum = obj.endnum;
     this.status.stand=0;
     this.status.time=0;
+    this.status.gemeover = true;
     this.display.min = 0;
-    this.display.flipmin = obj.gameTime/1000;
     this.display.mmin = 0;
     this.display.stand = '';
     this.display.end = 0;
@@ -397,9 +402,9 @@ TimerCore.prototype.setGameinfo = function(obj){
 
 TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停止状態で起動するか
     var self = this;
+    if(this.status.gameover)return false;
     clearInterval(self.intervalID);
     this.counterObj = new DateCount();
-    this.status.gameStatus = "Standby";
     this.status.timerStatus = "timeup";
     this.status.inReady=true;
     if(typeof obj === "object"){//直タイマー
@@ -409,7 +414,10 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
         this.countConf.caution = obj.caution;
         this.countConf.warn = obj.warn;
         this.display.stand="Special";
+        this.status.lastPosition = this.status.gameStatus;
+        this.status.gameStatus = "Standby";
     }else{//通常時
+        this.status.gameStatus = "Standby";
         this.status.auxTimer = false;
         this.countConf.readyTime = this.initTimerObj.readyTime;
         this.countConf.gameTime = this.initTimerObj.gameTime;
@@ -437,6 +445,8 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
         
         this.display.stand = this.initGameProperty.orderOfPlay[this.status.stand-1];
     }
+    
+    this.display.flipmin = this.countConf.gameTime/1000;
     if(bool){
         this.countDo();
     }else{
@@ -507,10 +517,25 @@ TimerCore.prototype.countDo = function(){
 }
 TimerCore.prototype.stop = function(){
     clearInterval(this.intervalID);
-    this.status.auxTimer = false;
     this.status.inCount = false;
     this.status.timerStatus = "timeup"
-    this.status.gameStatus = "ArrowsUp";
+    if(this.status.auxTimer){
+        if(this.status.lastPosition != "ArrowsUp"){
+            this.sound.play('end');
+        }
+        this.status.gameStatus = this.status.lastPosition;
+    }else{
+        
+        if((this.display.end==this.initGameProperty.endnum)&&(this.status.time == this.initGameProperty.orderOfPlay.length*this.initGameProperty.endnum)){
+                this.status.gameover = true;
+                this.toast.toastMessage = "Game is over!";
+            this.status.gameStatus = '';
+        }else{
+            this.toast.toastMessage = "Cease Fire!"
+            this.status.gameStatus = "ArrowsUp";
+        }
+    }
+    this.status.auxTimer = false;
     this.display.flipmin=0;
     this.display.mmin=0;
     this.display.min=0;

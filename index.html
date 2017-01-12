@@ -27,19 +27,19 @@
 		
 		<div id="endbox">
 			<div class="subd">END</div>
-			<div id="endnum">{{display.end}}</div>
+			<div id="endnum">{{status.auxTimer?'-':display.end}}</div>
 		</div>
         <div id="configbut" v-on:click="showConfig=!showConfig" v-bind:class="{active:showConfig}">
         </div>
         <div id="timerconfigbut" v-on:click="showTimerConfig=!showTimerConfig" v-bind:class="{active:showTimerConfig}" v-show="status.gameStatus=='Standby'||status.gameStatus=='ArrowsUp'||status.gameStatus==''">
         </div>
 	</div>
-	<ul id="standset">
+	<ul id="standset" v-show="!status.auxTimer">
         <li v-for="(item, index) in initGameProperty.orderOfPlay" v-bind:class="{byRignt:initGameProperty.orderOfPlay.length==2&&index==1,active:status.stand==index+1}"><span v-bind:class="{active:status.stand==index+1}">{{item}}</span>
         </li>
         
 	</ul>
-    <ul id="dotindex">
+    <ul id="dotindex" v-show="!status.auxTimer">
         <li v-for="n in initGameProperty.arrowsUp" v-bind:class="{active:((status.time%initGameProperty.arrowsUp==0?initGameProperty.arrowsUp:status.time%initGameProperty.arrowsUp) == n)&&status.time!=0}">
         </li>
     </ul>
