@@ -90,7 +90,7 @@ body{
         cursor: pointer;
         border-radius: 50%;
         -webkit-tap-highlight-color:rgba(0, 0, 0, 0)!important;
-        &:active,&:focus{
+        &:active,&:focus,&.active{
             outline: 0;
             opacity: 1;
         }
@@ -195,7 +195,25 @@ ul#dotindex{
 0% {opacity: 0;}
 100% {opacity: 1;}
 }
-#console{
+
+#timerconsole{
+    &.console{
+        height: auto;
+        width: 500px;
+    }
+    
+    #addgametime{
+        ul{
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: row-reverse;
+            padding-left: 70px;
+            li{
+            }
+        }
+    }
+}
+.console{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -371,7 +389,7 @@ ul#dotindex{
             }
         }
     }
-    #closeconfig{
+    .closeconfig{
         position: absolute;
         width: 80px;
         height: 80px;
@@ -389,7 +407,7 @@ ul#dotindex{
             background-color: #c7c7c7;
         }
     }
-    #setConfigbut{
+    .setconfig{
         position: absolute;
         width: 120px;
         height: 120px;
@@ -429,8 +447,14 @@ ul#dotindex{
             background-size: 50%;
             background-position: center;
             &.rep{
-                background-image: url(../images/replay.svg);
                 background-size: 70%;
+                &.enable{
+                background-image: url(../images/replay.svg);
+                }
+                &.disable{
+                background-image: url(../images/replay.svg);
+                opacity: 0.3;
+                }
             }
             &.playpause{
                 &.play{

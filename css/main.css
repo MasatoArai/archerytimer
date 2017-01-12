@@ -80,7 +80,7 @@ body {
     cursor: pointer;
     border-radius: 50%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; }
-    #timebox #timerconfigbut:active, #timebox #timerconfigbut:focus {
+    #timebox #timerconfigbut:active, #timebox #timerconfigbut:focus, #timebox #timerconfigbut.active {
       outline: 0;
       opacity: 1; }
 
@@ -175,7 +175,16 @@ ul#dotindex {
   100% {
     opacity: 1; } }
 
-#console {
+#timerconsole.console {
+  height: auto;
+  width: 500px; }
+#timerconsole #addgametime ul {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  padding-left: 70px; }
+
+.console {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -190,30 +199,30 @@ ul#dotindex {
   padding: 20px;
   font-size: 25px;
   box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.35); }
-  #console dl dt {
+  .console dl dt {
     padding: 20px 0 10px;
     font-size: 25px;
     line-height: 25px; }
-  #console hr {
+  .console hr {
     margin: 20px 0 0;
     border-style: solid;
     border-width: 0 0 1px 0;
     border-color: #454545; }
-  #console .flipup, #console .flipdown {
+  .console .flipup, .console .flipdown {
     text-align: center; }
-    #console .flipup:before, #console .flipdown:before {
+    .console .flipup:before, .console .flipdown:before {
       content: "";
       display: inline-block;
       width: 0;
       height: 0;
       border-style: solid; }
-  #console .flipup:before {
+  .console .flipup:before {
     border-width: 0 20px 20px 20px;
     border-color: transparent transparent #fff transparent; }
-  #console .flipdown:before {
+  .console .flipdown:before {
     border-width: 20px 20px 0 20px;
     border-color: #fff transparent transparent transparent; }
-  #console .flipnum {
+  .console .flipnum {
     background-color: #fff;
     font-size: 80px;
     line-height: 80px;
@@ -228,7 +237,7 @@ ul#dotindex {
     display: inline-block;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
     font-weight: 600; }
-    #console .flipnum:after {
+    .console .flipnum:after {
       content: "";
       position: absolute;
       top: 0;
@@ -237,7 +246,7 @@ ul#dotindex {
       width: 100%;
       border-bottom: 3px solid rgba(0, 0, 0, 0.3);
       background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, rgba(0, 0, 0, 0.2))); }
-  #console .togglebase {
+  .console .togglebase {
     display: inline-block;
     width: 120px;
     height: 60px;
@@ -249,9 +258,9 @@ ul#dotindex {
     padding-left: 30px;
     position: relative;
     transition: background-color 0.3s ease 0s; }
-  #console .togglebase.active {
+  .console .togglebase.active {
     background-color: #fff; }
-  #console .togglebase .togglenob {
+  .console .togglebase .togglenob {
     position: absolute;
     width: 60px;
     height: 60px;
@@ -262,54 +271,54 @@ ul#dotindex {
     top: -4px;
     transition: left 0.3s ease 0s;
     box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.23); }
-  #console .togglebase.active .togglenob {
+  .console .togglebase.active .togglenob {
     left: 0; }
-  #console ul#timeAndEnd {
+  .console ul#timeAndEnd {
     display: flex;
     justify-content: space-around; }
-    #console ul#timeAndEnd > li {
+    .console ul#timeAndEnd > li {
       flex-grow: 1; }
-  #console #gametime ul {
+  .console #gametime ul {
     display: flex;
     justify-content: center;
     flex-direction: row-reverse; }
-  #console #orderofplay ul {
+  .console #orderofplay ul {
     display: flex;
     justify-content: center; }
-    #console #orderofplay ul li {
+    .console #orderofplay ul li {
       width: 160px;
       border: 2px solid #fff;
       height: 50px;
       line-height: 50px;
       text-align: center;
       border-left: none; }
-      #console #orderofplay ul li.active {
+      .console #orderofplay ul li.active {
         background-color: #fff;
         color: #333333; }
-      #console #orderofplay ul li:first-child {
+      .console #orderofplay ul li:first-child {
         border-left: 2px solid #fff;
         border-radius: 10px 0 0 10px; }
-      #console #orderofplay ul li:nth-last-of-type(1) {
+      .console #orderofplay ul li:nth-last-of-type(1) {
         border-radius: 0 10px 10px 0; }
-  #console #arrowsup ul {
+  .console #arrowsup ul {
     display: flex;
     justify-content: center; }
-    #console #arrowsup ul li {
+    .console #arrowsup ul li {
       width: 160px;
       border: 2px solid #fff;
       height: 50px;
       line-height: 50px;
       text-align: center;
       border-left: none; }
-      #console #arrowsup ul li.active {
+      .console #arrowsup ul li.active {
         background-color: #fff;
         color: #333333; }
-      #console #arrowsup ul li:first-child {
+      .console #arrowsup ul li:first-child {
         border-left: 2px solid #fff;
         border-radius: 10px 0 0 10px; }
-      #console #arrowsup ul li:nth-last-of-type(1) {
+      .console #arrowsup ul li:nth-last-of-type(1) {
         border-radius: 0 10px 10px 0; }
-  #console #closeconfig {
+  .console .closeconfig {
     position: absolute;
     width: 80px;
     height: 80px;
@@ -322,10 +331,10 @@ ul#dotindex {
     cursor: pointer;
     border-radius: 50%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; }
-    #console #closeconfig:active, #console #closeconfig:focus {
+    .console .closeconfig:active, .console .closeconfig:focus {
       outline: 0;
       background-color: #c7c7c7; }
-  #console #setConfigbut {
+  .console .setconfig {
     position: absolute;
     width: 120px;
     height: 120px;
@@ -338,7 +347,7 @@ ul#dotindex {
     cursor: pointer;
     opacity: 1;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; }
-    #console #setConfigbut:active, #console #setConfigbut:focus {
+    .console .setconfig:active, .console .setconfig:focus {
       outline: 0;
       opacity: 0.3; }
 
@@ -363,8 +372,12 @@ ul#dotindex {
       background-size: 50%;
       background-position: center; }
       #ondisplayCtrl ul li.rep {
-        background-image: url(../images/replay.svg);
         background-size: 70%; }
+        #ondisplayCtrl ul li.rep.enable {
+          background-image: url(../images/replay.svg); }
+        #ondisplayCtrl ul li.rep.disable {
+          background-image: url(../images/replay.svg);
+          opacity: 0.3; }
       #ondisplayCtrl ul li.playpause.play {
         background-image: url(../images/play-button.svg); }
       #ondisplayCtrl ul li.playpause.pause {

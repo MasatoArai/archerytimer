@@ -31,7 +31,7 @@
 		</div>
         <div id="configbut" v-on:click="showConfig=!showConfig" v-bind:class="{active:showConfig}">
         </div>
-        <div id="timerconfigbut" v-on:click="showTimerConfig=true">
+        <div id="timerconfigbut" v-on:click="showTimerConfig=!showTimerConfig" v-bind:class="{active:showTimerConfig}" v-show="status.gameStatus=='Standby'||status.gameStatus=='ArrowsUp'||status.gameStatus==''">
         </div>
 	</div>
 	<ul id="standset">
@@ -65,7 +65,31 @@
         <div v-html="toast.toastMessage">
         </div>
     </div>
-    <div id="console" v-show="showConfig">
+    <div id="timerconsole" v-show="showTimerConfig" class="console">
+                <dl>
+                <dt>
+            行射補充時間
+                </dt>
+                <dd id="addgametime">
+                    <ul>
+                        <li v-for="n in 3" v-bind:id="'addgametime'+n">
+                            <div class="flipup" v-on:click="incredecre(true,'addgametime',n)">
+                            </div>
+                            <div class="flipnum" v-text="consoleObj.addgametime['digit'+n]">
+                                0
+                            </div>
+                            <div class="flipdown" v-on:click="incredecre(false,'addgametime',n)">
+                            </div>
+                        </li>
+                    </ul>
+                </dd>
+                </dl>
+        <hr>
+        
+        <div id="setTimerConfigbut" class="setconfig" v-on:click="setSpecialTimer()"></div>
+        <div id="closeTimerconfig" class="closeconfig" v-on:click="showTimerConfig=false"></div>
+    </div>
+    <div id="console" v-show="showConfig" class="console">
         <ul id="timeAndEnd">
             <li>
                 <dl>
@@ -169,13 +193,13 @@
             </div>
             </dd>
         </dl>
-        <div id="setConfigbut" v-on:click="setConfig()"></div>
-        <div id="closeconfig" v-on:click="showConfig=false">
+        <div id="setConfigbut" v-on:click="setConfig()" class="setconfig"></div>
+        <div id="closeconfig" v-on:click="showConfig=false" class="closeconfig">
         </div>
     </div>
         <div id="ondisplayCtrl">
             <ul>
-                <li class="rep" v-show="status.time>0" v-on:click="setConfig()">
+                <li class="rep" v-bind:class="repbut" v-on:click="reset()">
                 </li>
                 <li class="playpause" v-bind:class="playbut" v-on:click="playpause()">
                 </li>

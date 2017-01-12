@@ -11,6 +11,11 @@ function initializationAll(){
             el:'#container',
             data:{
                 consoleObj:{
+                    addgametime:{
+                        digit1:0,
+                        digit2:0,
+                        digit3:0
+                    },
                     gametime:{
                         digit1:0,
                         digit2:0,
@@ -74,6 +79,13 @@ function initializationAll(){
                 sound:{}
             },
             computed: {
+                repbut:function(){
+                    if(this.status.time==0){
+                        return "disable";
+                    }else{
+                        return "enable";
+                    }
+                },
                 playbut:function(){
                     if(this.status.gameStatus=="Standby"&&this.status.timerStatus=="timeup")return "play";
                     if(this.status.timerStatus == "counting")return "pause";
@@ -81,7 +93,14 @@ function initializationAll(){
                     return "disable"
                 },
                 nextbut:function(){
-                    if(this.status.time==0)return ""; if(this.status.gameStatus=="ArrowsUp"||this.status.gameStatus=="Standby"){
+                    if(this.status.time==0&&this.status.auxTimer==false)return "";
+                    
+                   if(this.status.auxTimer){
+                       if(this.status.gameStatus!="Standby"||
+                       this.status.gameStatus!="ArrowsUp"){
+                           return "stop";
+                       }
+                   } if(this.status.gameStatus=="ArrowsUp"||this.status.gameStatus=="Standby"){
                         return "nextend";
                     }else if(this.status.time%this.initGameProperty.arrowsUp != 0){
                         return "forward";
@@ -172,6 +191,12 @@ function initializationAll(){
                         self.toast.toastMessage='';
                     },ct);
                 },
+                reset:function(){
+                    if(this.status.time==0){
+                        return false;
+                    }
+                    this.setConfig();
+                },
                 playpause:function(){
                     if(this.playbut == "play"){
                         this.timerCore.countDo();
@@ -187,7 +212,11 @@ function initializationAll(){
                     }
                 },
                 nextEnd:function(){
-                    if(this.status.time==0)return;
+                    if(this.status.time==0&&this.status.auxTimer==false)return;
+                    if(this.status.auxTimer){
+                        this.timerCore.stop();
+                        return;
+                    }
                     if(this.status.time%this.initGameProperty.arrowsUp != 0){
                         //this.timerCore.stop();
                         if(this.status.gameStatus=="Standby"){
@@ -204,8 +233,29 @@ function initializationAll(){
                 backEnd:function(){
                     if(!this.status.inReady)return;
                 },
-                setSpecialTimer:function(obj){
-                    this.timerCore.setready(false,obj)
+                setSpecialTimer:function(){
+                    this.showTimerConfig = false;
+                    var c=this.consoleObj;
+                    var obj={
+                        readyTime:0,  gameTime:getNum([c.addgametime.digit1,c.addgametime.digit2,c.addgametime.digit3]),
+                        caution:45000,
+                        warn:30000,
+                    };
+                    if(obj.gameTime<10){
+                        this.toast.toastMessage="設定値が不正です。<br>10秒以上を設定してください。"
+                        return;
+                    }
+                    obj.caution = obj.gameTime<obj.caution?0:obj.caution;
+                    obj.warn = obj.gameTime<obj.warn?0:obj.warn;
+                    
+                    this.timerCore.setReady(false,obj);
+                    function getNum(arr){
+                        var total=0;
+                        for(var i=0;i<arr.length;i++){
+                           total += arr[i]*Math.pow(10,i);
+                        }
+                        return total*1000;
+                    }
                 },
                 setConfig:function(){
                     this.showConfig=false;
@@ -253,6 +303,9 @@ function initializationAll(){
                 },
                 incredecre:function(bool,key,n){
                     switch(key){
+                        case 'addgametime':
+                            countTime.call(this,bool,key,n);
+                            break;
                         case 'gametime':
                             countTime.call(this,bool,key,n);
                             break;
@@ -366,7 +419,7 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
         this.status.time++;
         
         //立ち位置表示
-        if(this.status.time==1||this.status.time%this.initGameProperty.arrowsUp != 1){
+        if(this.initGameProperty.orderOfPlay.length==3||this.status.time==1||this.status.time%this.initGameProperty.arrowsUp != 1){
             this.status.stand++;
             if(this.status.stand > this.initGameProperty.orderOfPlay.length){
                 this.status.stand=1;
@@ -406,14 +459,14 @@ TimerCore.prototype.countDo = function(){
             ingameTime = self.countConf.readyTime-count;
         }else{
             ingameTime = self.countConf.gameTime-(count-self.countConf.readyTime);
-            if(self.countConf.readyTime + (self.countConf.gameTime-self.countConf.caution) > count){
+            if(self.countConf.readyTime + (self.countConf.gameTime-(self.countConf.caution>0?self.countConf.caution:self.countConf.warn)) > count){
                 self.status.gameStatus = "Shoot";
             }else if(self.countConf.readyTime + (self.countConf.gameTime-self.countConf.warn) > count){
                 self.status.gameStatus = "Caution";
             }else if(self.countConf.readyTime + self.countConf.gameTime > count){
                 self.status.gameStatus = "Warn";
             }else if(self.countConf.readyTime + self.countConf.gameTime <= count){
-                if(self.status.time%self.initGameProperty.arrowsUp != 0){
+                if(!self.status.auxTimer && self.status.time % self.initGameProperty.arrowsUp != 0){
                     self.setReady(true);
                     return;
                 }
@@ -454,6 +507,7 @@ TimerCore.prototype.countDo = function(){
 }
 TimerCore.prototype.stop = function(){
     clearInterval(this.intervalID);
+    this.status.auxTimer = false;
     this.status.inCount = false;
     this.status.timerStatus = "timeup"
     this.status.gameStatus = "ArrowsUp";
