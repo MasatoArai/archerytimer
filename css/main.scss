@@ -35,8 +35,8 @@ body{
     font-family: "Helvetica Neue", Helvetica, sans-serif, "Hiragino Kaku Gothic ProN",YuGothic,Meiryo;
 }
 #container{
-    width: 1280px;
-    height: 720px;
+    width: 100vmax;
+    height: 100vmin;
     position: relative;
     transition: background 0.4s ease 0s;
     &.warn{
@@ -53,16 +53,16 @@ body{
     white-space: nowrap;
     position: relative;
     width: 100%;
-    height: 580px;
+    height: 80.5vmin;
     #mmc{
-    margin-left: 35px;
+    margin-left: 4.86vmin;
     }
     #configbut{
         position: absolute;
-        top: 20px;
-        left: 10px;
-        width: 60px;
-        height: 60px;
+        top: 2.777vmin;
+        left: 1.389vmin;
+        width: 8.33vmin;
+        height: 8.33vmin;
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
@@ -78,10 +78,10 @@ body{
     }
     #timerconfigbut{
         position: absolute;
-        top: 20px;
-        left: 130px;
-        width: 60px;
-        height: 60px;
+        top: 2.777vmin;
+        left: 18.06vmin;
+        width: 8.33vmin;
+        height: 8.33vmin;
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
@@ -98,23 +98,23 @@ body{
 }
 #endbox{
     position: absolute;
-    top: 90px;
-    left: 5px;
-    width: 205px;
-    height: 255px;
+    top: 12.5vmin;
+    left: 0.694vmin;
+    width: 28.472vmin;
+    height: 35.416vmin;
     text-align: center;
     background-color: #333333;
     color: #fff;
-    padding-top: 10px;
-    border-radius: 0 30px;
+    padding-top: 1.389vmin;
+    border-radius: 0 4.167vmin;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
     .subd{
-    font-size: 40px;
+    font-size: 5.555vmin;
     }
     #endnum{
-    height: 200px;
-    line-height: 200px;
-    font-size: 150px;
+    height:27.778vmin;
+    line-height:27.778vmin;
+    font-size:20.833vmin;
     font-weight: 600;
     }
 }
@@ -125,14 +125,14 @@ ul#standset{
     list-style: none;
     position: absolute;
     width: 100%;
-    height: 120px;
+    height: 16.667vmin;
     bottom: 0;
     li{
         flex-grow: 1;
         position: relative;
-        line-height: 120px;
-        font-size: 90px;
-        padding: 5px 20px 0;
+        line-height: 16.667vmin;
+        font-size: 12.5vmin;
+        padding: 0.694vmin 2.777vmin 0;
         font-weight: bold;
         color: rgba(51, 51, 51, 0.2);
         &.byRignt{
@@ -142,7 +142,7 @@ ul#standset{
             }
         }
         &.active{
-            border-bottom: 10px solid #333333;
+            border-bottom: 1.389vmin solid #333333;
             background: linear-gradient(to right, rgba(0,0,0,0.15) 0%,rgba(0,0,0,0) 100%);
         }
         span.active{
@@ -151,37 +151,37 @@ ul#standset{
     }
 }
 ul#dotindex{
-    width: 400px;
+    width: 55.555vmin;
     list-style: none;
     display: flex;
     justify-content: center;
     position: absolute;
-    bottom: 90px;
+    bottom: 12.5vmin;
     left: 50%;
     transform: translateX(-50%);
     li{
-        width: 20px;
-        height: 20px;
+        width: 2.777vmin;
+        height: 2.777vmin;
         border-radius: 50%;
         background-color: rgba(51, 51, 51, 0.2);
-        margin: 20px;
+        margin: 2.777vmin;
         &.active{
             background-color: #333333;
         }
     }
 }
 #belt{
-    height: 300px;
+    height:41.667vmin;
     width: 100%;
     position: absolute;
-    top: 130px;
+    top: 18.06vmin;
     background-color: rgba(0,0,0,0.7);
     color: #fff;
     text-align: center;
     z-index: 300;
     animation: toast 0.5s cubic-bezier(.13, .6, .25, 1) 0s;
     &>div{
-        font-size:70px;
+        font-size: 9.722vmin;
         line-height: 130%;
         position: absolute;
         top: 50%;
@@ -199,7 +199,7 @@ ul#dotindex{
 #timerconsole{
     &.console{
         height: auto;
-        width: 500px;
+        width: 69.444vmin;
     }
     
     #addgametime{
@@ -207,7 +207,7 @@ ul#dotindex{
             display: flex;
             justify-content: flex-end;
             flex-direction: row-reverse;
-            padding-left: 70px;
+            padding-left: 9.722vmin;
             li{
             }
         }
@@ -219,25 +219,25 @@ ul#dotindex{
     left: 50%;
     transform: translate(-50%,-50%);
     background-color: #333333;
-    width: 600px;
-    height: 700px;
+    width: 83.333vmin;
+    height:97.222vmin;
     color: #fff;
     z-index: 200;
-    border-radius: 50px;
-    border: 8px solid #fff;
-    padding: 20px;
-    font-size: 25px;
-    box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.35);
+    border-radius: 6.944vmin;
+    border: 1.111vmin solid #fff;
+    padding: 2.777vmin;
+    font-size: 3.472vmin;
+    box-shadow: 0px 0px 2.777vmin 6px rgba(0, 0, 0, 0.35);
 
     dl dt{
-        padding: 20px 0 10px;
-        font-size: 25px;
-        line-height: 25px;
+        padding: 2.777vmin 0 1.389vmin;
+        font-size: 3.472vmin;
+        line-height: 3.472vmin;
     }
     hr{
-        margin: 20px 0 0;
+        margin: 2.777vmin 0 0;
         border-style: solid;
-        border-width: 0 0 1px 0;
+        border-width: 0 0 0.277vmin 0;
         border-color: #454545;
     }
                 .flipup,.flipdown{
@@ -252,28 +252,28 @@ ul#dotindex{
                 }
                 .flipup{
                     &:before{
-                        border-width:0 20px 20px 20px;
+                        border-width:0 2.777vmin 2.777vmin 2.777vmin;
                         border-color: transparent transparent #fff transparent;
                     }
                     
                 }
                 .flipdown{
                     &:before{
-                        border-width:20px 20px 0 20px;
+                        border-width:20px 2.777vmin 0 2.777vmin;
                         border-color:#fff transparent transparent transparent;
                     }
                     
                 }
                 .flipnum{
                     background-color: #fff;
-                    font-size: 80px;
-                    line-height: 80px;
+                    font-size: 11.111vmin;
+                    line-height: 11.111vmin;
                     text-align: center;
-                    height: 80px;
-                    width: 50px;
-                    border-radius: 10px;
+                    height: 11.111vmin;
+                    width: 6.944vmin;
+                    border-radius: 1.389vmin;
                     color: #000;
-                    margin: 20px 5px;
+                    margin: 2.777vmin 0.694vmin;
                     position: relative;
                     overflow: hidden;
                     display: inline-block;
@@ -286,21 +286,21 @@ ul#dotindex{
                         left: 0;
                         height: 50%;
                         width: 100%;
-                        border-bottom: 3px solid rgba(0,0,0,0.3);
+                        border-bottom:0.4166vmin solid rgba(0,0,0,0.3);
                         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0,0,0,0.1)), color-stop(100%, rgba(0, 0, 0, 0.2)));
                     }
                 }
     
 .togglebase{
     display: inline-block;
-    width: 120px;
-    height: 60px;
+    width: 16.667vmin;
+    height: 8.33vmin;
     background-color: #343434;
-    margin-top: 30px;
-    margin-left: 20px;
-    border-radius: 30px;
-    border: 4px solid #fff;
-    padding-left: 30px;
+    margin-top: 4.167vmin;
+    margin-left: 2.777vmin;
+    border-radius: 4.167vmin;
+    border: 0.555vmin solid #fff;
+    padding-left: 4.167vmin;
     position: relative;
     transition:background-color 0.3s ease 0s;
 }
@@ -309,15 +309,15 @@ ul#dotindex{
 }
 .togglebase .togglenob{
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: 8.33vmin;
+    height: 8.33vmin;
     background-color: #fff;
     border-radius: 50%;
     border: 1px solid #ccc;
     left: 50%;
-    top: -4px;
+    top:-0.555vmin;
     transition:left 0.3s ease 0s;
-    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 0 0.694vmin 1px rgba(0, 0, 0, 0.23);
 }
 
 .togglebase.active .togglenob{
@@ -344,10 +344,10 @@ ul#dotindex{
             display: flex;
             justify-content: center;
             li{
-                width: 160px;
-                border: 2px solid #fff;
-                height: 50px;
-                line-height: 50px;
+                width: 22.222vmin;
+                border: 0.277vmin solid #fff;
+                height: 6.944vmin;
+                line-height: 6.944vmin;
                 text-align: center;
                 border-left: none;
                 &.active{
@@ -355,11 +355,11 @@ ul#dotindex{
                     color: #333333;
                 }
                 &:first-child{
-                   border-left: 2px solid #fff;
-                    border-radius: 10px 0 0 10px;
+                   border-left: 0.277vmin solid #fff;
+                    border-radius: 1.389vmin 0 0 1.389vmin;
                 }
                 &:nth-last-of-type(1){
-                    border-radius: 0 10px 10px 0;
+                    border-radius: 0 1.389vmin 1.389vmin 0;
                 }
             }
         }
@@ -369,10 +369,10 @@ ul#dotindex{
             display: flex;
             justify-content: center;
             li{
-                width: 160px;
-                border: 2px solid #fff;
-                height: 50px;
-                line-height: 50px;
+                width: 22.222vmin;
+                border: 0.277vmin solid #fff;
+                height: 6.944vmin;
+                line-height: 6.944vmin;
                 text-align: center;
                 border-left: none;
                 &.active{
@@ -380,21 +380,21 @@ ul#dotindex{
                     color: #333333;
                 }
                 &:first-child{
-                   border-left: 2px solid #fff;
-                    border-radius: 10px 0 0 10px;
+                   border-left: 0.277vmin solid #fff;
+                    border-radius: 1.389vmin 0 0 1.389vmin;
                 }
                 &:nth-last-of-type(1){
-                    border-radius: 0 10px 10px 0;
+                    border-radius: 0 1.389vmin 1.389vmin 0;
                 }
             }
         }
     }
     .closeconfig{
         position: absolute;
-        width: 80px;
-        height: 80px;
-        top: 5px;
-        right: 5px;
+        width: 11.111vmin;
+        height: 11.111vmin;
+        top: 0.694vmin;
+        right: 0.694vmin;
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -409,10 +409,10 @@ ul#dotindex{
     }
     .setconfig{
         position: absolute;
-        width: 120px;
-        height: 120px;
-        bottom: 40px;
-        right: 20px;
+        width: 16.667vmin;
+        height: 16.667vmin;
+        bottom: 5.555vmin;
+        right: 2.777vmin;
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -429,20 +429,20 @@ ul#dotindex{
 #ondisplayCtrl{
     position: absolute;
     z-index: 10000;
-    top: 347px;
-    left: 5px;
-    width: 205px;
-    height: 70px;
-    border-radius: 30px 0;
+    top: 48.194vmin;
+    left: 0.694vmin;
+    width: 28.472vmin;
+    height: 9.722vmin;
+    border-radius: 4.167vmin 0;
     background-color: rgb(51, 51, 51);
     ul{
         display: flex;
         justify-content:space-around;
-        padding: 15px;
+        padding: 2.083vmin;
         li{
-            height: 40px;
-            width: 40px;
-            border-radius: 5px;
+            height: 5.555vmin;
+            width: 5.555vmin;
+            border-radius: 0.694vmin;
             background-repeat: no-repeat;
             background-size: 50%;
             background-position: center;
@@ -486,5 +486,5 @@ ul#dotindex{
     }
 }
 #appDiv{
-    font-size: 20px;
+    font-size: 2.777vmin;
 }
