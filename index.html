@@ -162,7 +162,7 @@
             </dt>
             <dd id="orderofplay">
             <ul>
-                <li :class="{active:consoleObj.orderOfPlay==1}" v-on:click="consoleObj.orderOfPlay=1">
+                <li :class="{active:consoleObj.orderOfPlay==1}" v-on:click="consoleObj.orderOfPlay=1;consoleObj.arrowsUp=1">
                     No split
                 </li>
                 <li :class="{active:consoleObj.orderOfPlay==2}" v-on:click="consoleObj.orderOfPlay=2">
@@ -181,7 +181,7 @@
                     <li :class="{active:consoleObj.arrowsUp==1}" v-on:click="consoleObj.arrowsUp=1">
                         Per 1play
                     </li>
-                    <li :class="{active:consoleObj.arrowsUp==2}" v-on:click="consoleObj.arrowsUp=2">
+                    <li :class="{active:consoleObj.arrowsUp==2}" v-on:click="if(consoleObj.orderOfPlay!=1)consoleObj.arrowsUp=2">
                         Per 2play
                     </li>
                 </ul>
@@ -197,7 +197,7 @@
         <div id="closeconfig" v-on:click="showConfig=false" class="closeconfig">
         </div>
     </div>
-        <div id="ondisplayCtrl">
+        <div id="ondisplayCtrl" v-show="onCtrl">
             <ul>
                 <li class="rep" v-bind:class="repbut" v-on:click="reset()">
                 </li>

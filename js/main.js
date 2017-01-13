@@ -5,6 +5,15 @@ window.requestAnimationFrame = requestAnimationFrame;
 var vueApp;
     document.addEventListener('DOMContentLoaded',function(event){
         initializationAll();
+        
+        document.addEventListener('keydown',function(ev){
+            var keycode = ev.keyCode;
+            if(keycode == 13){
+                if(vueApp){
+                    vueApp.doNextAct();
+                }
+            }
+        });
     });
 function initializationAll(){
         vueApp = new Vue({
@@ -50,7 +59,6 @@ function initializationAll(){
                 
                 status:{
                     inCount:false,
-                    inReady:false,
                     timerStatus:"timeup",
                     gameStatus:"",
                     statusColor:"",
@@ -95,7 +103,7 @@ function initializationAll(){
                     return "disable"
                 },
                 nextbut:function(){
-                    if(this.status.time==0&&this.status.auxTimer==false)return "";
+                    if(this.status.time==0&&this.status.auxTimer==false)return "disable";
                     
                    if(this.status.auxTimer){
                        if(this.status.gameStatus!="Standby"||
@@ -112,6 +120,19 @@ function initializationAll(){
                 }
             },
             watch: {
+                showConfig:function(val){
+                    if(val){
+                        this.showTimerConfig = false;
+                    }
+                },
+                showTimerConfig:function(val){
+                    if(val){
+                        this.showConfig = false;
+                    }
+                },
+                'consoleObj.orderOfPlay':function(val){
+                    if(this.consoleObj.endnum.digit1%2!=0)this.consoleObj.endnum.digit1++;
+                },
                 'display.flipmin':function (val){
                     this.flipclock.setTime(val);
                 },
@@ -150,8 +171,8 @@ function initializationAll(){
                                      this.status.gameStatus==="Worn"||
                                      this.status.gameStatus==="Caution");
                     if(val === "pause"&&inShooting){
-                        this.sound.play("end");
-                        this.status.statusColor = "warn";
+                            this.sound.play("end");
+                            this.statusColor ="warn";
                     }
                     if(val === "counting"&&inShooting){
                         this.sound.play("start");
@@ -182,6 +203,13 @@ function initializationAll(){
                 }
             },
             methods: {
+                doNextAct:function(){
+                    if(this.status.gameStatus == 'Standby' && this.playbut!='disable'){
+                        this.playpause();
+                    }else if(this.status.gameStatus != 'Standby' && this.nextbut!='disable'){
+                        this.nextEnd();
+                    }
+                },
                 showToast:function(ss){
                     clearTimeout(this.toast.timeoutId);
                     var ct = 3000;
@@ -231,9 +259,6 @@ function initializationAll(){
                     }else{
                         this.timerCore.stop();
                     }
-                },
-                backEnd:function(){
-                    if(!this.status.inReady)return;
                 },
                 setSpecialTimer:function(){
                     this.showTimerConfig = false;
@@ -317,6 +342,13 @@ function initializationAll(){
                         case 'endnum':
                             var endnum=this.consoleObj.endnum.digit2*10+this.consoleObj.endnum.digit1;
                             endnum = bool?endnum+1:endnum-1;
+                            if(this.consoleObj.orderOfPlay==3){
+                                if(bool){
+                                endnum = endnum%2!=0?endnum+1:endnum;
+                                }else{
+                                endnum = endnum%2!=0?endnum-1:endnum;
+                                }
+                            }
                             endnum = (endnum<0)?0:endnum;
                             endnum = (endnum>99)?99:endnum;
                             this.consoleObj.endnum.digit1=endnum%10;
@@ -392,6 +424,8 @@ TimerCore.prototype.setGameinfo = function(obj){
     this.display.stand = '';
     this.display.end = 0;
     
+    this.status.gameover=false;
+    
     this.standCounter = new Array(this.initGameProperty.orderOfPlay.length);
     for(var i=0;i<this.standCounter.length;i++){
         this.standCounter[i]=0;
@@ -402,11 +436,9 @@ TimerCore.prototype.setGameinfo = function(obj){
 
 TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停止状態で起動するか
     var self = this;
-    if(this.status.gameover)return false;
     clearInterval(self.intervalID);
     this.counterObj = new DateCount();
     this.status.timerStatus = "timeup";
-    this.status.inReady=true;
     if(typeof obj === "object"){//直タイマー
         this.status.auxTimer = true;
         this.countConf.readyTime = obj.readyTime;
@@ -417,6 +449,9 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
         this.status.lastPosition = this.status.gameStatus;
         this.status.gameStatus = "Standby";
     }else{//通常時
+        if(this.isFinished()){
+            return false;
+        }
         this.status.gameStatus = "Standby";
         this.status.auxTimer = false;
         this.countConf.readyTime = this.initTimerObj.readyTime;
@@ -526,11 +561,13 @@ TimerCore.prototype.stop = function(){
         this.status.gameStatus = this.status.lastPosition;
     }else{
         
-        if((this.display.end==this.initGameProperty.endnum)&&(this.status.time == this.initGameProperty.orderOfPlay.length*this.initGameProperty.endnum)){
-                this.status.gameover = true;
+        if(this.isFinished()){
+            //round finish
                 this.toast.toastMessage = "Game is over!";
             this.status.gameStatus = '';
+            this.sound.play('end');
         }else{
+            // end
             this.toast.toastMessage = "Cease Fire!"
             this.status.gameStatus = "ArrowsUp";
         }
@@ -539,6 +576,19 @@ TimerCore.prototype.stop = function(){
     this.display.flipmin=0;
     this.display.mmin=0;
     this.display.min=0;
+}
+TimerCore.prototype.isFinished = function(time){
+    if(this.initGameProperty.endnum==0)return false;
+    var times;
+    if(time){
+        times = time;
+    }else{
+        times = this.status.time;
+    }
+    var ret = (this.display.end==this.initGameProperty.endnum)&&(times == this.initGameProperty.orderOfPlay.length*this.initGameProperty.endnum);
+        
+    this.status.gameover = ret;
+    return ret;
 }
 TimerCore.prototype.pause = function(){
     this.status.timerStatus = "pause";
