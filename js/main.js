@@ -39,7 +39,8 @@ function initializationAll(){
                         digit2:0
                     },
                     orderOfPlay:2,
-                    arrowsUp:2
+                    arrowsUp:2,
+                    sound:'hone.mp3'
                 },
                 
                 initTimerObj:{
@@ -83,6 +84,7 @@ function initializationAll(){
                 },
                 onCtrl:false,
                 showConfig:false,
+                selectSound:false,
                 showTimerConfig:false,
                 timerCore:{},
                 flipclock:{},
@@ -203,6 +205,28 @@ function initializationAll(){
                 }
             },
             methods: {
+                
+                getStrageData:function(callback){
+                    var json = localStorage.getItem('timerInitObj')
+                    if(json == null)return;
+                    var obj = $.parseJSON(json);
+                    var io = this.consoleObj;
+                    
+                    jQuery.extend(true,io,obj);
+                    if(callback){
+                        callback();
+                    }
+                },
+                setStrageData:function(){
+                    var json = JSON.stringify(this.consoleObj);
+                    localStorage.setItem('timerInitObj',json);
+                },
+                setSound:function(s){
+                    this.consoleObj.sound=s;
+                    this.setHornSound([s]);
+                    this.selectSound=false;
+                    this.sound.play('start');
+                },
                 doNextAct:function(){
                     if(this.status.gameStatus == 'Standby' && this.playbut!='disable'){
                         this.playpause();
@@ -276,6 +300,7 @@ function initializationAll(){
                     obj.warn = obj.gameTime<obj.warn?0:obj.warn;
                     
                     this.timerCore.setReady(false,obj);
+                    this.setStrageData();
                     function getNum(arr){
                         var total=0;
                         for(var i=0;i<arr.length;i++){
@@ -305,6 +330,7 @@ function initializationAll(){
                         return;
                     }
                     this.timerCore.setGameinfo(temp);
+                    this.setStrageData();
                     function getOrder(n){
                         var ret=[];
                         switch(n){
@@ -365,6 +391,16 @@ function initializationAll(){
                         }
                     }
                     
+                },
+                setHornSound:function(urdArray){
+                    this.sound=new Howl({
+                      src: urdArray,
+                      sprite: {
+                        ready: [4000, 3000],
+                        start: [8500, 2400],
+                        end: [0, 4000]
+                      }
+                    });
                 }
                 
             },
@@ -372,15 +408,11 @@ function initializationAll(){
                 this.flipclock = new FlipClock($('.clock'), 999, {
                     clockFace: 'Counter'
                 });
+                var self = this;
+                this.getStrageData(function(){
+                    self.setHornSound([self.consoleObj.sound]);
+                })
                 this.flipclock.setTime(0);
-                this.sound=new Howl({
-                  src: ["hone.mp3"],
-                  sprite: {
-                    ready: [4000, 3000],
-                    start: [8500, 2400],
-                    end: [0, 4000]
-                  }
-                });
                 this.timerCore = new TimerCore(this)
             }
             

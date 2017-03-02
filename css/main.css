@@ -20,15 +20,16 @@
 ::selection {
   background: rgba(0, 0, 0, 0); }
 
-dl, ul {
+dl,
+ul {
   list-style: none; }
 
 dl dt {
-  font-family: "Helvetica Neue", Helvetica, sans-serif, "Hiragino Kaku Gothic ProN",YuGothic,Meiryo; }
+  font-family: "Helvetica Neue", Helvetica, sans-serif, "Hiragino Kaku Gothic ProN", YuGothic, Meiryo; }
 
 body {
   overflow: hidden;
-  font-family: "Helvetica Neue", Helvetica, sans-serif, "Hiragino Kaku Gothic ProN",YuGothic,Meiryo; }
+  font-family: "Helvetica Neue", Helvetica, sans-serif, "Hiragino Kaku Gothic ProN", YuGothic, Meiryo; }
 
 #container {
   width: 100vmax;
@@ -198,7 +199,8 @@ ul#dotindex {
   border: 1.111vmin solid #fff;
   padding: 2.777vmin;
   font-size: 3.472vmin;
-  box-shadow: 0px 0px 2.777vmin 6px rgba(0, 0, 0, 0.35); }
+  box-shadow: 0px 0px 2.777vmin 6px rgba(0, 0, 0, 0.35);
+  overflow: hidden; }
   .console dl dt {
     padding: 2.777vmin 0 1.389vmin;
     font-size: 3.472vmin;
@@ -208,9 +210,11 @@ ul#dotindex {
     border-style: solid;
     border-width: 0 0 0.277vmin 0;
     border-color: #454545; }
-  .console .flipup, .console .flipdown {
+  .console .flipup,
+  .console .flipdown {
     text-align: center; }
-    .console .flipup:before, .console .flipdown:before {
+    .console .flipup:before,
+    .console .flipdown:before {
       content: "";
       display: inline-block;
       width: 0;
@@ -220,7 +224,7 @@ ul#dotindex {
     border-width: 0 2.777vmin 2.777vmin 2.777vmin;
     border-color: transparent transparent #fff transparent; }
   .console .flipdown:before {
-    border-width: 20px 2.777vmin 0 2.777vmin;
+    border-width: 2.777vmin 2.777vmin 0 2.777vmin;
     border-color: #fff transparent transparent transparent; }
   .console .flipnum {
     background-color: #fff;
@@ -350,6 +354,46 @@ ul#dotindex {
     .console .setconfig:active, .console .setconfig:focus {
       outline: 0;
       opacity: 0.3; }
+  .console .selectsound {
+    position: absolute;
+    height: 5vmax;
+    width: 5vmax;
+    background-image: url(../images/sound.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    right: 15vmax;
+    bottom: 5vmax; }
+
+#selectSoundBase {
+  position: absolute;
+  bottom: 0;
+  background-color: #333;
+  width: 76vmin;
+  height: 27vmin;
+  z-index: 1000;
+  border-radius: 6.944vmin 6.944vmin 0 0;
+  border: 1.111vmin solid #fff;
+  border-bottom: none;
+  padding: 2.777vmin; }
+  #selectSoundBase ul {
+    display: flex;
+    justify-content: center; }
+    #selectSoundBase ul li {
+      min-width: 22.222vmin;
+      border: 0.277vmin solid #fff;
+      height: 6.944vmin;
+      line-height: 6.944vmin;
+      text-align: center;
+      border-left: none;
+      padding: 0 3vmin; }
+      #selectSoundBase ul li:first-child {
+        border-left: 0.277vmin solid #fff;
+        border-radius: 1.389vmin 0 0 1.389vmin; }
+      #selectSoundBase ul li:nth-last-of-type(1) {
+        border-radius: 0 1.389vmin 1.389vmin 0; }
+      #selectSoundBase ul li.active {
+        background-color: #fff;
+        color: #333333; }
 
 #ondisplayCtrl {
   position: absolute;
