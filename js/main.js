@@ -419,9 +419,9 @@ function initializationAll(){
         });
     }
 function TimerCore(vueIns){
+    this.vue = vueIns;
     this.initTimerObj=vueIns.initTimerObj;
     this.initGameProperty=vueIns.initGameProperty;
-    this.sound = vueIns.sound;
     this.toast = vueIns.toast;
     this.reset = vueIns.setConfig;
     this.status=vueIns.status;
@@ -468,10 +468,8 @@ TimerCore.prototype.setGameinfo = function(obj){
 
 TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停止状態で起動するか
     var self = this;
-    clearInterval(self.intervalID);
-    this.counterObj = new DateCount();
-    this.status.timerStatus = "timeup";
     if(typeof obj === "object"){//直タイマー
+        if(this.status.inCount)return;
         this.status.auxTimer = true;
         this.countConf.readyTime = obj.readyTime;
         this.countConf.gameTime = obj.gameTime;
@@ -512,6 +510,10 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
         
         this.display.stand = this.initGameProperty.orderOfPlay[this.status.stand-1];
     }
+    
+    clearInterval(self.intervalID);
+    this.counterObj = new DateCount();
+    this.status.timerStatus = "timeup";
     
     this.display.flipmin = this.countConf.gameTime/1000;
     if(bool){
@@ -587,8 +589,16 @@ TimerCore.prototype.stop = function(){
     this.status.inCount = false;
     this.status.timerStatus = "timeup"
     if(this.status.auxTimer){
+        this.status.auxTimer = false;
         if(this.status.lastPosition != "ArrowsUp"){
-            this.sound.play('end');
+            this.vue.sound.play('end');
+            this.countConf.readyTime = this.initTimerObj.readyTime;
+            this.countConf.gameTime = this.initTimerObj.gameTime;
+            this.countConf.caution = this.initTimerObj.sign.caution;
+            this.countConf.warn = this.initTimerObj.sign.warn;
+            this.display.flipmin = this.countConf.gameTime/1000;
+        }else{
+    this.display.flipmin=0;
         }
         this.status.gameStatus = this.status.lastPosition;
     }else{
@@ -597,15 +607,14 @@ TimerCore.prototype.stop = function(){
             //round finish
                 this.toast.toastMessage = "Game is over!";
             this.status.gameStatus = '';
-            this.sound.play('end');
+            this.vue.sound.play('end');
         }else{
             // end
             this.toast.toastMessage = "Cease Fire!"
             this.status.gameStatus = "ArrowsUp";
         }
-    }
-    this.status.auxTimer = false;
     this.display.flipmin=0;
+    }
     this.display.mmin=0;
     this.display.min=0;
 }
