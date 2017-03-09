@@ -13,242 +13,243 @@
     <script src="js/main.js"></script>
 </head>
     <body>
-<div id="container" v-bind:class="status.statusColor">
-	<div id="timebox">
-		<div id="inner">
-			<svg width="150" height="150" xmlns="http://www.w3.org/2000/svg" id="mmc" style="width:20.833vmin;height:20.833vmin">
-				 <g>
-				  <ellipse ry="36.67%" rx="36.67%" id="svg_1" cy="50%" cx="50%" stroke-width="6.666%" stroke="#333333" fill="none"></ellipse>
-                   <circle v-bind:r="(display.mmin/100*23.333+6.666)+'%'" cy="50%" cx="50%" stroke-width="0" stroke="none" fill="#333333"></circle>
-				 </g>
-			</svg>
-			<div class="clock"></div>
-		</div>
-		
-		<div id="endbox">
-			<div class="subd">END</div>
-			<div id="endnum">{{status.auxTimer?'-':display.end}}</div>
-		</div>
-        <div id="configbut" v-on:click="showConfig=!showConfig" v-bind:class="{active:showConfig}">
-        </div>
-        <div id="timerconfigbut" v-on:click="showTimerConfig=!showTimerConfig" v-bind:class="{active:showTimerConfig}" v-show="status.gameStatus=='Standby'||status.gameStatus=='ArrowsUp'||status.gameStatus==''">
-        </div>
-	</div>
-	<ul id="standset" v-show="!status.auxTimer">
-        <li v-for="(item, index) in initGameProperty.orderOfPlay" v-bind:class="{byRignt:initGameProperty.orderOfPlay.length==2&&index==1,active:status.stand==index+1}"><span v-bind:class="{active:status.stand==index+1}">{{item}}</span>
-        </li>
-        
-	</ul>
-    <ul id="dotindex" v-show="!status.auxTimer">
-        <li v-for="n in initGameProperty.arrowsUp" v-bind:class="{active:((status.time%initGameProperty.arrowsUp==0?initGameProperty.arrowsUp:status.time%initGameProperty.arrowsUp) == n)&&status.time!=0}">
-        </li>
-    </ul>
-    <div id="belt" v-if="toast.visibleBelt">
-        <!--<div id="appDiv">
-            <div>
-            readyTime:{{initTimerObj.readyTime}}</div>
-            <div>
-            gameTime:{{initTimerObj.gameTime}}</div>
-            <div>
-            Caution:{{initTimerObj.sign.caution}}</div>
-            <div>
-            warn:{{initTimerObj.sign.warn}}</div>
-            <div>
-            sec:{{display.min}}</div>
-            <div>
-            mm:{{display.mmin}}</div>
-            <div>
-            status:{{status.gameStatus}}</div>
-            <div>
-            stand:{{display.stand}}</div>
-        </div>-->
-        <div v-html="toast.toastMessage">
-        </div>
-    </div>
-    <div id="timerconsole" v-show="showTimerConfig" class="console">
-                <dl>
-                <dt>
-            行射補充時間
-                </dt>
-                <dd id="addgametime">
-                    <ul>
-                        <li v-for="n in 3" v-bind:id="'addgametime'+n">
-                            <div class="flipup" v-on:click="incredecre(true,'addgametime',n)">
-                            </div>
-                            <div class="flipnum" v-text="consoleObj.addgametime['digit'+n]">
-                                0
-                            </div>
-                            <div class="flipdown" v-on:click="incredecre(false,'addgametime',n)">
-                            </div>
-                        </li>
-                    </ul>
-                </dd>
-                </dl>
-        <hr>
-        
-        <div id="setTimerConfigbut" class="setconfig" v-on:click="setSpecialTimer()"></div>
-        <div id="closeTimerconfig" class="closeconfig" v-on:click="showTimerConfig=false"></div>
-    </div>
-    <div id="console" v-show="showConfig" class="console">
-        <ul id="timeAndEnd">
-            <li>
-                <dl>
-                <dt>
-            競技時間
-                </dt>
-                <dd id="gametime">
-                    <ul>
-                        <li v-for="n in 3" v-bind:id="'gametime'+n">
-                            <div class="flipup" v-on:click="incredecre(true,'gametime',n)">
-                            </div>
-                            <div class="flipnum" v-text="consoleObj.gametime['digit'+n]">
-                                0
-                            </div>
-                            <div class="flipdown" v-on:click="incredecre(false,'gametime',n)">
-                            </div>
-                        </li>
-                    </ul>
-                </dd>
-                </dl>
-            </li>
-            <li>
-                <dl>
-                <dt>
-            用意時間
-                </dt>
-                <dd id="gametime">
-                    <ul>
-                        <li v-for="n in 2" v-bind:id="'readytime'+n">
-                            <div class="flipup" v-on:click="incredecre(true,'readytime',n)">
-                            </div>
-                            <div class="flipnum" v-text="consoleObj.readytime['digit'+n]">
-                                0
-                            </div>
-                            <div class="flipdown" v-on:click="incredecre(false,'readytime',n)">
-                            </div>
-                        </li>
-                    </ul>
-                </dd>
-                </dl>
-            </li>
-            <li>
-            <dl>
-            <dt>
-            エンド数
-            </dt>
-            <dd id="endnums">
-                <ul>
-                    <li>
-                    <div class="flipup" v-on:click="incredecre(true,'endnum',0)">
-                    </div>
-                    <div style="text-align:center">
-                    <div class="flipnum" v-text="consoleObj.endnum.digit2">
-                    </div><div class="flipnum" v-text="consoleObj.endnum.digit1">
-                    </div>
-                    </div>
-                    <div class="flipdown" v-on:click="incredecre(false,'endnum',0)">
-                    </div>
-                    </li>
-                </ul>
-            </dd>
-            </dl>
-            </li>
-        
-        </ul>
-        <hr>
-        <dl>
-            <dt>
-                立ち順序
-            </dt>
-            <dd id="orderofplay">
-            <ul>
-                <li :class="{active:consoleObj.orderOfPlay==1}" v-on:click="consoleObj.orderOfPlay=1;consoleObj.arrowsUp=1">
-                    No split
-                </li>
-                <li :class="{active:consoleObj.orderOfPlay==2}" v-on:click="consoleObj.orderOfPlay=2">
-                    AB : CD
-                </li>
-                <li :class="{active:consoleObj.orderOfPlay==3}" v-on:click="consoleObj.orderOfPlay=3">
-                    AB : CD : EF
-                </li>
-            </ul>
-            </dd>
-            <dt>
-                矢取り間隔
-            </dt>
-            <dd id="arrowsup">
-                <ul>
-                    <li :class="{active:consoleObj.arrowsUp==1}" v-on:click="consoleObj.arrowsUp=1">
-                        Per 1play
-                    </li>
-                    <li :class="{active:consoleObj.arrowsUp==2}" v-on:click="if(consoleObj.orderOfPlay!=1)consoleObj.arrowsUp=2">
-                        Per 2play
-                    </li>
-                </ul>
-            </dd>
-            <dt>オンディスプレイ・コントローラ</dt>
-            <dd>
-            <div id="ctrltoggle" class="togglebase" v-bind:class="{active:onCtrl}" v-on:click="onCtrl=!onCtrl">
-                <div class="togglenob"></div>
+        <div id="app">
+        <div id="container" v-bind:class="status.statusColor">
+            <div id="timebox">
+                <div id="inner">
+                    <svg width="150" height="150" xmlns="http://www.w3.org/2000/svg" id="mmc" style="width:20.833vmin;height:20.833vmin">
+                         <g>
+                          <ellipse ry="36.67%" rx="36.67%" id="svg_1" cy="50%" cx="50%" stroke-width="6.666%" stroke="#333333" fill="none"></ellipse>
+                           <circle v-bind:r="(display.mmin/100*23.333+6.666)+'%'" cy="50%" cx="50%" stroke-width="0" stroke="none" fill="#333333"></circle>
+                         </g>
+                    </svg>
+                    <div class="clock"></div>
+                </div>
+
+                <div id="endbox">
+                    <div class="subd">END</div>
+                    <div id="endnum">{{status.auxTimer?'-':display.end}}</div>
+                </div>
+                <div id="configbut" v-on:click="showConfig=!showConfig" v-bind:class="{active:showConfig}">
+                </div>
+                <div id="timerconfigbut" v-on:click="showTimerConfig=!showTimerConfig" v-bind:class="{active:showTimerConfig}" v-show="status.gameStatus=='Standby'||status.gameStatus=='ArrowsUp'||status.gameStatus==''">
+                </div>
             </div>
-            </dd>
-        </dl>
-        <div id="selectSoundbut" v-on:click="selectSound=true" class="selectsound"></div>
-        <div id="setConfigbut" v-on:click="setConfig()" class="setconfig"></div>
-        <div id="closeconfig" v-on:click="showConfig=false" class="closeconfig"></div>
-        <div id="selectSoundBase" v-if="(selectSound&&showConfig)">
-            <dl>
-            <dt>
-                通知音
-            </dt>
-            <dd id="selectSound">
-                <ul>
-                    <li :class="{active:consoleObj.sound=='hone.mp3'}" v-on:click="setSound('hone.mp3')">
-                        WorldCup HONE
-                    </li>
-                    <li :class="{active:consoleObj.sound=='beepset.mp3'}" v-on:click="setSound('beepset.mp3')">
-                        Tone BEEP
-                    </li>
-                </ul>
-            </dd>
-            </dl>
-        </div>
-        <!--
-        <div id="tabs">
-            <div id="standardRound" class="tab"></div>
-            <div id="tournamentRound" class="tab"></div>
-        </div>-->
-    </div>
-        <div id="ondisplayCtrl" v-show="onCtrl">
-            <ul>
-                <li class="rep" v-bind:class="repbut" v-on:click="reset()">
+            <ul id="standset" v-show="!status.auxTimer">
+                <li v-for="(item, index) in initGameProperty.orderOfPlay" v-bind:class="{byRignt:initGameProperty.orderOfPlay.length==2&&index==1,active:status.stand==index+1}"><span v-bind:class="{active:status.stand==index+1}">{{item}}</span>
                 </li>
-                <li class="playpause" v-bind:class="playbut" v-on:click="playpause()">
-                </li>
-                <li class="next" v-bind:class="nextbut" v-on:click="nextEnd()">
+
+            </ul>
+            <ul id="dotindex" v-show="!status.auxTimer">
+                <li v-for="n in initGameProperty.arrowsUp" v-bind:class="{active:((status.time%initGameProperty.arrowsUp==0?initGameProperty.arrowsUp:status.time%initGameProperty.arrowsUp) == n)&&status.time!=0}">
                 </li>
             </ul>
+            <div id="belt" v-if="toast.visibleBelt">
+                <!--<div id="appDiv">
+                    <div>
+                    readyTime:{{initTimerObj.readyTime}}</div>
+                    <div>
+                    gameTime:{{initTimerObj.gameTime}}</div>
+                    <div>
+                    Caution:{{initTimerObj.sign.caution}}</div>
+                    <div>
+                    warn:{{initTimerObj.sign.warn}}</div>
+                    <div>
+                    sec:{{display.min}}</div>
+                    <div>
+                    mm:{{display.mmin}}</div>
+                    <div>
+                    status:{{status.gameStatus}}</div>
+                    <div>
+                    stand:{{display.stand}}</div>
+                </div>-->
+                <div v-html="toast.toastMessage">
+                </div>
+            </div>
+            <div id="timerconsole" v-show="showTimerConfig" class="console">
+                        <dl>
+                        <dt>
+                    行射補充時間
+                        </dt>
+                        <dd id="addgametime">
+                            <ul>
+                                <li v-for="n in 3" v-bind:id="'addgametime'+n">
+                                    <div class="flipup" v-on:click="incredecre(true,'addgametime',n)">
+                                    </div>
+                                    <div class="flipnum" v-text="consoleObj.addgametime['digit'+n]">
+                                        0
+                                    </div>
+                                    <div class="flipdown" v-on:click="incredecre(false,'addgametime',n)">
+                                    </div>
+                                </li>
+                            </ul>
+                        </dd>
+                        </dl>
+                <hr>
+
+                <div id="setTimerConfigbut" class="setconfig" v-on:click="setSpecialTimer()"></div>
+                <div id="closeTimerconfig" class="closeconfig" v-on:click="showTimerConfig=false"></div>
+            </div>
+            <div id="console" v-show="showConfig" class="console">
+                <ul id="timeAndEnd">
+                    <li>
+                        <dl>
+                        <dt>
+                    競技時間
+                        </dt>
+                        <dd id="gametime">
+                            <ul>
+                                <li v-for="n in 3" v-bind:id="'gametime'+n">
+                                    <div class="flipup" v-on:click="incredecre(true,'gametime',n)">
+                                    </div>
+                                    <div class="flipnum" v-text="consoleObj.gametime['digit'+n]">
+                                        0
+                                    </div>
+                                    <div class="flipdown" v-on:click="incredecre(false,'gametime',n)">
+                                    </div>
+                                </li>
+                            </ul>
+                        </dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                        <dt>
+                    用意時間
+                        </dt>
+                        <dd id="gametime">
+                            <ul>
+                                <li v-for="n in 2" v-bind:id="'readytime'+n">
+                                    <div class="flipup" v-on:click="incredecre(true,'readytime',n)">
+                                    </div>
+                                    <div class="flipnum" v-text="consoleObj.readytime['digit'+n]">
+                                        0
+                                    </div>
+                                    <div class="flipdown" v-on:click="incredecre(false,'readytime',n)">
+                                    </div>
+                                </li>
+                            </ul>
+                        </dd>
+                        </dl>
+                    </li>
+                    <li>
+                    <dl>
+                    <dt>
+                    エンド数
+                    </dt>
+                    <dd id="endnums">
+                        <ul>
+                            <li>
+                            <div class="flipup" v-on:click="incredecre(true,'endnum',0)">
+                            </div>
+                            <div style="text-align:center">
+                            <div class="flipnum" v-text="consoleObj.endnum.digit2">
+                            </div><div class="flipnum" v-text="consoleObj.endnum.digit1">
+                            </div>
+                            </div>
+                            <div class="flipdown" v-on:click="incredecre(false,'endnum',0)">
+                            </div>
+                            </li>
+                        </ul>
+                    </dd>
+                    </dl>
+                    </li>
+
+                </ul>
+                <hr>
+                <dl>
+                    <dt>
+                        立ち順序
+                    </dt>
+                    <dd id="orderofplay">
+                    <ul>
+                        <li :class="{active:consoleObj.orderOfPlay==1}" v-on:click="consoleObj.orderOfPlay=1;consoleObj.arrowsUp=1">
+                            No split
+                        </li>
+                        <li :class="{active:consoleObj.orderOfPlay==2}" v-on:click="consoleObj.orderOfPlay=2">
+                            AB : CD
+                        </li>
+                        <li :class="{active:consoleObj.orderOfPlay==3}" v-on:click="consoleObj.orderOfPlay=3">
+                            AB : CD : EF
+                        </li>
+                    </ul>
+                    </dd>
+                    <dt>
+                        矢取り間隔
+                    </dt>
+                    <dd id="arrowsup">
+                        <ul>
+                            <li :class="{active:consoleObj.arrowsUp==1}" v-on:click="consoleObj.arrowsUp=1">
+                                Per 1play
+                            </li>
+                            <li :class="{active:consoleObj.arrowsUp==2}" v-on:click="if(consoleObj.orderOfPlay!=1)consoleObj.arrowsUp=2">
+                                Per 2play
+                            </li>
+                        </ul>
+                    </dd>
+                    <dt>オンディスプレイ・コントローラ</dt>
+                    <dd>
+                    <div id="ctrltoggle" class="togglebase" v-bind:class="{active:onCtrl}" v-on:click="onCtrl=!onCtrl">
+                        <div class="togglenob"></div>
+                    </div>
+                    </dd>
+                </dl>
+                <div id="selectSoundbut" v-on:click="selectSound=true" class="selectsound"></div>
+                <div id="setConfigbut" v-on:click="setConfig()" class="setconfig"></div>
+                <div id="closeconfig" v-on:click="showConfig=false" class="closeconfig"></div>
+                <div id="selectSoundBase" v-if="(selectSound&&showConfig)">
+                    <dl>
+                    <dt>
+                        通知音
+                    </dt>
+                    <dd id="selectSound">
+                        <ul>
+                            <li :class="{active:consoleObj.sound=='hone.mp3'}" v-on:click="setSound('hone.mp3')">
+                                WorldCup HONE
+                            </li>
+                            <li :class="{active:consoleObj.sound=='beepset.mp3'}" v-on:click="setSound('beepset.mp3')">
+                                Tone BEEP
+                            </li>
+                        </ul>
+                    </dd>
+                    </dl>
+                </div>
+                <!--
+                <div id="tabs">
+                    <div id="standardRound" class="tab"></div>
+                    <div id="tournamentRound" class="tab"></div>
+                </div>-->
+            </div>
+                <div id="ondisplayCtrl" v-show="onCtrl">
+                    <ul>
+                        <li class="rep" v-bind:class="repbut" v-on:click="reset()">
+                        </li>
+                        <li class="playpause" v-bind:class="playbut" v-on:click="playpause()">
+                        </li>
+                        <li class="next" v-bind:class="nextbut" v-on:click="nextEnd()">
+                        </li>
+                    </ul>
+                </div>
+
         </div>
-    <div id="orientationinfo">
-    </div>
-    
-    <div id="isAC" v-if="isAC" @click="setFullScreen()">
-        <div>
-            Ditected Android chrome.
-            <img src="images/and.svg">
-            Tap to fullscreen mode.
+            
+            <div id="orientationinfo"></div>
+            <div id="isAC" v-if="isAC" @click="setFullScreen()">
+                <div>
+                    Ditected Android chrome.
+                    <img src="images/and.svg">
+                    Tap to fullscreen mode.
+                </div>
+            </div>
+            <div id="splash">
+                <div>
+                    <div>ARCHERY TIMER<span>v0.08</span></div>
+                    Presented by BALLS
+                    <img src="images/tama.svg">
+                    <span>Copyrights &copy; BALLS All Rights Reserved.</span>
+                </div>
+
+            </div>
         </div>
-    </div>
-    
-    <div id="splash">
-        <div>
-            <div>ARCHERY TIMER<span>v0.08</span></div>
-            Presented by BALLS
-            <img src="images/tama.svg">
-            <span>Copyrights &copy; BALLS All Rights Reserved.</span>
-        </div>
-        
-    </div>
-</div>
 </body>
 </html>

@@ -17,7 +17,7 @@ var vueApp;
     });
 function initializationAll(){
         vueApp = new Vue({
-            el:'#container',
+            el:'#app',
             data:{
                 isAC:false,
                 consoleObj:{
@@ -428,7 +428,7 @@ function initializationAll(){
                 })
                 this.flipclock.setTime(0);
                 this.timerCore = new TimerCore(this)
-                $('#container').show();
+                $('#app').show();
                 setTimeout(function(){
                     $('#splash').fadeOut(1000);
                 },6000);
