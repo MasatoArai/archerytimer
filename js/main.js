@@ -20,6 +20,7 @@ function initializationAll(){
             el:'#app',
             data:{
                 isAC:false,
+                    isShowCopy:false,
                 consoleObj:{
                     addgametime:{
                         digit1:0,
@@ -206,6 +207,15 @@ function initializationAll(){
                 }
             },
             methods: {
+                showCopy:function(b){
+                    if(b){
+                        $('#splash').show();
+                        this.isShowCopy = true;
+                    }else{
+                        $('#splash').fadeOut(1000);
+                        this.isShowCopy = false;
+                    }
+                },
                 setFullScreen:function(){
                     this.isAC = false;
                     enterFullscreen();

@@ -197,6 +197,7 @@
                 <div id="selectSoundbut" v-on:click="selectSound=true" class="selectsound"></div>
                 <div id="setConfigbut" v-on:click="setConfig()" class="setconfig"></div>
                 <div id="closeconfig" v-on:click="showConfig=false" class="closeconfig"></div>
+                <div id="copy" v-on:click="showCopy(true)" class="copybut"></div>
                 <div id="selectSoundBase" v-if="(selectSound&&showConfig)">
                     <dl>
                     <dt>
@@ -248,7 +249,7 @@
                     <img src="images/tama.svg">
                     <span>Copyrights &copy; BALLS All Rights Reserved.</span>
                 </div>
-
+                <div id="closecopy" class="closecopy" v-on:click="showCopy(false)" v-if="isShowCopy"></div>
             </div>
         </div>
 </body>

@@ -304,7 +304,7 @@ ul#dotindex {
     padding: 2.777vmin;
     font-size: 3.472vmin;
     box-shadow: 0px 0px 2.777vmin 6px rgba(0, 0, 0, 0.35);
-    overflow: hidden;
+    //overflow: hidden;
     dl dt {
         padding: 2.777vmin 0 1.389vmin;
         font-size: 3.472vmin;
@@ -461,19 +461,43 @@ ul#dotindex {
             }
         }
     }
+    .copybut {
+    position: absolute;
+    width: 11.111vmin;
+    height: 11.111vmin;
+    top: 17vmin;
+    right: -6vmin;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(../images/copyright.svg);
+        background-size: 80%;
+    cursor: pointer;
+    background-color: #333333;
+    border: 1.2vmin solid #fff;
+    border-radius: 50%;
+    -webkit-tap-highlight-color: transparent !important;
+        &:active,
+        &:focus {
+            outline: 0;
+            background-color: #c7c7c7;
+        }
+    }
     .closeconfig {
-        position: absolute;
-        width: 11.111vmin;
-        height: 11.111vmin;
-        top: 0.694vmin;
-        right: 0.694vmin;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-image: url(../images/close.svg);
-        cursor: pointer;
-        border-radius: 50%;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0)!important;
+    position: absolute;
+    width: 11.111vmin;
+    height: 11.111vmin;
+    top: 0;
+    right: -6vmin;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(../images/close.svg);
+    cursor: pointer;
+    background-color: #333333;
+    border: 1.2vmin solid #fff;
+    border-radius: 50%;
+    -webkit-tap-highlight-color: transparent !important;
         &:active,
         &:focus {
             outline: 0;
@@ -644,7 +668,7 @@ ul#dotindex {
     background-color: #fff;
     z-index: 1002;
     &>div{
-        @include animation(zoom 3s cubic-bezier(.1, .48, .47, 1) alternate 2s);
+        @include animation(zoom 3s cubic-bezier(.1, .48, .47, 1) alternate 1s);
         &>div{
                 font-size: 133%;
                 white-space: nowrap;
@@ -671,6 +695,26 @@ ul#dotindex {
         span{
             font-size: 60%;
             white-space: nowrap;
+        }
+    }
+    
+    .closecopy {
+    position: absolute;
+    width: 7vmin;
+    height: 7vmin;
+    top: 12vmin;
+    left: 12vmin;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(../images/closecopy.svg);
+    background-size:contain;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent !important;
+        &:active,
+        &:focus {
+            outline: 0;
+            opacity: 0.5;
         }
     }
 }

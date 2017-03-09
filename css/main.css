@@ -240,8 +240,7 @@ ul#dotindex {
   border: 1.111vmin solid #fff;
   padding: 2.777vmin;
   font-size: 3.472vmin;
-  box-shadow: 0px 0px 2.777vmin 6px rgba(0, 0, 0, 0.35);
-  overflow: hidden; }
+  box-shadow: 0px 0px 2.777vmin 6px rgba(0, 0, 0, 0.35); }
   /* line 308, main.scss */
   .console dl dt {
     padding: 2.777vmin 0 1.389vmin;
@@ -389,24 +388,47 @@ ul#dotindex {
       .console #arrowsup ul li:nth-last-of-type(1) {
         border-radius: 0 1.389vmin 1.389vmin 0; }
   /* line 464, main.scss */
+  .console .copybut {
+    position: absolute;
+    width: 11.111vmin;
+    height: 11.111vmin;
+    top: 17vmin;
+    right: -6vmin;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(../images/copyright.svg);
+    background-size: 80%;
+    cursor: pointer;
+    background-color: #333333;
+    border: 1.2vmin solid #fff;
+    border-radius: 50%;
+    -webkit-tap-highlight-color: transparent !important; }
+    /* line 480, main.scss */
+    .console .copybut:active, .console .copybut:focus {
+      outline: 0;
+      background-color: #c7c7c7; }
+  /* line 486, main.scss */
   .console .closeconfig {
     position: absolute;
     width: 11.111vmin;
     height: 11.111vmin;
-    top: 0.694vmin;
-    right: 0.694vmin;
+    top: 0;
+    right: -6vmin;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     background-image: url(../images/close.svg);
     cursor: pointer;
+    background-color: #333333;
+    border: 1.2vmin solid #fff;
     border-radius: 50%;
     -webkit-tap-highlight-color: transparent !important; }
-    /* line 477, main.scss */
+    /* line 501, main.scss */
     .console .closeconfig:active, .console .closeconfig:focus {
       outline: 0;
       background-color: #c7c7c7; }
-  /* line 483, main.scss */
+  /* line 507, main.scss */
   .console .setconfig {
     position: absolute;
     width: 16.667vmin;
@@ -420,11 +442,11 @@ ul#dotindex {
     cursor: pointer;
     opacity: 1;
     -webkit-tap-highlight-color: transparent !important; }
-    /* line 496, main.scss */
+    /* line 520, main.scss */
     .console .setconfig:active, .console .setconfig:focus {
       outline: 0;
       opacity: 0.3; }
-  /* line 502, main.scss */
+  /* line 526, main.scss */
   .console .selectsound {
     position: absolute;
     height: 5vmax;
@@ -435,7 +457,7 @@ ul#dotindex {
     right: 15vmax;
     bottom: 5vmax; }
 
-/* line 514, main.scss */
+/* line 538, main.scss */
 #selectSoundBase {
   position: absolute;
   bottom: 0;
@@ -447,11 +469,11 @@ ul#dotindex {
   border: 1.111vmin solid #fff;
   border-bottom: none;
   padding: 2.777vmin; }
-  /* line 525, main.scss */
+  /* line 549, main.scss */
   #selectSoundBase ul {
     display: flex;
     justify-content: center; }
-    /* line 528, main.scss */
+    /* line 552, main.scss */
     #selectSoundBase ul li {
       min-width: 22.222vmin;
       border: 0.277vmin solid #fff;
@@ -460,19 +482,19 @@ ul#dotindex {
       text-align: center;
       border-left: none;
       padding: 0 3vmin; }
-      /* line 536, main.scss */
+      /* line 560, main.scss */
       #selectSoundBase ul li:first-child {
         border-left: 0.277vmin solid #fff;
         border-radius: 1.389vmin 0 0 1.389vmin; }
-      /* line 540, main.scss */
+      /* line 564, main.scss */
       #selectSoundBase ul li:nth-last-of-type(1) {
         border-radius: 0 1.389vmin 1.389vmin 0; }
-      /* line 543, main.scss */
+      /* line 567, main.scss */
       #selectSoundBase ul li.active {
         background-color: #fff;
         color: #333333; }
 
-/* line 551, main.scss */
+/* line 575, main.scss */
 #ondisplayCtrl {
   position: absolute;
   z-index: 10000;
@@ -482,12 +504,12 @@ ul#dotindex {
   height: 9.722vmin;
   border-radius: 4.167vmin 0;
   background-color: #333333; }
-  /* line 560, main.scss */
+  /* line 584, main.scss */
   #ondisplayCtrl ul {
     display: flex;
     justify-content: space-around;
     padding: 2.083vmin; }
-    /* line 564, main.scss */
+    /* line 588, main.scss */
     #ondisplayCtrl ul li {
       height: 5.555vmin;
       width: 5.555vmin;
@@ -495,44 +517,44 @@ ul#dotindex {
       background-repeat: no-repeat;
       background-size: 50%;
       background-position: center; }
-      /* line 571, main.scss */
+      /* line 595, main.scss */
       #ondisplayCtrl ul li.rep {
         background-size: 70%; }
-        /* line 573, main.scss */
+        /* line 597, main.scss */
         #ondisplayCtrl ul li.rep.enable {
           background-image: url(../images/replay.svg); }
-        /* line 576, main.scss */
+        /* line 600, main.scss */
         #ondisplayCtrl ul li.rep.disable {
           background-image: url(../images/replay.svg);
           opacity: 0.3; }
-      /* line 582, main.scss */
+      /* line 606, main.scss */
       #ondisplayCtrl ul li.playpause.play {
         background-image: url(../images/play-button.svg); }
-      /* line 585, main.scss */
+      /* line 609, main.scss */
       #ondisplayCtrl ul li.playpause.pause {
         background-image: url(../images/pause.svg); }
-      /* line 588, main.scss */
+      /* line 612, main.scss */
       #ondisplayCtrl ul li.playpause.redume {
         background-image: url(../images/play-button.svg); }
-      /* line 593, main.scss */
+      /* line 617, main.scss */
       #ondisplayCtrl ul li.next.nextend {
         background-image: url(../images/nextready.svg); }
-      /* line 596, main.scss */
+      /* line 620, main.scss */
       #ondisplayCtrl ul li.next.forward {
         background-image: url(../images/forward.svg);
         background-size: 85%; }
-      /* line 600, main.scss */
+      /* line 624, main.scss */
       #ondisplayCtrl ul li.next.stop {
         background-image: url(../images/stop.svg); }
-      /* line 603, main.scss */
+      /* line 627, main.scss */
       #ondisplayCtrl ul li.next.default {
         background-image: url(../images/next.svg); }
 
-/* line 611, main.scss */
+/* line 635, main.scss */
 #appDiv {
   font-size: 2.777vmin; }
 
-/* line 614, main.scss */
+/* line 638, main.scss */
 #isAC {
   position: absolute;
   width: 100vw;
@@ -542,7 +564,7 @@ ul#dotindex {
   background-color: #5a5a5a;
   z-index: 1001;
   color: #fff; }
-  /* line 623, main.scss */
+  /* line 647, main.scss */
   #isAC > div {
     position: absolute;
     top: 50%;
@@ -553,13 +575,13 @@ ul#dotindex {
     transform: translate(-50%, -50%);
     white-space: nowrap;
     text-align: center; }
-    /* line 630, main.scss */
+    /* line 654, main.scss */
     #isAC > div > img {
       width: 30vmin;
       display: block;
       margin: 5vmin auto; }
 
-/* line 638, main.scss */
+/* line 662, main.scss */
 #splash {
   position: absolute;
   width: 100vw;
@@ -568,11 +590,11 @@ ul#dotindex {
   left: 0;
   background-color: #fff;
   z-index: 1002; }
-  /* line 646, main.scss */
+  /* line 670, main.scss */
   #splash > div {
-    -webkit-animation: zoom 3s cubic-bezier(0.1, 0.48, 0.47, 1) alternate 2s;
-    -moz-animation: zoom 3s cubic-bezier(0.1, 0.48, 0.47, 1) alternate 2s;
-    animation: zoom 3s cubic-bezier(0.1, 0.48, 0.47, 1) alternate 2s;
+    -webkit-animation: zoom 3s cubic-bezier(0.1, 0.48, 0.47, 1) alternate 1s;
+    -moz-animation: zoom 3s cubic-bezier(0.1, 0.48, 0.47, 1) alternate 1s;
+    animation: zoom 3s cubic-bezier(0.1, 0.48, 0.47, 1) alternate 1s;
     -webkit-animation-fill-mode: both;
     -moz-animation-fill-mode: both;
     animation-fill-mode: both;
@@ -584,20 +606,20 @@ ul#dotindex {
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center; }
-    /* line 648, main.scss */
+    /* line 672, main.scss */
     #splash > div > div {
       font-size: 133%;
       white-space: nowrap;
       position: relative;
       margin-bottom: 2vmin;
       font-weight: bold; }
-      /* line 654, main.scss */
+      /* line 678, main.scss */
       #splash > div > div span {
         font-size: 40%;
         position: absolute;
         bottom: -2vmin;
         right: 0vmin; }
-    /* line 666, main.scss */
+    /* line 690, main.scss */
     #splash > div img {
       display: block;
       margin: 2vmax auto;
@@ -607,17 +629,35 @@ ul#dotindex {
       -webkit-animation-fill-mode: both;
       -moz-animation-fill-mode: both;
       animation-fill-mode: both; }
-    /* line 671, main.scss */
+    /* line 695, main.scss */
     #splash > div span {
       font-size: 60%;
       white-space: nowrap; }
+  /* line 701, main.scss */
+  #splash .closecopy {
+    position: absolute;
+    width: 7vmin;
+    height: 7vmin;
+    top: 12vmin;
+    left: 12vmin;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(../images/closecopy.svg);
+    background-size: contain;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent !important; }
+    /* line 714, main.scss */
+    #splash .closecopy:active, #splash .closecopy:focus {
+      outline: 0;
+      opacity: 0.5; }
 
 @media screen and (orientation: landscape) {
-  /* line 679, main.scss */
+  /* line 723, main.scss */
   #orientationinfo {
     display: none; } }
 @media screen and (orientation: portrait) {
-  /* line 684, main.scss */
+  /* line 728, main.scss */
   #orientationinfo {
     position: absolute;
     width: 100vw;
