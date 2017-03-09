@@ -19,6 +19,7 @@ function initializationAll(){
         vueApp = new Vue({
             el:'#container',
             data:{
+                isAC:false,
                 consoleObj:{
                     addgametime:{
                         digit1:0,
@@ -205,7 +206,18 @@ function initializationAll(){
                 }
             },
             methods: {
-                
+                setFullScreen:function(){
+                    this.isAC = false;
+                    enterFullscreen();
+                    function enterFullscreen () {
+                      var x = document.body;
+                      if (x.webkitRequestFullScreen) {
+                        x.webkitRequestFullScreen();
+                      } else {
+                        x.requestFullScreen();
+                      }
+                    }
+                },
                 getStrageData:function(callback){
                     var json = localStorage.getItem('timerInitObj')
                     if(json == null)return;
@@ -405,6 +417,8 @@ function initializationAll(){
                 
             },
             mounted:function(){
+                var ua = navigator.userAgent.toLowerCase(); 
+                if(ua.indexOf('android')>0&&ua.indexOf('chrome')>0)this.isAC=true;
                 this.flipclock = new FlipClock($('.clock'), 999, {
                     clockFace: 'Counter'
                 });
@@ -414,6 +428,10 @@ function initializationAll(){
                 })
                 this.flipclock.setTime(0);
                 this.timerCore = new TimerCore(this)
+                $('#container').show();
+                setTimeout(function(){
+                    $('#splash').fadeOut(1000);
+                },6000);
             }
             
         });
