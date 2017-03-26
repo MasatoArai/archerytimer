@@ -45,6 +45,7 @@ $set-prefix: -webkit-,
     /*--- safari（PC）用 ---*/
     display: flex;
 }
+
 * {
     padding: 0;
     margin: 0;
@@ -86,16 +87,114 @@ body {
     height: 100vh;
     width: 100vw;
 }
-#app{
+
+#app {
     display: none;
 }
 
-@media screen and (orientation: portrait){
-    #container{
+@media screen and (orientation: portrait) {
+    #default {
         display: none;
     }
 }
-#container {
+
+#tournament {
+    .ondisplayCtrl{
+        bottom: 21vmin;
+        left: 50%;
+        border-radius: 2vmin 2vmin 0 0;
+        transform: translateX(-50%);
+        height: inherit;
+        ul{
+            padding: 0.002vmin;
+        }
+    }
+    #tournament-timebox{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 1.5vmin;
+        .clock {
+            position: relative;
+            margin-left: 0.5vmin;
+        }
+    }
+    #tournamentMatrixBase{
+    position: absolute;
+    bottom: 0;
+    height: 21vmin;
+    width: 100%;
+    background-color: #333333;
+        padding: 0.5vmin;
+    .endbox {
+        background-color: #000;
+        top: inherit;
+        height: 20vmin;
+        border-radius: 2vmin;
+        width: 16vmax;
+        left: 50%;
+        transform: translateX(-50%);
+        .subd {
+            font-size: 4vmin;
+            line-height: 4vmin;
+        }
+        .endnum {
+            height: 14vmin;
+        }
+    }
+        .tnum{
+            position: absolute;
+            font-size: 6vh;
+            font-weight: bold;
+            color: white;
+            bottom: 1vmin;
+            &.l{
+                left: 42vmin;
+            }
+            &.r{
+                right: 42vmin;
+            }
+        }
+        .dotlamp{
+            position: absolute;
+            background-color: #000;
+            border-radius: 2vmin;
+            height: 8vmin;
+            width: 34vmin;
+            top: 2vmin;
+            overflow: hidden;
+            padding: 0.5vmin;
+            &.l1{
+                left: 39vmin;
+            }
+            &.l2{
+                right: 39vmin;
+            }
+        }
+        .remtimebox{
+            position: absolute;
+            background-color: #333333;
+            width: 36vmin;
+            height: 17vmin;
+            border-radius: 2vmin;
+            top: 2vmin;
+            overflow: hidden;
+            &.t1{
+                left:2vmin;
+            }
+            &.t2{
+                right:2vmin;
+            }
+        }
+    }
+    #mmc {
+    position: absolute;
+    top: 56vmin;
+    left: 0;
+    }
+}
+
+#default {
     width: 100vmax;
     height: 100vmin;
     transition: background 0.4s ease 0s;
@@ -112,6 +211,10 @@ body {
     &.shoot {
         background-color: white;
     }
+    .ondisplayCtrl{
+    top: 44.5vmin;
+    left: 0.694vmin;
+    }
 }
 
 #timebox {
@@ -119,9 +222,18 @@ body {
     position: relative;
     width: 100%;
     height: 80.5vmin;
-    #mmc {
-        margin-left: 4.86vmin;
+    .clock{
+        position: absolute;
+        top: 5vmin;
+        left: 30vmin;
     }
+    #mmc {
+    position: absolute;
+    top: 55vmin;
+    left: 5vmin;
+    }
+}
+
     #configbut {
         position: absolute;
         top: 2.777vmin;
@@ -157,6 +269,10 @@ body {
         cursor: pointer;
         border-radius: 50%;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0)!important;
+        &.tournament{
+            left: inherit;
+            right: 1.389vmin;
+        }
         &:active,
         &:focus,
         &.active {
@@ -164,14 +280,12 @@ body {
             opacity: 1;
         }
     }
-}
-
-#endbox {
+.endbox {
     position: absolute;
     top: 12.5vmin;
     left: 0.694vmin;
     width: 28.472vmin;
-    height: 35.416vmin;
+    height: 31vmin;
     text-align: center;
     background-color: #333333;
     color: #fff;
@@ -181,11 +295,8 @@ body {
     .subd {
         font-size: 5.555vmin;
     }
-    #endnum {
-        height: 27.778vmin;
-        line-height: 27.778vmin;
-        font-size: 20.833vmin;
-        font-weight: 600;
+    .endnum {
+            height: 17vmin;
     }
 }
 
@@ -281,9 +392,8 @@ ul#dotindex {
     #addgametime {
         ul {
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
             flex-direction: row-reverse;
-            padding-left: 9.722vmin;
             li {}
         }
     }
@@ -295,13 +405,12 @@ ul#dotindex {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #333333;
-    width: 83.333vmin;
-    height: 97.222vmin;
+    width: 86vmin;
     color: #fff;
     z-index: 200;
     border-radius: 6.944vmin;
     border: 1.111vmin solid #fff;
-    padding: 2.777vmin;
+    padding: 2vmin 5vmin 7vmin 5vmin;
     font-size: 3.472vmin;
     box-shadow: 0px 0px 2.777vmin 6px rgba(0, 0, 0, 0.35);
     //overflow: hidden;
@@ -309,12 +418,13 @@ ul#dotindex {
         padding: 2.777vmin 0 1.389vmin;
         font-size: 3.472vmin;
         line-height: 3.472vmin;
+        text-align: center;
     }
     hr {
         margin: 2.777vmin 0 0;
         border-style: solid;
         border-width: 0 0 0.277vmin 0;
-        border-color: #454545;
+        border-color: #8f8f8f;
     }
     .flipup,
     .flipdown {
@@ -365,13 +475,15 @@ ul#dotindex {
             background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, rgba(0, 0, 0, 0.2)));
         }
     }
+    .ctrltoggle{
+        text-align: center;
+        width: 30vmin;
+    }
     .togglebase {
         display: inline-block;
         width: 16.667vmin;
         height: 8.33vmin;
         background-color: #343434;
-        margin-top: 4.167vmin;
-        margin-left: 2.777vmin;
         border-radius: 4.167vmin;
         border: 0.555vmin solid #fff;
         padding-left: 4.167vmin;
@@ -462,42 +574,69 @@ ul#dotindex {
         }
     }
     .copybut {
-    position: absolute;
-    width: 11.111vmin;
-    height: 11.111vmin;
-    top: 17vmin;
-    right: -6vmin;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url(../images/copyright.svg);
+        position: absolute;
+        width: 11.111vmin;
+        height: 11.111vmin;
+        top: 17vmin;
+        right: -6vmin;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(../images/copyright.svg);
         background-size: 80%;
-    cursor: pointer;
-    background-color: #333333;
-    border: 1.2vmin solid #fff;
-    border-radius: 50%;
-    -webkit-tap-highlight-color: transparent !important;
+        cursor: pointer;
+        background-color: #333333;
+        border: 1.2vmin solid #fff;
+        border-radius: 50%;
+        -webkit-tap-highlight-color: transparent !important;
         &:active,
         &:focus {
             outline: 0;
             background-color: #c7c7c7;
         }
     }
+    #selectmode {
+        position: absolute;
+        width: 14vmin;
+        height: 14vmin;
+        top: 34vmin;
+        right: -7vmin;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-size: 100%;
+        cursor: pointer;
+        background-color: #fff;
+        border: 1.2vmin solid #fff;
+        border-radius: 50%;
+        -webkit-tap-highlight-color: transparent !important;
+        &:active,
+        &:focus {
+            outline: 0;
+            background-color: #c7c7c7;
+        }
+        &.default{
+        background-image: url(../images/medal.svg);
+        }
+        &.tournament{
+        background-image: url(../images/rank.svg);
+        }
+    }
     .closeconfig {
-    position: absolute;
-    width: 11.111vmin;
-    height: 11.111vmin;
-    top: 0;
-    right: -6vmin;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url(../images/close.svg);
-    cursor: pointer;
-    background-color: #333333;
-    border: 1.2vmin solid #fff;
-    border-radius: 50%;
-    -webkit-tap-highlight-color: transparent !important;
+        position: absolute;
+        width: 11.111vmin;
+        height: 11.111vmin;
+        top: 0;
+        right: -6vmin;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(../images/close.svg);
+        cursor: pointer;
+        background-color: #333333;
+        border: 1.2vmin solid #fff;
+        border-radius: 50%;
+        -webkit-tap-highlight-color: transparent !important;
         &:active,
         &:focus {
             outline: 0;
@@ -508,8 +647,8 @@ ul#dotindex {
         position: absolute;
         width: 16.667vmin;
         height: 16.667vmin;
-        bottom: 5.555vmin;
-        right: 2.777vmin;
+        bottom: 5vmin;
+        right: 5vmin;
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -530,8 +669,37 @@ ul#dotindex {
         background-image: url(../images/sound.svg);
         background-repeat: no-repeat;
         background-size: contain;
-        right: 15vmax;
-        bottom: 5vmax;
+        right: 16vmax;
+        bottom: 4.5vmax;
+    }
+    
+    #tournamentkind{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        ul{
+            width: 80%;
+            margin: 0 auto;
+            li{       
+    width: 100%;
+    height: 10vmin;
+                text-align: center;
+                line-height: 10vmin;
+                border: 0.277vmin solid #fff;
+                border-bottom: none;
+            &:first-child {
+                border-radius: 1.389vmin 1.389vmin 0 0;
+            }
+            &:nth-last-of-type(1) {
+                border-radius: 0 0 1.389vmin 1.389vmin;
+                border-bottom: 0.277vmin solid #fff;
+            }
+            &.active {
+                background-color: #fff;
+                color: #333333;
+            }
+            }
+        }
     }
 }
 
@@ -572,11 +740,9 @@ ul#dotindex {
     }
 }
 
-#ondisplayCtrl {
+.ondisplayCtrl {
     position: absolute;
     z-index: 1000;
-    top: 48.194vmin;
-    left: 0.694vmin;
     width: 28.472vmin;
     height: 9.722vmin;
     border-radius: 4.167vmin 0;
@@ -635,7 +801,8 @@ ul#dotindex {
 #appDiv {
     font-size: 2.777vmin;
 }
-#isAC{
+
+#isAC {
     position: absolute;
     width: 100vw;
     height: 100vh;
@@ -644,22 +811,22 @@ ul#dotindex {
     background-color: #5a5a5a;
     z-index: 1001;
     color: #fff;
-    &>div{
+    &>div {
         position: absolute;
         top: 50%;
         left: 50%;
-        @include pre(transform, translate(-50%,-50%));
+        @include pre(transform, translate(-50%, -50%));
         white-space: nowrap;
         text-align: center;
-        &>img{
+        &>img {
             width: 30vmin;
             display: block;
             margin: 5vmin auto;
         }
     }
-    
 }
-#splash{
+
+#splash {
     position: absolute;
     width: 100vw;
     height: 100vh;
@@ -667,15 +834,15 @@ ul#dotindex {
     left: 0;
     background-color: #fff;
     z-index: 1002;
-    &>div{
+    &>div {
         @include animation(zoom 3s cubic-bezier(.1, .48, .47, 1) alternate 1s);
-        &>div{
-                font-size: 133%;
-                white-space: nowrap;
-                position: relative;
-                margin-bottom: 2vmin;
-    font-weight: bold;
-            span{
+        &>div {
+            font-size: 133%;
+            white-space: nowrap;
+            position: relative;
+            margin-bottom: 2vmin;
+            font-weight: bold;
+            span {
                 font-size: 40%;
                 position: absolute;
                 bottom: -2vmin;
@@ -685,32 +852,31 @@ ul#dotindex {
         position: absolute;
         top: 50%;
         left: 50%;
-        @include pre(transform, translate(-50%,-50%));
+        @include pre(transform, translate(-50%, -50%));
         text-align: center;
-        img{
+        img {
             display: block;
-                margin: 2vmax auto;
-                @include animation(yurayura 0.3s cubic-bezier(.53, .01, .47, 1) infinite alternate 0s)
+            margin: 2vmax auto;
+            @include animation(yurayura 0.3s cubic-bezier(.53, .01, .47, 1) infinite alternate 0s)
         }
-        span{
+        span {
             font-size: 60%;
             white-space: nowrap;
         }
     }
-    
     .closecopy {
-    position: absolute;
-    width: 7vmin;
-    height: 7vmin;
-    top: 12vmin;
-    left: 12vmin;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url(../images/closecopy.svg);
-    background-size:contain;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent !important;
+        position: absolute;
+        width: 7vmin;
+        height: 7vmin;
+        top: 12vmin;
+        left: 12vmin;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(../images/closecopy.svg);
+        background-size: contain;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent !important;
         &:active,
         &:focus {
             outline: 0;
@@ -719,40 +885,42 @@ ul#dotindex {
     }
 }
 
-@media screen and (orientation: landscape){
-    #orientationinfo{
+@media screen and (orientation: landscape) {
+    #orientationinfo {
         display: none;
     }
 }
-@media screen and (orientation: portrait){
-#orientationinfo {
-    position: absolute;
-    width:100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    background-color: #fff;
-    background-repeat: no-repeat;
-    background-size: 65%;
-    background-position: center center;
-    background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%20version%3D%221.1%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%2090%2090%22%20enable-background%3D%22new%200%200%2090%2090%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20points%3D%220%2C0%200%2C0%200%2C0%20%22%3E%3C/polygon%3E%3Cg%3E%3Cpath%20d%3D%22M71.545%2C48.145h-31.98V20.743c0-2.627-2.138-4.765-4.765-4.765H18.456c-2.628%2C0-4.767%2C2.138-4.767%2C4.765v42.789%20%20%20c0%2C2.628%2C2.138%2C4.766%2C4.767%2C4.766h5.535v0.959c0%2C2.628%2C2.138%2C4.765%2C4.766%2C4.765h42.788c2.628%2C0%2C4.766-2.137%2C4.766-4.765V52.914%20%20%20C76.311%2C50.284%2C74.173%2C48.145%2C71.545%2C48.145z%20M18.455%2C16.935h16.344c2.1%2C0%2C3.808%2C1.708%2C3.808%2C3.808v27.401H37.25V22.636%20%20%20c0-0.264-0.215-0.478-0.479-0.478H16.482c-0.264%2C0-0.479%2C0.214-0.479%2C0.478v36.585c0%2C0.264%2C0.215%2C0.478%2C0.479%2C0.478h7.507v7.644%20%20%20h-5.534c-2.101%2C0-3.81-1.709-3.81-3.81V20.743C14.645%2C18.643%2C16.354%2C16.935%2C18.455%2C16.935z%20M16.96%2C23.116h19.331v25.031h-7.535%20%20%20c-2.628%2C0-4.766%2C2.139-4.766%2C4.768v5.828h-7.03V23.116z%20M71.545%2C73.064H28.757c-2.101%2C0-3.81-1.708-3.81-3.808V52.914%20%20%20c0-2.102%2C1.709-3.812%2C3.81-3.812h42.788c2.1%2C0%2C3.809%2C1.71%2C3.809%2C3.812v16.343C75.354%2C71.356%2C73.645%2C73.064%2C71.545%2C73.064z%22%3E%3C/path%3E%3Cpath%20d%3D%22M28.919%2C58.424c-1.466%2C0-2.659%2C1.193-2.659%2C2.66c0%2C1.466%2C1.193%2C2.658%2C2.659%2C2.658c1.468%2C0%2C2.662-1.192%2C2.662-2.658%20%20%20C31.581%2C59.617%2C30.387%2C58.424%2C28.919%2C58.424z%20M28.919%2C62.786c-0.939%2C0-1.703-0.764-1.703-1.702c0-0.939%2C0.764-1.704%2C1.703-1.704%20%20%20c0.94%2C0%2C1.705%2C0.765%2C1.705%2C1.704C30.623%2C62.022%2C29.858%2C62.786%2C28.919%2C62.786z%22%3E%3C/path%3E%3Cpath%20d%3D%22M69.654%2C50.461H33.069c-0.264%2C0-0.479%2C0.215-0.479%2C0.479v20.288c0%2C0.264%2C0.215%2C0.478%2C0.479%2C0.478h36.585%20%20%20c0.263%2C0%2C0.477-0.214%2C0.477-0.478V50.939C70.131%2C50.676%2C69.917%2C50.461%2C69.654%2C50.461z%20M69.174%2C51.417V70.75H33.548V51.417H69.174z%22%3E%3C/path%3E%3Cpath%20d%3D%22M45.201%2C30.296c6.651%2C0%2C12.233%2C5.351%2C12.551%2C11.977l-3.033-2.638c-0.193-0.165-0.507-0.142-0.675%2C0.048%20%20%20c-0.174%2C0.198-0.153%2C0.501%2C0.045%2C0.676l3.883%2C3.375c0.09%2C0.075%2C0.198%2C0.115%2C0.312%2C0.115c0.141%2C0%2C0.273-0.061%2C0.362-0.166%20%20%20l3.371-3.877c0.173-0.2%2C0.151-0.502-0.047-0.675c-0.194-0.166-0.508-0.144-0.676%2C0.048l-2.592%2C2.979%20%20%20c-0.18-3.417-1.629-6.605-4.099-9.001c-2.538-2.461-5.877-3.817-9.404-3.817c-0.264%2C0-0.479%2C0.215-0.479%2C0.479%20%20%20C44.72%2C30.083%2C44.936%2C30.296%2C45.201%2C30.296z%22%3E%3C/path%3E%3C/g%3E%3C/svg%3E);
-    
+
+@media screen and (orientation: portrait) {
+    #orientationinfo {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-size: 65%;
+        background-position: center center;
+        background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%20version%3D%221.1%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%2090%2090%22%20enable-background%3D%22new%200%200%2090%2090%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20points%3D%220%2C0%200%2C0%200%2C0%20%22%3E%3C/polygon%3E%3Cg%3E%3Cpath%20d%3D%22M71.545%2C48.145h-31.98V20.743c0-2.627-2.138-4.765-4.765-4.765H18.456c-2.628%2C0-4.767%2C2.138-4.767%2C4.765v42.789%20%20%20c0%2C2.628%2C2.138%2C4.766%2C4.767%2C4.766h5.535v0.959c0%2C2.628%2C2.138%2C4.765%2C4.766%2C4.765h42.788c2.628%2C0%2C4.766-2.137%2C4.766-4.765V52.914%20%20%20C76.311%2C50.284%2C74.173%2C48.145%2C71.545%2C48.145z%20M18.455%2C16.935h16.344c2.1%2C0%2C3.808%2C1.708%2C3.808%2C3.808v27.401H37.25V22.636%20%20%20c0-0.264-0.215-0.478-0.479-0.478H16.482c-0.264%2C0-0.479%2C0.214-0.479%2C0.478v36.585c0%2C0.264%2C0.215%2C0.478%2C0.479%2C0.478h7.507v7.644%20%20%20h-5.534c-2.101%2C0-3.81-1.709-3.81-3.81V20.743C14.645%2C18.643%2C16.354%2C16.935%2C18.455%2C16.935z%20M16.96%2C23.116h19.331v25.031h-7.535%20%20%20c-2.628%2C0-4.766%2C2.139-4.766%2C4.768v5.828h-7.03V23.116z%20M71.545%2C73.064H28.757c-2.101%2C0-3.81-1.708-3.81-3.808V52.914%20%20%20c0-2.102%2C1.709-3.812%2C3.81-3.812h42.788c2.1%2C0%2C3.809%2C1.71%2C3.809%2C3.812v16.343C75.354%2C71.356%2C73.645%2C73.064%2C71.545%2C73.064z%22%3E%3C/path%3E%3Cpath%20d%3D%22M28.919%2C58.424c-1.466%2C0-2.659%2C1.193-2.659%2C2.66c0%2C1.466%2C1.193%2C2.658%2C2.659%2C2.658c1.468%2C0%2C2.662-1.192%2C2.662-2.658%20%20%20C31.581%2C59.617%2C30.387%2C58.424%2C28.919%2C58.424z%20M28.919%2C62.786c-0.939%2C0-1.703-0.764-1.703-1.702c0-0.939%2C0.764-1.704%2C1.703-1.704%20%20%20c0.94%2C0%2C1.705%2C0.765%2C1.705%2C1.704C30.623%2C62.022%2C29.858%2C62.786%2C28.919%2C62.786z%22%3E%3C/path%3E%3Cpath%20d%3D%22M69.654%2C50.461H33.069c-0.264%2C0-0.479%2C0.215-0.479%2C0.479v20.288c0%2C0.264%2C0.215%2C0.478%2C0.479%2C0.478h36.585%20%20%20c0.263%2C0%2C0.477-0.214%2C0.477-0.478V50.939C70.131%2C50.676%2C69.917%2C50.461%2C69.654%2C50.461z%20M69.174%2C51.417V70.75H33.548V51.417H69.174z%22%3E%3C/path%3E%3Cpath%20d%3D%22M45.201%2C30.296c6.651%2C0%2C12.233%2C5.351%2C12.551%2C11.977l-3.033-2.638c-0.193-0.165-0.507-0.142-0.675%2C0.048%20%20%20c-0.174%2C0.198-0.153%2C0.501%2C0.045%2C0.676l3.883%2C3.375c0.09%2C0.075%2C0.198%2C0.115%2C0.312%2C0.115c0.141%2C0%2C0.273-0.061%2C0.362-0.166%20%20%20l3.371-3.877c0.173-0.2%2C0.151-0.502-0.047-0.675c-0.194-0.166-0.508-0.144-0.676%2C0.048l-2.592%2C2.979%20%20%20c-0.18-3.417-1.629-6.605-4.099-9.001c-2.538-2.461-5.877-3.817-9.404-3.817c-0.264%2C0-0.479%2C0.215-0.479%2C0.479%20%20%20C44.72%2C30.083%2C44.936%2C30.296%2C45.201%2C30.296z%22%3E%3C/path%3E%3C/g%3E%3C/svg%3E);
+    }
 }
-}
-@include keyframes(zoom){
-    0%{
+
+@include keyframes(zoom) {
+    0% {
         opacity: 0;
     }
-    100%{
+    100% {
         opacity: 1;
     }
 }
-@include keyframes(yurayura){
-    0%{
-        @include pre(transform,rotate(-20deg));
+
+@include keyframes(yurayura) {
+    0% {
+        @include pre(transform, rotate(-20deg));
     }
-    100%{
-        @include pre(transform,rotate(20deg));
+    100% {
+        @include pre(transform, rotate(20deg));
     }
 }

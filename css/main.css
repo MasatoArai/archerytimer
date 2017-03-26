@@ -1,4 +1,3 @@
-/* line 48, main.scss */
 * {
   padding: 0;
   margin: 0;
@@ -16,36 +15,105 @@
   font-weight: 800;
   src: local("Open Sans Extrabold"), local("OpenSans-Extrabold"), url(.woff2) format("opensanseb.woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000; }
-/* line 70, main.scss */
 ::selection {
   background: transparent; }
 
-/* line 74, main.scss */
 dl,
 ul {
   list-style: none; }
 
-/* line 79, main.scss */
 dl dt {
   font-family: "Helvetica Neue", Helvetica, sans-serif, "Hiragino Kaku Gothic ProN", YuGothic, Meiryo; }
 
-/* line 83, main.scss */
 body {
   overflow: hidden;
   font-family: "Helvetica Neue", Helvetica, sans-serif, "Hiragino Kaku Gothic ProN", YuGothic, Meiryo;
   height: 100vh;
   width: 100vw; }
 
-/* line 89, main.scss */
 #app {
   display: none; }
 
 @media screen and (orientation: portrait) {
-  /* line 94, main.scss */
-  #container {
+  #default {
     display: none; } }
-/* line 98, main.scss */
-#container {
+#tournament .ondisplayCtrl {
+  bottom: 21vmin;
+  left: 50%;
+  border-radius: 2vmin 2vmin 0 0;
+  transform: translateX(-50%);
+  height: inherit; }
+  #tournament .ondisplayCtrl ul {
+    padding: 0.002vmin; }
+#tournament #tournament-timebox {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1.5vmin; }
+  #tournament #tournament-timebox .clock {
+    position: relative;
+    margin-left: 0.5vmin; }
+#tournament #tournamentMatrixBase {
+  position: absolute;
+  bottom: 0;
+  height: 21vmin;
+  width: 100%;
+  background-color: #333333;
+  padding: 0.5vmin; }
+  #tournament #tournamentMatrixBase .endbox {
+    background-color: #000;
+    top: inherit;
+    height: 20vmin;
+    border-radius: 2vmin;
+    width: 16vmax;
+    left: 50%;
+    transform: translateX(-50%); }
+    #tournament #tournamentMatrixBase .endbox .subd {
+      font-size: 4vmin;
+      line-height: 4vmin; }
+    #tournament #tournamentMatrixBase .endbox .endnum {
+      height: 14vmin; }
+  #tournament #tournamentMatrixBase .tnum {
+    position: absolute;
+    font-size: 6vh;
+    font-weight: bold;
+    color: white;
+    bottom: 1vmin; }
+    #tournament #tournamentMatrixBase .tnum.l {
+      left: 42vmin; }
+    #tournament #tournamentMatrixBase .tnum.r {
+      right: 42vmin; }
+  #tournament #tournamentMatrixBase .dotlamp {
+    position: absolute;
+    background-color: #000;
+    border-radius: 2vmin;
+    height: 8vmin;
+    width: 34vmin;
+    top: 2vmin;
+    overflow: hidden;
+    padding: 0.5vmin; }
+    #tournament #tournamentMatrixBase .dotlamp.l1 {
+      left: 39vmin; }
+    #tournament #tournamentMatrixBase .dotlamp.l2 {
+      right: 39vmin; }
+  #tournament #tournamentMatrixBase .remtimebox {
+    position: absolute;
+    background-color: #333333;
+    width: 36vmin;
+    height: 17vmin;
+    border-radius: 2vmin;
+    top: 2vmin;
+    overflow: hidden; }
+    #tournament #tournamentMatrixBase .remtimebox.t1 {
+      left: 2vmin; }
+    #tournament #tournamentMatrixBase .remtimebox.t2 {
+      right: 2vmin; }
+#tournament #mmc {
+  position: absolute;
+  top: 56vmin;
+  left: 0; }
+
+#default {
   width: 100vmax;
   height: 100vmin;
   transition: background 0.4s ease 0s;
@@ -53,88 +121,86 @@ body {
   background-color: #fff;
   top: 0;
   left: 0; }
-  /* line 106, main.scss */
-  #container.warn {
+  #default.warn {
     background-color: #ff4f4f; }
-  /* line 109, main.scss */
-  #container.caution {
+  #default.caution {
     background-color: #ffe44f; }
-  /* line 112, main.scss */
-  #container.shoot {
+  #default.shoot {
     background-color: white; }
+  #default .ondisplayCtrl {
+    top: 44.5vmin;
+    left: 0.694vmin; }
 
-/* line 117, main.scss */
 #timebox {
   white-space: nowrap;
   position: relative;
   width: 100%;
   height: 80.5vmin; }
-  /* line 122, main.scss */
+  #timebox .clock {
+    position: absolute;
+    top: 5vmin;
+    left: 30vmin; }
   #timebox #mmc {
-    margin-left: 4.86vmin; }
-  /* line 125, main.scss */
-  #timebox #configbut {
     position: absolute;
-    top: 2.777vmin;
-    left: 1.389vmin;
-    width: 8.33vmin;
-    height: 8.33vmin;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    background-image: url(../images/equalizer.svg);
-    opacity: 0.2;
-    cursor: pointer;
-    border-radius: 50%;
-    -webkit-tap-highlight-color: transparent !important; }
-    /* line 139, main.scss */
-    #timebox #configbut:active, #timebox #configbut:focus, #timebox #configbut.active {
-      outline: 0;
-      opacity: 1; }
-  /* line 146, main.scss */
-  #timebox #timerconfigbut {
-    position: absolute;
-    top: 2.777vmin;
-    left: 18.06vmin;
-    width: 8.33vmin;
-    height: 8.33vmin;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    background-image: url(../images/chronometer_b.svg);
-    opacity: 0.2;
-    cursor: pointer;
-    border-radius: 50%;
-    -webkit-tap-highlight-color: transparent !important; }
-    /* line 160, main.scss */
-    #timebox #timerconfigbut:active, #timebox #timerconfigbut:focus, #timebox #timerconfigbut.active {
-      outline: 0;
-      opacity: 1; }
+    top: 55vmin;
+    left: 5vmin; }
 
-/* line 169, main.scss */
-#endbox {
+#configbut {
+  position: absolute;
+  top: 2.777vmin;
+  left: 1.389vmin;
+  width: 8.33vmin;
+  height: 8.33vmin;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url(../images/equalizer.svg);
+  opacity: 0.2;
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-tap-highlight-color: transparent !important; }
+  #configbut:active, #configbut:focus, #configbut.active {
+    outline: 0;
+    opacity: 1; }
+
+#timerconfigbut {
+  position: absolute;
+  top: 2.777vmin;
+  left: 18.06vmin;
+  width: 8.33vmin;
+  height: 8.33vmin;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url(../images/chronometer_b.svg);
+  opacity: 0.2;
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-tap-highlight-color: transparent !important; }
+  #timerconfigbut.tournament {
+    left: inherit;
+    right: 1.389vmin; }
+  #timerconfigbut:active, #timerconfigbut:focus, #timerconfigbut.active {
+    outline: 0;
+    opacity: 1; }
+
+.endbox {
   position: absolute;
   top: 12.5vmin;
   left: 0.694vmin;
   width: 28.472vmin;
-  height: 35.416vmin;
+  height: 31vmin;
   text-align: center;
   background-color: #333333;
   color: #fff;
   padding-top: 1.389vmin;
   border-radius: 0 4.167vmin;
   font-family: "Helvetica Neue", Helvetica, sans-serif; }
-  /* line 181, main.scss */
-  #endbox .subd {
+  .endbox .subd {
     font-size: 5.555vmin; }
-  /* line 184, main.scss */
-  #endbox #endnum {
-    height: 27.778vmin;
-    line-height: 27.778vmin;
-    font-size: 20.833vmin;
-    font-weight: 600; }
+  .endbox .endnum {
+    height: 17vmin; }
 
-/* line 192, main.scss */
 ul#standset {
   display: flex;
   flex-wrap: nowrap;
@@ -144,7 +210,6 @@ ul#standset {
   width: 100%;
   height: 16.667vmin;
   bottom: 0; }
-  /* line 201, main.scss */
   ul#standset li {
     flex-grow: 1;
     position: relative;
@@ -153,21 +218,16 @@ ul#standset {
     padding: 0.694vmin 2.777vmin 0;
     font-weight: bold;
     color: rgba(51, 51, 51, 0.2); }
-    /* line 209, main.scss */
     ul#standset li.byRignt {
       text-align: right; }
-      /* line 211, main.scss */
       ul#standset li.byRignt.active {
         background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.15) 100%); }
-    /* line 215, main.scss */
     ul#standset li.active {
       border-bottom: 1.389vmin solid #333333;
       background: linear-gradient(to right, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%); }
-    /* line 219, main.scss */
     ul#standset li span.active {
       color: #333333; }
 
-/* line 225, main.scss */
 ul#dotindex {
   width: 55.555vmin;
   list-style: none;
@@ -177,18 +237,15 @@ ul#dotindex {
   bottom: 12.5vmin;
   left: 50%;
   transform: translateX(-50%); }
-  /* line 234, main.scss */
   ul#dotindex li {
     width: 2.777vmin;
     height: 2.777vmin;
     border-radius: 50%;
     background-color: rgba(51, 51, 51, 0.2);
     margin: 2.777vmin; }
-    /* line 240, main.scss */
     ul#dotindex li.active {
       background-color: #333333; }
 
-/* line 246, main.scss */
 #belt {
   height: 41.667vmin;
   width: 100%;
@@ -199,7 +256,6 @@ ul#dotindex {
   text-align: center;
   z-index: 300;
   animation: toast 0.5s cubic-bezier(0.13, 0.6, 0.25, 1) 0s; }
-  /* line 256, main.scss */
   #belt > div {
     font-size: 9.722vmin;
     line-height: 130%;
@@ -214,49 +270,41 @@ ul#dotindex {
     opacity: 0; }
   100% {
     opacity: 1; } }
-/* line 277, main.scss */
 #timerconsole.console {
   height: auto;
   width: 69.444vmin; }
-/* line 282, main.scss */
 #timerconsole #addgametime ul {
   display: flex;
-  justify-content: flex-end;
-  flex-direction: row-reverse;
-  padding-left: 9.722vmin; }
+  justify-content: center;
+  flex-direction: row-reverse; }
 
-/* line 292, main.scss */
 .console {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #333333;
-  width: 83.333vmin;
-  height: 97.222vmin;
+  width: 86vmin;
   color: #fff;
   z-index: 200;
   border-radius: 6.944vmin;
   border: 1.111vmin solid #fff;
-  padding: 2.777vmin;
+  padding: 2vmin 5vmin 7vmin 5vmin;
   font-size: 3.472vmin;
   box-shadow: 0px 0px 2.777vmin 6px rgba(0, 0, 0, 0.35); }
-  /* line 308, main.scss */
   .console dl dt {
     padding: 2.777vmin 0 1.389vmin;
     font-size: 3.472vmin;
-    line-height: 3.472vmin; }
-  /* line 313, main.scss */
+    line-height: 3.472vmin;
+    text-align: center; }
   .console hr {
     margin: 2.777vmin 0 0;
     border-style: solid;
     border-width: 0 0 0.277vmin 0;
-    border-color: #454545; }
-  /* line 319, main.scss */
+    border-color: #8f8f8f; }
   .console .flipup,
   .console .flipdown {
     text-align: center; }
-    /* line 322, main.scss */
     .console .flipup:before,
     .console .flipdown:before {
       content: "";
@@ -264,15 +312,12 @@ ul#dotindex {
       width: 0;
       height: 0;
       border-style: solid; }
-  /* line 331, main.scss */
   .console .flipup:before {
     border-width: 0 2.777vmin 2.777vmin 2.777vmin;
     border-color: transparent transparent #fff transparent; }
-  /* line 337, main.scss */
   .console .flipdown:before {
     border-width: 2.777vmin 2.777vmin 0 2.777vmin;
     border-color: #fff transparent transparent transparent; }
-  /* line 342, main.scss */
   .console .flipnum {
     background-color: #fff;
     font-size: 11.111vmin;
@@ -288,7 +333,6 @@ ul#dotindex {
     display: inline-block;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
     font-weight: 600; }
-    /* line 357, main.scss */
     .console .flipnum:after {
       content: "";
       position: absolute;
@@ -298,23 +342,21 @@ ul#dotindex {
       width: 100%;
       border-bottom: 0.4166vmin solid rgba(0, 0, 0, 0.3);
       background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, rgba(0, 0, 0, 0.2))); }
-  /* line 368, main.scss */
+  .console .ctrltoggle {
+    text-align: center;
+    width: 30vmin; }
   .console .togglebase {
     display: inline-block;
     width: 16.667vmin;
     height: 8.33vmin;
     background-color: #343434;
-    margin-top: 4.167vmin;
-    margin-left: 2.777vmin;
     border-radius: 4.167vmin;
     border: 0.555vmin solid #fff;
     padding-left: 4.167vmin;
     position: relative;
     transition: background-color 0.3s ease 0s; }
-  /* line 381, main.scss */
   .console .togglebase.active {
     background-color: #fff; }
-  /* line 384, main.scss */
   .console .togglebase .togglenob {
     position: absolute;
     width: 8.33vmin;
@@ -326,26 +368,20 @@ ul#dotindex {
     top: -0.555vmin;
     transition: left 0.3s ease 0s;
     box-shadow: 0 0 0.694vmin 1px rgba(0, 0, 0, 0.23); }
-  /* line 396, main.scss */
   .console .togglebase.active .togglenob {
     left: 0; }
-  /* line 399, main.scss */
   .console ul#timeAndEnd {
     display: flex;
     justify-content: space-around; }
-    /* line 402, main.scss */
     .console ul#timeAndEnd > li {
       flex-grow: 1; }
-  /* line 407, main.scss */
   .console #gametime ul {
     display: flex;
     justify-content: center;
     flex-direction: row-reverse; }
-  /* line 415, main.scss */
   .console #orderofplay ul {
     display: flex;
     justify-content: center; }
-    /* line 418, main.scss */
     .console #orderofplay ul li {
       width: 22.222vmin;
       border: 0.277vmin solid #fff;
@@ -353,22 +389,17 @@ ul#dotindex {
       line-height: 6.944vmin;
       text-align: center;
       border-left: none; }
-      /* line 425, main.scss */
       .console #orderofplay ul li.active {
         background-color: #fff;
         color: #333333; }
-      /* line 429, main.scss */
       .console #orderofplay ul li:first-child {
         border-left: 0.277vmin solid #fff;
         border-radius: 1.389vmin 0 0 1.389vmin; }
-      /* line 433, main.scss */
       .console #orderofplay ul li:nth-last-of-type(1) {
         border-radius: 0 1.389vmin 1.389vmin 0; }
-  /* line 440, main.scss */
   .console #arrowsup ul {
     display: flex;
     justify-content: center; }
-    /* line 443, main.scss */
     .console #arrowsup ul li {
       width: 22.222vmin;
       border: 0.277vmin solid #fff;
@@ -376,18 +407,14 @@ ul#dotindex {
       line-height: 6.944vmin;
       text-align: center;
       border-left: none; }
-      /* line 450, main.scss */
       .console #arrowsup ul li.active {
         background-color: #fff;
         color: #333333; }
-      /* line 454, main.scss */
       .console #arrowsup ul li:first-child {
         border-left: 0.277vmin solid #fff;
         border-radius: 1.389vmin 0 0 1.389vmin; }
-      /* line 458, main.scss */
       .console #arrowsup ul li:nth-last-of-type(1) {
         border-radius: 0 1.389vmin 1.389vmin 0; }
-  /* line 464, main.scss */
   .console .copybut {
     position: absolute;
     width: 11.111vmin;
@@ -404,11 +431,31 @@ ul#dotindex {
     border: 1.2vmin solid #fff;
     border-radius: 50%;
     -webkit-tap-highlight-color: transparent !important; }
-    /* line 480, main.scss */
     .console .copybut:active, .console .copybut:focus {
       outline: 0;
       background-color: #c7c7c7; }
-  /* line 486, main.scss */
+  .console #selectmode {
+    position: absolute;
+    width: 14vmin;
+    height: 14vmin;
+    top: 34vmin;
+    right: -7vmin;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-size: 100%;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1.2vmin solid #fff;
+    border-radius: 50%;
+    -webkit-tap-highlight-color: transparent !important; }
+    .console #selectmode:active, .console #selectmode:focus {
+      outline: 0;
+      background-color: #c7c7c7; }
+    .console #selectmode.default {
+      background-image: url(../images/medal.svg); }
+    .console #selectmode.tournament {
+      background-image: url(../images/rank.svg); }
   .console .closeconfig {
     position: absolute;
     width: 11.111vmin;
@@ -424,17 +471,15 @@ ul#dotindex {
     border: 1.2vmin solid #fff;
     border-radius: 50%;
     -webkit-tap-highlight-color: transparent !important; }
-    /* line 501, main.scss */
     .console .closeconfig:active, .console .closeconfig:focus {
       outline: 0;
       background-color: #c7c7c7; }
-  /* line 507, main.scss */
   .console .setconfig {
     position: absolute;
     width: 16.667vmin;
     height: 16.667vmin;
-    bottom: 5.555vmin;
-    right: 2.777vmin;
+    bottom: 5vmin;
+    right: 5vmin;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -442,11 +487,9 @@ ul#dotindex {
     cursor: pointer;
     opacity: 1;
     -webkit-tap-highlight-color: transparent !important; }
-    /* line 520, main.scss */
     .console .setconfig:active, .console .setconfig:focus {
       outline: 0;
       opacity: 0.3; }
-  /* line 526, main.scss */
   .console .selectsound {
     position: absolute;
     height: 5vmax;
@@ -454,10 +497,31 @@ ul#dotindex {
     background-image: url(../images/sound.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    right: 15vmax;
-    bottom: 5vmax; }
+    right: 16vmax;
+    bottom: 4.5vmax; }
+  .console #tournamentkind {
+    display: flex;
+    justify-content: center;
+    flex-direction: column; }
+    .console #tournamentkind ul {
+      width: 80%;
+      margin: 0 auto; }
+      .console #tournamentkind ul li {
+        width: 100%;
+        height: 10vmin;
+        text-align: center;
+        line-height: 10vmin;
+        border: 0.277vmin solid #fff;
+        border-bottom: none; }
+        .console #tournamentkind ul li:first-child {
+          border-radius: 1.389vmin 1.389vmin 0 0; }
+        .console #tournamentkind ul li:nth-last-of-type(1) {
+          border-radius: 0 0 1.389vmin 1.389vmin;
+          border-bottom: 0.277vmin solid #fff; }
+        .console #tournamentkind ul li.active {
+          background-color: #fff;
+          color: #333333; }
 
-/* line 538, main.scss */
 #selectSoundBase {
   position: absolute;
   bottom: 0;
@@ -469,11 +533,9 @@ ul#dotindex {
   border: 1.111vmin solid #fff;
   border-bottom: none;
   padding: 2.777vmin; }
-  /* line 549, main.scss */
   #selectSoundBase ul {
     display: flex;
     justify-content: center; }
-    /* line 552, main.scss */
     #selectSoundBase ul li {
       min-width: 22.222vmin;
       border: 0.277vmin solid #fff;
@@ -482,79 +544,59 @@ ul#dotindex {
       text-align: center;
       border-left: none;
       padding: 0 3vmin; }
-      /* line 560, main.scss */
       #selectSoundBase ul li:first-child {
         border-left: 0.277vmin solid #fff;
         border-radius: 1.389vmin 0 0 1.389vmin; }
-      /* line 564, main.scss */
       #selectSoundBase ul li:nth-last-of-type(1) {
         border-radius: 0 1.389vmin 1.389vmin 0; }
-      /* line 567, main.scss */
       #selectSoundBase ul li.active {
         background-color: #fff;
         color: #333333; }
 
-/* line 575, main.scss */
-#ondisplayCtrl {
+.ondisplayCtrl {
   position: absolute;
   z-index: 1000;
-  top: 48.194vmin;
-  left: 0.694vmin;
   width: 28.472vmin;
   height: 9.722vmin;
   border-radius: 4.167vmin 0;
   background-color: #333333; }
-  /* line 584, main.scss */
-  #ondisplayCtrl ul {
+  .ondisplayCtrl ul {
     display: flex;
     justify-content: space-around;
     padding: 2.083vmin; }
-    /* line 588, main.scss */
-    #ondisplayCtrl ul li {
+    .ondisplayCtrl ul li {
       height: 5.555vmin;
       width: 5.555vmin;
       border-radius: 0.694vmin;
       background-repeat: no-repeat;
       background-size: 50%;
       background-position: center; }
-      /* line 595, main.scss */
-      #ondisplayCtrl ul li.rep {
+      .ondisplayCtrl ul li.rep {
         background-size: 70%; }
-        /* line 597, main.scss */
-        #ondisplayCtrl ul li.rep.enable {
+        .ondisplayCtrl ul li.rep.enable {
           background-image: url(../images/replay.svg); }
-        /* line 600, main.scss */
-        #ondisplayCtrl ul li.rep.disable {
+        .ondisplayCtrl ul li.rep.disable {
           background-image: url(../images/replay.svg);
           opacity: 0.3; }
-      /* line 606, main.scss */
-      #ondisplayCtrl ul li.playpause.play {
+      .ondisplayCtrl ul li.playpause.play {
         background-image: url(../images/play-button.svg); }
-      /* line 609, main.scss */
-      #ondisplayCtrl ul li.playpause.pause {
+      .ondisplayCtrl ul li.playpause.pause {
         background-image: url(../images/pause.svg); }
-      /* line 612, main.scss */
-      #ondisplayCtrl ul li.playpause.redume {
+      .ondisplayCtrl ul li.playpause.redume {
         background-image: url(../images/play-button.svg); }
-      /* line 617, main.scss */
-      #ondisplayCtrl ul li.next.nextend {
+      .ondisplayCtrl ul li.next.nextend {
         background-image: url(../images/nextready.svg); }
-      /* line 620, main.scss */
-      #ondisplayCtrl ul li.next.forward {
+      .ondisplayCtrl ul li.next.forward {
         background-image: url(../images/forward.svg);
         background-size: 85%; }
-      /* line 624, main.scss */
-      #ondisplayCtrl ul li.next.stop {
+      .ondisplayCtrl ul li.next.stop {
         background-image: url(../images/stop.svg); }
-      /* line 627, main.scss */
-      #ondisplayCtrl ul li.next.default {
+      .ondisplayCtrl ul li.next.default {
         background-image: url(../images/next.svg); }
 
-/* line 635, main.scss */
 #appDiv {
   font-size: 2.777vmin; }
 
-/* line 638, main.scss */
 #isAC {
   position: absolute;
   width: 100vw;
@@ -564,7 +606,6 @@ ul#dotindex {
   background-color: #5a5a5a;
   z-index: 1001;
   color: #fff; }
-  /* line 647, main.scss */
   #isAC > div {
     position: absolute;
     top: 50%;
@@ -575,13 +616,11 @@ ul#dotindex {
     transform: translate(-50%, -50%);
     white-space: nowrap;
     text-align: center; }
-    /* line 654, main.scss */
     #isAC > div > img {
       width: 30vmin;
       display: block;
       margin: 5vmin auto; }
 
-/* line 662, main.scss */
 #splash {
   position: absolute;
   width: 100vw;
@@ -590,7 +629,6 @@ ul#dotindex {
   left: 0;
   background-color: #fff;
   z-index: 1002; }
-  /* line 670, main.scss */
   #splash > div {
     -webkit-animation: zoom 3s cubic-bezier(0.1, 0.48, 0.47, 1) alternate 1s;
     -moz-animation: zoom 3s cubic-bezier(0.1, 0.48, 0.47, 1) alternate 1s;
@@ -606,20 +644,17 @@ ul#dotindex {
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center; }
-    /* line 672, main.scss */
     #splash > div > div {
       font-size: 133%;
       white-space: nowrap;
       position: relative;
       margin-bottom: 2vmin;
       font-weight: bold; }
-      /* line 678, main.scss */
       #splash > div > div span {
         font-size: 40%;
         position: absolute;
         bottom: -2vmin;
         right: 0vmin; }
-    /* line 690, main.scss */
     #splash > div img {
       display: block;
       margin: 2vmax auto;
@@ -629,11 +664,9 @@ ul#dotindex {
       -webkit-animation-fill-mode: both;
       -moz-animation-fill-mode: both;
       animation-fill-mode: both; }
-    /* line 695, main.scss */
     #splash > div span {
       font-size: 60%;
       white-space: nowrap; }
-  /* line 701, main.scss */
   #splash .closecopy {
     position: absolute;
     width: 7vmin;
@@ -647,17 +680,14 @@ ul#dotindex {
     background-size: contain;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent !important; }
-    /* line 714, main.scss */
     #splash .closecopy:active, #splash .closecopy:focus {
       outline: 0;
       opacity: 0.5; }
 
 @media screen and (orientation: landscape) {
-  /* line 723, main.scss */
   #orientationinfo {
     display: none; } }
 @media screen and (orientation: portrait) {
-  /* line 728, main.scss */
   #orientationinfo {
     position: absolute;
     width: 100vw;

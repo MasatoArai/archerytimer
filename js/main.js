@@ -16,12 +16,29 @@ var vueApp;
         });
     });
 function initializationAll(){
+        function getStringNum(num,digit){
+            var line = '';
+            for(var i=0;i<digit;i++){
+                line=String(digNum(num,Math.pow(10,i)))+line;
+            }
+            return line;
+        }
+        function digNum(num, digit) {//num = 数値　digit=桁　１，１０、１００
+            if (digit % 10 == 0 || digit == 1) {
+                return Math.floor(num / digit) % 10
+            } else {
+                return NaN;
+            }
+        }
+    
         vueApp = new Vue({
             el:'#app',
             data:{
-                isAC:false,
+                isLoaded:false,
+                isAC:false,//isAndroidChrome
                     isShowCopy:false,
                 consoleObj:{
+                    timermode:'default',
                     addgametime:{
                         digit1:0,
                         digit2:0,
@@ -42,7 +59,16 @@ function initializationAll(){
                     },
                     orderOfPlay:2,
                     arrowsUp:2,
-                    sound:'hone.mp3'
+                    sound:'hone.mp3',
+                    tournament:{
+                        mode:'single',// mix team
+                        gametime:20,// 80 120,
+                        setnum:5,//4 4
+                        arrowsUp:6,//4 4
+                        turntime:15,//8 8
+                        firstStand:1,
+                        shootOff:false  
+                    }
                 },
                 
                 initTimerObj:{
@@ -55,6 +81,9 @@ function initializationAll(){
                 },
                 
                 initGameProperty:{
+                    timerMode:'',
+                    tournamentMode:'',
+                    firstStand:0,
                     arrowsUp:0,
                     orderOfPlay:[],
                     endnum:0
@@ -69,7 +98,7 @@ function initializationAll(){
                     auxTimer:false,
                     lastPosition:"",
                     gameover:false,
-                    time:0
+                    time:0//各射射巡進行数
                 },
                 
                 display:{
@@ -77,7 +106,10 @@ function initializationAll(){
                     flipmin:0,
                     mmin:0,
                     end:0,
-                    stand:''
+                    stand:'',
+                    
+                    remdot1:0,
+                    remdot2:0
                 },
                 toast:{
                     toastMessage:'',
@@ -90,7 +122,15 @@ function initializationAll(){
                 showTimerConfig:false,
                 timerCore:{},
                 flipclock:{},
-                sound:{}
+                sound:{},
+                
+                dotmatrixs:{
+                    remdot1:{},
+                    remdot2:{},
+                    endnum:{},
+                    lampl:{},
+                    lampr:{}
+                }
             },
             computed: {
                 repbut:function(){
@@ -134,7 +174,63 @@ function initializationAll(){
                         this.showConfig = false;
                     }
                 },
+                'consoleObj.timermode':function(val){
+                        if(!this.isLoaded)return;
+                    Vue.nextTick(function () {
+                        this.timerCore.rejectGameinfo()
+                        this.counterInit();
+                    },this);
+                },
+                'consoleObj.tournament.mode':function(val){
+                    switch(val){
+                        case "single":
+                            this.consoleObj.tournament.gametime=20;
+                            this.consoleObj.tournament.setnum=5;
+                            this.consoleObj.tournament.arrowsUp=6;
+                            this.consoleObj.tournament.turntime = 15
+                            break;
+                        case "team":
+                            this.consoleObj.tournament.gametime=120;
+                            this.consoleObj.tournament.setnum=4;
+                            this.consoleObj.tournament.arrowsUp=4;
+                            this.consoleObj.tournament.turntime=8;
+                            break;
+                        case "mix":
+                            this.consoleObj.tournament.gametime=80;
+                            this.consoleObj.tournament.setnum=4;
+                            this.consoleObj.tournament.arrowsUp=4;
+                            this.consoleObj.tournament.turntime=8;
+                            break;   
+                    }
+                    this.consoleObj.tournament.shootOff=false;
+                        if(!this.isLoaded)return;
+                        this.timerCore.rejectGameinfo()
+                        this.counterInit();
+                },
+                
+                'consoleObj.tournament.shootOff':function(val){
+                    if(val){
+                        switch(this.consoleObj.tournament.mode){
+                            case "single":
+                                this.consoleObj.tournament.gametime=20;
+                                this.consoleObj.tournament.setnum=1;
+                                this.consoleObj.tournament.arrowsUp=2;
+                                break;
+                            case "team":
+                                this.consoleObj.tournament.gametime=60;
+                                this.consoleObj.tournament.setnum=1;
+                                this.consoleObj.tournament.arrowsUp=6;
+                                break;
+                            case "mix":
+                                this.consoleObj.tournament.gametime=80;
+                                this.consoleObj.tournament.setnum=1;
+                                this.consoleObj.tournament.arrowsUp=4;
+                                break;   
+                        }
+                    }
+                },
                 'consoleObj.orderOfPlay':function(val){
+                    if(val!=3)return;
                     if(this.consoleObj.endnum.digit1%2!=0)this.consoleObj.endnum.digit1++;
                 },
                 'display.flipmin':function (val){
@@ -204,9 +300,57 @@ function initializationAll(){
                             break;
                     }
                     }
+                },
+                'display.end':function(val){
+                    var digit=this.consoleObj.timermode=='default'?2:1;
+                        this.dotmatrixs.endnum.changeValue(getStringNum(val,digit));
+                },
+                'display.min':function(val){
+                    if(this.consoleObj.timermode=="default")return;
+                },
+                
+                'display.remdot1':function(val){
+                    if(this.consoleObj.timermode=="default")return;
+                    var digit=this.consoleObj.tournament.mode=='team'?3:2;
+                    if(this.status.stand>0)
+                    this.dotmatrixs['remdot1'].changeValue(getStringNum(val,digit));
+                },
+                'display.remdot2':function(val){
+                    if(this.consoleObj.timermode=="default")return;
+                    var digit=this.consoleObj.tournament.mode=='team'?3:2;
+                    if(this.status.stand>0) this.dotmatrixs['remdot2'].changeValue(getStringNum(val,digit));
                 }
             },
             methods: {
+                counterInit:function(){
+                    var digit=this.consoleObj.timermode=='default'?2:1;
+                    var startnum = (this.consoleObj.timermode=='default')?999:(this.consoleObj.tournament.mode=='team')?999:99;
+                    this.flipclock = new FlipClock($('.clock'), startnum, {
+                        clockFace: 'Counter'
+                    });
+                    this.flipclock.setTime(0); 
+                        
+                        this.dotmatrixs.endnum= new DotMatrix("endnum");
+                        this.dotmatrixs.endnum.target.innerHTML="";
+                        this.dotmatrixs.endnum.draw({value : getStringNum(0,digit),colorOn : "#ff8b17", colorOff : "#4b2a12",digit:digit});
+                    
+                    if(this.consoleObj.timermode=="tournament"){
+                        this.dotmatrixs.remdot1 = new DotMatrix("remdot1");
+                        this.dotmatrixs.remdot2 = new DotMatrix("remdot2");
+                        this.dotmatrixs.remdot1.target.innerHTML="";
+                        this.dotmatrixs.remdot2.target.innerHTML="";
+                        
+                        this.dotmatrixs.remdot1.draw({value : "000",colorOn : "#ff8b17", colorOff : "#4b2a12",digit:this.consoleObj.tournament.mode=='team'?3:2});
+                        this.dotmatrixs.remdot2.draw({value : "000",colorOn : "#ff8b17", colorOff : "#4b2a12",digit:this.consoleObj.tournament.mode=='team'?3:2});
+                        
+                        this.dotmatrixs.lampl = new DotMatrix('dotlamp1');
+                        this.dotmatrixs.lampr = new DotMatrix('dotlamp2');
+                        this.dotmatrixs.lampl.draw({value : " FIRST ",colorOn : "#4b2a12", colorOff : "#ffff00",digit:7,shape : "square"});
+                        this.dotmatrixs.lampr.draw({value : " FIRST ",colorOn : "#4b2a12", colorOff : "#ffff00",digit:7,shape : "square"});
+                        
+                    }
+                    
+                },
                 showCopy:function(b){
                     if(b){
                         $('#splash').show();
@@ -334,15 +478,47 @@ function initializationAll(){
                 setConfig:function(){
                     this.showConfig=false;
                     var c=this.consoleObj;
+                    
                     var temp={
-                        gameTime:getNum([c.gametime.digit1,c.gametime.digit2,c.gametime.digit3]),
-                        readyTime:getNum([c.readytime.digit1,c.readytime.digit2]),
+                        timerMode:'',
+                        gameTime:0,
+                        readyTime:0,
                         caution:45000,
                         warn:30000,
-                        arrowsUp:c.arrowsUp,
-                        orderOfPlay:getOrder(c.orderOfPlay),
-                        endnum:getNum([c.endnum.digit1,c.endnum.digit2])/1000
+                        arrowsUp:0,
+                        orderOfPlay:[],
+                        endnum:0
                     };
+                    
+                    if(c.timermode=='default'){
+                        temp={
+                            timerMode:c.timermode,
+                            gameTime:getNum([c.gametime.digit1,c.gametime.digit2,c.gametime.digit3]),
+                            readyTime:getNum([c.readytime.digit1,c.readytime.digit2]),
+                            caution:45000,
+                            warn:30000,
+                            arrowsUp:c.arrowsUp,
+                            orderOfPlay:getOrder(c.orderOfPlay),
+                            endnum:getNum([c.endnum.digit1,c.endnum.digit2])/1000
+                        };
+                    }
+                    
+                    if(c.timermode=='tournament'){
+                        temp={
+                            timerMode:c.timermode,
+                            tournamentMode:c.tournament.mode,
+                            firstStand:c.tournament.firstStand,
+                            gameTime:c.tournament.gametime*1000,
+                            readyTime:10*1000,
+                            caution:0,
+                            warn:0,
+                            arrowsUp:c.tournament.arrowsUp,
+                            orderOfPlay:['TARGET1','TARGET2'],
+                            endnum:c.tournament.turntime,
+                            setnum:c.tournament.setnum
+                        };
+                    }
+                    
                     if(temp.gameTime<temp.caution){
                         temp.caution=0;
                         temp.warn=0;
@@ -429,17 +605,16 @@ function initializationAll(){
             mounted:function(){
                 var ua = navigator.userAgent.toLowerCase(); 
                 if(ua.indexOf('android')>0&&ua.indexOf('chrome')>0)this.isAC=true;
-                this.flipclock = new FlipClock($('.clock'), 999, {
-                    clockFace: 'Counter'
-                });
+                //this.counterInit();
                 var self = this;
                 this.getStrageData(function(){
                     self.setHornSound([self.consoleObj.sound]);
                 })
-                this.flipclock.setTime(0);
                 this.timerCore = new TimerCore(this)
                 $('#app').show();
                 setTimeout(function(){
+                    self.counterInit();
+                    self.isLoaded=true;
                     $('#splash').fadeOut(1000);
                 },6000);
             }
@@ -454,10 +629,10 @@ function TimerCore(vueIns){
     this.reset = vueIns.setConfig;
     this.status=vueIns.status;
     this.display = vueIns.display;
-    this.toast = vueIns.toast;
     this.counterObj={};
     this.intervalID = 0;
-    this.standCounter = [];
+    this.standCounter = [];//3立時エンド計算用
+    this.counterIndex = 0;//トーナメント時カウンター参照用
     
     this.countConf = {
         readyTime:0,
@@ -468,17 +643,42 @@ function TimerCore(vueIns){
     }
 }
 
+TimerCore.prototype.rejectGameinfo = function(){
+    clearInterval(this.intervalID);
+    this.status.inCount = false;
+    this.status.timerStatus = "timeup";
+    this.status.auxTimer=false;
+    this.status.statusColor = '';
+    this.initTimerObj.gameTime = 0;
+    this.initTimerObj.readyTime = 0;
+    this.status.stand=0;
+    this.status.time=0;
+    this.display.flipmin=0;
+    this.display.min = 0;
+    this.display.mmin = 0;
+    this.display.stand = '';
+    this.display.end = 0;
+    this.display.remdot1=0;
+    this.display.remdot2=0;
+    this.display.stand='';
+    this.initGameProperty.arrowsUp=0;
+    this.initGameProperty.orderOfPlay=[];
+}
+
 TimerCore.prototype.setGameinfo = function(obj){
     this.initTimerObj.gameTime = obj.gameTime;
     this.initTimerObj.readyTime = obj.readyTime;
     this.initTimerObj.sign.caution = obj.caution;
     this.initTimerObj.sign.warn = obj.warn;
+    this.initGameProperty.timerMode = obj.timerMode;
+    this.initGameProperty.tournamentMode = obj.tournamentMode||'';
+    this.initGameProperty.firstStand = obj.firstStand||0;
     this.initGameProperty.arrowsUp = obj.arrowsUp;
     this.initGameProperty.orderOfPlay = obj.orderOfPlay;
     this.initGameProperty.endnum = obj.endnum;
+    this.initGameProperty.setnum = obj.setnum||0;
     this.status.stand=0;
     this.status.time=0;
-    this.status.gemeover = true;
     this.display.min = 0;
     this.display.mmin = 0;
     this.display.stand = '';
@@ -493,7 +693,7 @@ TimerCore.prototype.setGameinfo = function(obj){
     
     this.setReady();
 }
-
+//射前設定
 TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停止状態で起動するか
     var self = this;
     if(typeof obj === "object"){//直タイマー
@@ -519,31 +719,58 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
         
         this.status.time++;
         
+       
+        if(this.initGameProperty.timerMode == 'default'){
         //立ち位置表示
-        if(this.initGameProperty.orderOfPlay.length==3||this.status.time==1||this.status.time%this.initGameProperty.arrowsUp != 1){
-            this.status.stand++;
-            if(this.status.stand > this.initGameProperty.orderOfPlay.length){
-                this.status.stand=1;
+            if(this.initGameProperty.orderOfPlay.length==3||this.status.time==1||this.status.time%this.initGameProperty.arrowsUp != 1){
+                this.status.stand++;
+                if(this.status.stand > this.initGameProperty.orderOfPlay.length){
+                    this.status.stand=1;
+                }
+            }
+            //end進み
+          //playorderが１か２立
+            if((this.initGameProperty.orderOfPlay.length==2&&this.status.time%this.initGameProperty.orderOfPlay.length == 1)||this.initGameProperty.orderOfPlay.length==1){
+                this.display.end++
+            }
+            //3立
+            if(this.initGameProperty.orderOfPlay.length==3){
+                this.standCounter[this.status.stand-1]++;
+                this.display.end=this.standCounter[this.status.stand-1];
+            }
+        }else if(this.initGameProperty.timerMode == 'tournament'){
+        //立ち位置表示
+            if(this.status.time==1){
+                this.status.stand=this.initGameProperty.firstStand;
+            }else{
+                this.status.stand++;
+                if(this.status.stand > this.initGameProperty.orderOfPlay.length){
+                    this.status.stand=1;
+                }
+            }
+            //end転じてset進み
+            if(this.status.time%this.initGameProperty.arrowsUp==1){//初回ないしやとりばさみ
+                this.display.end++;
             }
         }
-      //playorderが１か２立
-        if((this.initGameProperty.orderOfPlay.length==2&&this.status.time%this.initGameProperty.orderOfPlay.length == 1)||this.initGameProperty.orderOfPlay.length==1){
-            this.display.end++
-        }
-        //3立
-        if(this.initGameProperty.orderOfPlay.length==3){
-            this.standCounter[this.status.stand-1]++;
-            this.display.end=this.standCounter[this.status.stand-1];
-        }
-        
         this.display.stand = this.initGameProperty.orderOfPlay[this.status.stand-1];
     }
     
     clearInterval(self.intervalID);
-    this.counterObj = new DateCount();
+    if(this.initGameProperty.timerMode == 'tournament' && this.initGameProperty.tournamentMode!='single'){//トーナメント　チームミクス時カウンター保持
+            if(this.status.time%this.initGameProperty.arrowsUp==1){
+                this.counterObj = new DateCount();
+                this.display.flipmin = this.countConf.gameTime/1000;
+            }else{
+                this.display.flipmin = this.counterObj.getElapsedTime(this.counterIndex)/1000;
+            }
+    }else{//defaultないしトーナメントシングル
+        this.counterObj = new DateCount();
+        this.display.flipmin = this.countConf.gameTime/1000;
+    }
+    this.display.min = this.display.flipmin;
     this.status.timerStatus = "timeup";
     
-    this.display.flipmin = this.countConf.gameTime/1000;
     if(bool){
         this.countDo();
     }else{
@@ -552,12 +779,16 @@ TimerCore.prototype.setReady = function(bool,obj){//timer設定obj,bool一時停
 }
 
 TimerCore.prototype.countDo = function(){
-    this.counterObj.start();
+    this.counterIndex = 0;
+    if(this.initGameProperty.timerMode == 'tournament'){
+        this.counterIndex = this.status.stand-1;
+    }
+    this.counterObj.start(this.counterIndex);
     this.status.inCount = true;
     this.status.timerStatus = "counting"
     var self = this;
-    this.intervalID=setInterval(function(){
-        var count = self.counterObj.getElapsedTime();
+    this.intervalID=setInterval(function(){//1000分の5秒単位でタイマー状態確認
+        var count = self.counterObj.getElapsedTime(self.counterIndex);
         var ingameTime = 0;
         var fliplag = 0;
         
@@ -661,37 +892,47 @@ TimerCore.prototype.isFinished = function(time){
 }
 TimerCore.prototype.pause = function(){
     this.status.timerStatus = "pause";
-    this.counterObj.pause();
+    this.counterObj.pause(this.counterIndex);
 }
 TimerCore.prototype.redume = function(){
     this.status.timerStatus = "counting";
-    this.counterObj.redume();
+    this.counterObj.redume(this.counterIndex);
 }
 
 function DateCount(){
-    this.startDate = 0;
-    this.pauseTime = 0;
-    this.redumeTime = 0;
-    this.elapsedTime = 0;
+    this.startDate = [0,0];
+    this.pauseTime = [0,0];
+    this.redumeTime = [0,0];
+    this.elapsedTime = [0,0];
 }
-DateCount.prototype.start = function(){
-    this.startDate = Date.now();
+
+
+DateCount.prototype.start = function(n){
+    var index = 0;
+    if(n)index = n;
+    this.startDate[index] = Date.now();
 }
-DateCount.prototype.getElapsedTime = function(){
+DateCount.prototype.getElapsedTime = function(n){
+    var index = 0;
+    if(n)index = n;
     var nowDate = Date.now();
-    if(this.pauseTime>0){
-        this.redumeTime += nowDate-this.pauseTime;
-        this.pauseTime = nowDate;
+    if(this.pauseTime[index]>0){
+        this.redumeTime[index] += nowDate-this.pauseTime[index];
+        this.pauseTime[index] = nowDate;
     }
-    this.elapsedTime = nowDate-this.startDate-this.redumeTime;
-    return this.elapsedTime;
+    this.elapsedTime[index] = nowDate-this.startDate[index]-this.redumeTime[index];
+    return this.elapsedTime[index];
 }
-DateCount.prototype.pause = function(){
-    this.pauseTime = Date.now();
+DateCount.prototype.pause = function(n){
+    var index = 0;
+    if(n)index = n;
+    this.pauseTime[index] = Date.now();
 }
-DateCount.prototype.redume = function(){
+DateCount.prototype.redume = function(n){
+    var index = 0;
+    if(n)index = n;
     var nowDate = Date.now();
-    this.radumeTime += this.pauseTime==0?0:nowDate-this.pauseTime;
-    this.pauseTime = 0;
+    this.redumeTime[index] += this.pauseTime[index]==0?0:nowDate-this.pauseTime[index];
+    this.pauseTime[index] = 0;
 }
 

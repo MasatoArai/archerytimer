@@ -10,11 +10,22 @@
     <script src="js/vue.js"></script>
     <script src="js/flipclock.js"></script>
     <script src="js/howler.js"></script>
+    <script src="js/dot-matrix.js"></script>
     <script src="js/main.js"></script>
 </head>
     <body>
         <div id="app">
-        <div id="container" v-bind:class="status.statusColor">
+        <div id="default" v-if="consoleObj.timermode=='default'" v-bind:class="status.statusColor">
+                <div class="ondisplayCtrl" v-show="onCtrl">
+                    <ul>
+                        <li class="rep" v-bind:class="repbut" v-on:click="reset()">
+                        </li>
+                        <li class="playpause" v-bind:class="playbut" v-on:click="playpause()">
+                        </li>
+                        <li class="next" v-bind:class="nextbut" v-on:click="nextEnd()">
+                        </li>
+                    </ul>
+                </div>
             <div id="timebox">
                 <div id="inner">
                     <svg width="150" height="150" xmlns="http://www.w3.org/2000/svg" id="mmc" style="width:20.833vmin;height:20.833vmin">
@@ -26,15 +37,12 @@
                     <div class="clock"></div>
                 </div>
 
-                <div id="endbox">
+                <div class="endbox">
                     <div class="subd">END</div>
-                    <div id="endnum">{{status.auxTimer?'-':display.end}}</div>
-                </div>
-                <div id="configbut" v-on:click="showConfig=!showConfig" v-bind:class="{active:showConfig}">
-                </div>
-                <div id="timerconfigbut" v-on:click="showTimerConfig=!showTimerConfig" v-bind:class="{active:showTimerConfig}" v-show="status.gameStatus=='Standby'||status.gameStatus=='ArrowsUp'||status.gameStatus==''">
+                    <div id="endnum" class="endnum">{{status.auxTimer?'-':display.end}}</div>
                 </div>
             </div>
+            
             <ul id="standset" v-show="!status.auxTimer">
                 <li v-for="(item, index) in initGameProperty.orderOfPlay" v-bind:class="{byRignt:initGameProperty.orderOfPlay.length==2&&index==1,active:status.stand==index+1}"><span v-bind:class="{active:status.stand==index+1}">{{item}}</span>
                 </li>
@@ -44,30 +52,60 @@
                 <li v-for="n in initGameProperty.arrowsUp" v-bind:class="{active:((status.time%initGameProperty.arrowsUp==0?initGameProperty.arrowsUp:status.time%initGameProperty.arrowsUp) == n)&&status.time!=0}">
                 </li>
             </ul>
+
+        </div>
+        <div id="tournament" v-if="consoleObj.timermode=='tournament'">
+            
+            <div id="tournament-timebox">
+                <div class="clock"></div>
+            </div>
+
+            <svg width="150" height="150" xmlns="http://www.w3.org/2000/svg" id="mmc" style="width:17vmin;height:17vmin">
+                 <g>
+                  <ellipse ry="36.67%" rx="36.67%" id="svg_1" cy="50%" cx="50%" stroke-width="6.666%" stroke="#333333" fill="none"></ellipse>
+                   <circle v-bind:r="(display.mmin/100*23.333+6.666)+'%'" cy="50%" cx="50%" stroke-width="0" stroke="none" fill="#333333"></circle>
+                 </g>
+            </svg>
+            <div id="tournamentMatrixBase">
+                <div id="remdot1" class="remtimebox t1"></div>
+                <div id="dotlamp1" class="dotlamp l1"></div>
+                <div id="remdot2" class="remtimebox t2"></div>
+                <div id="dotlamp2" class="dotlamp l2"></div>
+                <div class="tnum l">TARGET1</div>
+                <div class="tnum r">TARGET2</div>
+                
+                <div class="endbox">
+                    <div class="subd">SET</div>
+                    <div id="endnum" class="endnum"></div>
+                </div> 
+            </div>
+            
+                <div class="ondisplayCtrl" v-show="onCtrl">
+                    <ul>
+                        <li class="rep" v-bind:class="repbut" v-on:click="reset()">
+                        </li>
+                        <li class="playpause" v-bind:class="playbut" v-on:click="playpause()">
+                        </li>
+                        <li class="next" v-bind:class="nextbut" v-on:click="nextEnd()">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+                <div id="configbut" v-on:click="showConfig=!showConfig" v-bind:class="{active:showConfig}">
+                </div>
+                <div id="timerconfigbut" v-on:click="showTimerConfig=!showTimerConfig" v-bind:class="{active:showTimerConfig,tournament:consoleObj.timermode=='tournament'}" v-show="status.gameStatus=='Standby'||status.gameStatus=='ArrowsUp'||status.gameStatus==''">
+                </div>
+            
+            
             <div id="belt" v-if="toast.visibleBelt">
-                <!--<div id="appDiv">
-                    <div>
-                    readyTime:{{initTimerObj.readyTime}}</div>
-                    <div>
-                    gameTime:{{initTimerObj.gameTime}}</div>
-                    <div>
-                    Caution:{{initTimerObj.sign.caution}}</div>
-                    <div>
-                    warn:{{initTimerObj.sign.warn}}</div>
-                    <div>
-                    sec:{{display.min}}</div>
-                    <div>
-                    mm:{{display.mmin}}</div>
-                    <div>
-                    status:{{status.gameStatus}}</div>
-                    <div>
-                    stand:{{display.stand}}</div>
-                </div>-->
                 <div v-html="toast.toastMessage">
                 </div>
             </div>
+            
             <div id="timerconsole" v-show="showTimerConfig" class="console">
-                        <dl>
+                        <dl style="width:60%">
                         <dt>
                     行射補充時間
                         </dt>
@@ -85,12 +123,12 @@
                             </ul>
                         </dd>
                         </dl>
-                <hr>
 
                 <div id="setTimerConfigbut" class="setconfig" v-on:click="setSpecialTimer()"></div>
                 <div id="closeTimerconfig" class="closeconfig" v-on:click="showTimerConfig=false"></div>
             </div>
             <div id="console" v-show="showConfig" class="console">
+                <div class="default" v-if="consoleObj.timermode=='default'">
                 <ul id="timeAndEnd">
                     <li>
                         <dl>
@@ -187,17 +225,59 @@
                             </li>
                         </ul>
                     </dd>
-                    <dt>オンディスプレイ・コントローラ</dt>
+                </dl>
+                </div>
+                <div class="tournament" v-if="consoleObj.timermode=='tournament'">
+                    
+                <dl>
+                    <dt>
+                        トーナメント種別
+                    </dt>
+                    <dd id="tournamentkind">
+                    <ul>
+                        <li :class="{active:consoleObj.tournament.mode=='single'}" v-on:click="consoleObj.tournament.mode='single'">
+                            SINGLE
+                        </li>
+                        <li :class="{active:consoleObj.tournament.mode=='team'}" v-on:click="consoleObj.tournament.mode='team'">
+                            TEAM
+                        </li>
+                        <li :class="{active:consoleObj.tournament.mode=='mix'}" v-on:click="consoleObj.tournament.mode='mix'">
+                            MIX
+                        </li>
+                    </ul>
+                    </dd>
+                    
+                    <dt>
+                        ファーストシューター
+                    </dt>
+                    <dd id="arrowsup">
+                        <ul>
+                            <li :class="{active:consoleObj.tournament.firstStand==1}" v-on:click="consoleObj.tournament.firstStand=1">
+                               TARGET1
+                            </li>
+                            <li :class="{active:consoleObj.tournament.firstStand==2}" v-on:click="consoleObj.tournament.firstStand=2">
+                                TARGET2
+                            </li>
+                        </ul>
+                    </dd>
+                </dl>
+                </div>
+                <hr>
+                <div class="ctrltoggle">
+                    <dl>
+                    <dt>コントローラ表示</dt>
                     <dd>
                     <div id="ctrltoggle" class="togglebase" v-bind:class="{active:onCtrl}" v-on:click="onCtrl=!onCtrl">
                         <div class="togglenob"></div>
                     </div>
                     </dd>
-                </dl>
+                    </dl>
+                </div>
                 <div id="selectSoundbut" v-on:click="selectSound=true" class="selectsound"></div>
                 <div id="setConfigbut" v-on:click="setConfig()" class="setconfig"></div>
                 <div id="closeconfig" v-on:click="showConfig=false" class="closeconfig"></div>
                 <div id="copy" v-on:click="showCopy(true)" class="copybut"></div>
+                <div id="selectmode" @click="consoleObj.timermode=consoleObj.timermode=='default'?'tournament':'default'" v-bind:class="consoleObj.timermode"></div>
                 <div id="selectSoundBase" v-if="(selectSound&&showConfig)">
                     <dl>
                     <dt>
@@ -221,18 +301,6 @@
                     <div id="tournamentRound" class="tab"></div>
                 </div>-->
             </div>
-                <div id="ondisplayCtrl" v-show="onCtrl">
-                    <ul>
-                        <li class="rep" v-bind:class="repbut" v-on:click="reset()">
-                        </li>
-                        <li class="playpause" v-bind:class="playbut" v-on:click="playpause()">
-                        </li>
-                        <li class="next" v-bind:class="nextbut" v-on:click="nextEnd()">
-                        </li>
-                    </ul>
-                </div>
-
-        </div>
             
             <div id="orientationinfo"></div>
             <div id="isAC" v-if="isAC" @click="setFullScreen()">
