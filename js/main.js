@@ -353,7 +353,7 @@ function initializationAll() {
             , 'display.min': function (val) {}, //todo watch
             'display.mmin': function (val) {
                 //todo あとで変更
-                if (this.initGameProperty.timerMode == "tournament") {
+                if (this.consoleObj.timerMode == "tournament") {
                     this.dotmatrixs.dropdown.dropDown(val);
                 }
             }
@@ -370,15 +370,7 @@ function initializationAll() {
                 var digit = this.consoleObj.tournament.mode == 'team' ? 3 : 2;
                 var self = this;
                 if (this.status.stand > 0) {
-                    if (val > 0) {
-                        this.dotmatrixs.remdot1.changeValue(util.getStringNum(val, digit));
-                    }
-                    else {
-                        this.dotmatrixs.remdot1.changeValue(util.getStringNum(val, digit));
-                        this.dotmatrixs.remdot1.blink([5000, 300], false, function () {
-                            self.dotmatrixs.remdot1.changeValue(util.getStringNum(self.initTimerObj.gameTime / 1000, digit));
-                        });
-                    }
+                        this.dotmatrixs.remdot1.changeValue(util.getStringNum(val, digit))
                 }
             }
             , 'display.remdot2': function (val) {
@@ -386,16 +378,8 @@ function initializationAll() {
                 var digit = this.consoleObj.tournament.mode == 'team' ? 3 : 2;
                 var self = this;
                 if (this.status.stand > 0) {
-                    if (val > 0) {
                         this.dotmatrixs.remdot2.changeValue(util.getStringNum(val, digit));
                     }
-                    else {
-                        this.dotmatrixs.remdot2.changeValue(util.getStringNum(val, digit));
-                        this.dotmatrixs.remdot2.blink([5000, 300], false, function () {
-                            self.dotmatrixs.remdot2.changeValue(util.getStringNum(self.initTimerObj.gameTime / 1000, digit));
-                        });
-                    }
-                }
             }
         }
         , methods: {
@@ -877,48 +861,26 @@ TimerCore.prototype.setReady = function (bool, obj) { //timer設定obj,bool一�
     this.display.min = this.display.flipmin;
     this.status.timerStatus = "timeup";
     //note remdot設定
-    if(this.initGameProperty.timerMode=="tournament"){//
-        if(this.status.time%this.initGameProperty.arrowsUp < this.initGameProperty.arrowsUp&&this.status.time%this.initGameProperty.arrowsUp!=0)
-        this.setRemdot();
-    }
     
     if (bool) {
+    if(this.initGameProperty.timerMode=="tournament"){
+        if(this.status.time%this.initGameProperty.arrowsUp 
+           <
+           this.initGameProperty.arrowsUp
+           &&
+           this.status.time%this.initGameProperty.arrowsUp!=0){
+            this.setRemdot('next');
+        }
+    }
         this.countDo();
     }
     else {
         this.vue.setFirstShooter();
         this.toast.toastMessage = "STANDBY!!";
-        if (this.initGameProperty.timerMode == "tournament") {
-            this.vue.dotmatrixs.remdot1.changeValue(util.getStringNum(0, this.vue.dotmatrixs.remdot1.dot.digit));
-            this.vue.dotmatrixs.remdot2.changeValue(util.getStringNum(0, this.vue.dotmatrixs.remdot2.dot.digit));
-        }
-    }
-
-    function setRemdot() {
-        if (self.initGameProperty.timerMode == "tournament") {
-            if (!bool) {
-                self.display.remdot1 = self.display.flipmin;
-                self.display.remdot2 = self.display.flipmin;
-            }
-            else if(self.initGameProperty.tournamentMode=='single'){
-                switch (self.status.stand) {
-                case 1:
-                    self.display.remdot1 = self.display.flipmin;
-                    self.vue.dotmatrixs.remdot2.blink([5000, 300, 300, 300], false, function () {
-                        self.vue.dotmatrixs.remdot2.changeValue(util.getStringNum(self.initTimerObj.gameTime / 1000, self.vue.dotmatrixs.remdot1.dot.digit));
-                    });
-                    break;
-                case 2:
-                    self.display.remdot2 = self.display.flipmin;
-                    self.vue.dotmatrixs.remdot1.blink([5000, 300, 300, 300], false, function () {
-                        self.vue.dotmatrixs.remdot1.changeValue(util.getStringNum(self.initTimerObj.gameTime / 1000, self.vue.dotmatrixs.remdot2.dot.digit));
-                    });
-                    break;
-                }
-            }
-        }
+        this.setRemdot('standby');
     }
 }
+
 TimerCore.prototype.countDo = function () {
     this.counterIndex = 0;
     var isFirstShootAtTournament = false;
@@ -983,8 +945,8 @@ TimerCore.prototype.countDo = function () {
                     return;
                     }
                     if (self.initGameProperty.timerMode == 'tournament'){
+                        self.setDispMinMmin();
                         if(self.initGameProperty.tournamentMode == 'single'){
-                            self.setDispMinMmin();
                             self.setReady(true);
                             return;
                         }else{
@@ -1031,10 +993,10 @@ TimerCore.prototype.setDispMinMmin = function() { //flip以外のdisplay　min�
         if(this.initGameProperty.timerMode == 'tournament'){
             switch(this.status.stand){
                 case 1:
-                    this.display.remdotl == dispMin;
+                    this.display.remdot1 == dispMin;
                     break;
                 case 2:
-                    this.display.remdotr == dispMin;
+                    this.display.remdot2 == dispMin;
                     break;
             }
         }
@@ -1070,11 +1032,13 @@ TimerCore.prototype.stop = function () {
             this.toast.toastMessage = "Game is over!";
             this.status.gameStatus = 'GameOver';
             this.vue.sound.play('end');
+            this.setRemdot("arrowsup");
         }
         else {
             // end end
             this.toast.toastMessage = "Cease Fire!"
             this.status.gameStatus = "ArrowsUp";
+            this.setRemdot("arrowsup");
         }
         this.display.flipmin = 0;
     }
@@ -1160,9 +1124,13 @@ TimerCore.prototype.setRemdot = function(mode) {
     Vue.nextTick(function(){
         var self = this;
      switch(dispmode){
+         case 'standby'://スタンバイ時ゲームタイム掲示
+             this.display.remdot1 = this.initTimerObj.gameTime/1000;
+             this.display.remdot2 = this.initTimerObj.gameTime/1000;
+             break;
         case 'fixed'://静的にflipと合わせるだけ
-            this.display.remdotl = this.display.min;
-            this.display.remdotr = this.display.min;
+            this.display.remdot1 = this.display.min;
+            this.display.remdot2 = this.display.min;
             break;
         case 'next'||'timeout'://ボタン操作による移動//時間切れによる移動
             if(this.initGameProperty.tournamentMode=='single'){
