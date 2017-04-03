@@ -54,18 +54,13 @@
             </ul>
 
         </div>
-        <div id="tournament" v-if="consoleObj.timermode=='tournament'">
+        <div id="tournament" v-if="consoleObj.timermode=='tournament'" v-bind:class="status.statusColor">
             
             <div id="tournament-timebox">
                 <div class="clock"></div>
             </div>
-
-            <svg width="150" height="150" xmlns="http://www.w3.org/2000/svg" id="mmc" style="width:17vmin;height:17vmin">
-                 <g>
-                  <ellipse ry="36.67%" rx="36.67%" id="svg_1" cy="50%" cx="50%" stroke-width="6.666%" stroke="#333333" fill="none"></ellipse>
-                   <circle v-bind:r="(display.mmin/100*23.333+6.666)+'%'" cy="50%" cx="50%" stroke-width="0" stroke="none" fill="#333333"></circle>
-                 </g>
-            </svg>
+<div id="dropDown" class="dropDown">
+            </div>
             <div id="tournamentMatrixBase">
                 <div id="remdot1" class="remtimebox t1"></div>
                 <div id="dotlamp1" class="dotlamp l1"></div>
@@ -76,6 +71,12 @@
                 
                 <div class="endbox">
                     <div class="subd">SET</div>
+                    <ul class="standtip l">
+                    <li v-for="n in (initGameProperty.arrowsUp/2)" v-bind:class="{active:status.time>=(initGameProperty.firstStand==1?2*n-1:2*n)+((display.end-1)*initGameProperty.arrowsUp)}"></li>
+                    </ul>
+                    <ul class="standtip r">
+                    <li v-for="n in (initGameProperty.arrowsUp/2)" v-bind:class="{active:status.time>=(initGameProperty.firstStand==2?2*n-1:2*n)+((display.end-1)*initGameProperty.arrowsUp)}"></li>
+                    </ul>
                     <div id="endnum" class="endnum"></div>
                 </div> 
             </div>
@@ -241,8 +242,8 @@
                         <li :class="{active:consoleObj.tournament.mode=='team'}" v-on:click="consoleObj.tournament.mode='team'">
                             TEAM
                         </li>
-                        <li :class="{active:consoleObj.tournament.mode=='mix'}" v-on:click="consoleObj.tournament.mode='mix'">
-                            MIX
+                        <li :class="{active:consoleObj.tournament.mode=='mixed'}" v-on:click="consoleObj.tournament.mode='mixed'">
+                            MIXED
                         </li>
                     </ul>
                     </dd>

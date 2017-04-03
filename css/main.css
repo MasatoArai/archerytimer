@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   padding: 0;
   margin: 0;
@@ -37,81 +38,124 @@ body {
 @media screen and (orientation: portrait) {
   #default {
     display: none; } }
-#tournament .ondisplayCtrl {
-  bottom: 21vmin;
-  left: 50%;
-  border-radius: 2vmin 2vmin 0 0;
-  transform: translateX(-50%);
-  height: inherit; }
-  #tournament .ondisplayCtrl ul {
-    padding: 0.002vmin; }
-#tournament #tournament-timebox {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 1.5vmin; }
-  #tournament #tournament-timebox .clock {
-    position: relative;
-    margin-left: 0.5vmin; }
-#tournament #tournamentMatrixBase {
-  position: absolute;
-  bottom: 0;
-  height: 21vmin;
-  width: 100%;
-  background-color: #333333;
-  padding: 0.5vmin; }
-  #tournament #tournamentMatrixBase .endbox {
-    background-color: #000;
-    top: inherit;
-    height: 20vmin;
-    border-radius: 2vmin;
-    width: 16vmax;
+#tournament {
+  width: 100vw;
+  height: 100vh; }
+  #tournament.warn {
+    background-color: #ff4f4f; }
+  #tournament.caution {
+    background-color: #ffe44f; }
+  #tournament.shoot {
+    background-color: white; }
+  #tournament .ondisplayCtrl {
+    bottom: 21vmin;
     left: 50%;
-    transform: translateX(-50%); }
-    #tournament #tournamentMatrixBase .endbox .subd {
-      font-size: 4vmin;
-      line-height: 4vmin; }
-    #tournament #tournamentMatrixBase .endbox .endnum {
-      height: 14vmin; }
-  #tournament #tournamentMatrixBase .tnum {
+    border-radius: 2vmin 2vmin 0 0;
+    transform: translateX(-50%);
+    height: 5vmin; }
+    #tournament .ondisplayCtrl ul {
+      padding: 0.002vmin; }
+  #tournament #tournament-timebox {
     position: absolute;
-    font-size: 6vh;
-    font-weight: bold;
-    color: white;
-    bottom: 1vmin; }
-    #tournament #tournamentMatrixBase .tnum.l {
-      left: 42vmin; }
-    #tournament #tournamentMatrixBase .tnum.r {
-      right: 42vmin; }
-  #tournament #tournamentMatrixBase .dotlamp {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 1.5vmin; }
+    #tournament #tournament-timebox .clock {
+      position: relative;
+      margin-left: 0.5vmin; }
+  #tournament #tournamentMatrixBase {
     position: absolute;
-    background-color: #000;
-    border-radius: 2vmin;
-    height: 8vmin;
-    width: 34vmin;
-    top: 2vmin;
-    overflow: hidden;
-    padding: 0.5vmin; }
-    #tournament #tournamentMatrixBase .dotlamp.l1 {
-      left: 39vmin; }
-    #tournament #tournamentMatrixBase .dotlamp.l2 {
-      right: 39vmin; }
-  #tournament #tournamentMatrixBase .remtimebox {
-    position: absolute;
+    bottom: 0;
+    height: 21vmin;
+    width: 100%;
     background-color: #333333;
-    width: 36vmin;
-    height: 17vmin;
+    padding: 0.5vmin; }
+    #tournament #tournamentMatrixBase .endbox {
+      background-color: #000;
+      top: inherit;
+      height: 20vmin;
+      border-radius: 2vmin;
+      width: 16vmax;
+      left: 50%;
+      transform: translateX(-50%); }
+      #tournament #tournamentMatrixBase .endbox ul.standtip {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        width: 2vmin; }
+        #tournament #tournamentMatrixBase .endbox ul.standtip.l {
+          left: 0; }
+        #tournament #tournamentMatrixBase .endbox ul.standtip.r {
+          right: 0; }
+        #tournament #tournamentMatrixBase .endbox ul.standtip li {
+          display: block;
+          width: 2vmin;
+          height: 2vmin;
+          background-color: #4b2a12;
+          margin-bottom: 2vmin; }
+          #tournament #tournamentMatrixBase .endbox ul.standtip li.active {
+            background-color: #ff8b17; }
+      #tournament #tournamentMatrixBase .endbox .subd {
+        font-size: 4vmin;
+        line-height: 4vmin; }
+      #tournament #tournamentMatrixBase .endbox .endnum {
+        height: 14vmin; }
+    #tournament #tournamentMatrixBase .tnum {
+      position: absolute;
+      font-size: 6vh;
+      font-weight: bold;
+      color: white;
+      bottom: 1vmin; }
+      #tournament #tournamentMatrixBase .tnum.l {
+        left: 42vmin; }
+      #tournament #tournamentMatrixBase .tnum.r {
+        right: 42vmin; }
+    #tournament #tournamentMatrixBase .dotlamp {
+      position: absolute;
+      background-color: #000;
+      border-radius: 2vmin;
+      height: 8vmin;
+      width: 34vmin;
+      top: 2vmin;
+      overflow: hidden;
+      padding: 0.5vmin; }
+      #tournament #tournamentMatrixBase .dotlamp.l1 {
+        left: 39vmin; }
+      #tournament #tournamentMatrixBase .dotlamp.l2 {
+        right: 39vmin; }
+    #tournament #tournamentMatrixBase .remtimebox {
+      position: absolute;
+      background-color: #333333;
+      width: 36vmin;
+      height: 17vmin;
+      border-radius: 2vmin;
+      top: 2vmin;
+      overflow: hidden; }
+      #tournament #tournamentMatrixBase .remtimebox.t1 {
+        left: 2vmin; }
+      #tournament #tournamentMatrixBase .remtimebox.t2 {
+        right: 2vmin; }
+  #tournament #dropDown {
+    position: absolute;
+    left: 30.5vmin;
+    top: 26vmin;
+    padding: 3vmin 1vmin;
+    width: 9vmin;
+    height: 22vmin;
+    background-color: #333333;
     border-radius: 2vmin;
-    top: 2vmin;
     overflow: hidden; }
-    #tournament #tournamentMatrixBase .remtimebox.t1 {
-      left: 2vmin; }
-    #tournament #tournamentMatrixBase .remtimebox.t2 {
-      right: 2vmin; }
-#tournament #mmc {
-  position: absolute;
-  top: 56vmin;
-  left: 0; }
+    #tournament #dropDown.r {
+      left: inherit;
+      right: 0;
+      border-radius: 　2vmin 0 0 2vmin; }
+  #tournament #mmc {
+    position: absolute;
+    top: 56vmin;
+    left: 0; }
 
 #default {
   width: 100vmax;
@@ -286,7 +330,7 @@ ul#dotindex {
   background-color: #333333;
   width: 86vmin;
   color: #fff;
-  z-index: 200;
+  z-index: 1200;
   border-radius: 6.944vmin;
   border: 1.111vmin solid #fff;
   padding: 2vmin 5vmin 7vmin 5vmin;
@@ -628,7 +672,7 @@ ul#dotindex {
   top: 0;
   left: 0;
   background-color: #fff;
-  z-index: 1002; }
+  z-index: 3000; }
   #splash > div {
     -webkit-animation: zoom 3s cubic-bezier(0.1, 0.48, 0.47, 1) alternate 1s;
     -moz-animation: zoom 3s cubic-bezier(0.1, 0.48, 0.47, 1) alternate 1s;
@@ -694,7 +738,7 @@ ul#dotindex {
     height: 100vh;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 2000;
     background-color: #fff;
     background-repeat: no-repeat;
     background-size: 65%;
