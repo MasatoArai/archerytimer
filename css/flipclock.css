@@ -67,6 +67,7 @@ font-weight: bold;
 line-height: 70vmin;
 border-radius:  2.778vmin;
 background: #000;
+    margin-top:0;
 }
 
 .flip-clock-wrapper ul li {

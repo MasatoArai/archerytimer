@@ -44,6 +44,7 @@ function initializationAll() {
             isShowCopy: false
             , consoleObj: {
                 timermode: 'default'
+                ,canBGchange:false
                 , addgametime: {
                     digit1: 0
                     , digit2: 0
@@ -119,6 +120,7 @@ function initializationAll() {
             , showConfig: false
             , selectSound: false
             , showTimerConfig: false
+            , showKeyinfo: false
             , timerCore: {}
             , flipclock: {}
             , sound: {}
@@ -129,7 +131,12 @@ function initializationAll() {
                 , lampl: {}
                 , lampr: {}
                 , dropdown: {}
+                , defaultLampLine1:{}
+                , defaultLampLine2:{}
+                , standdot:{}
+                , dotstatus:{}
             }
+            , doubleLineDotmatrixs:{}
         }
         , computed: {
             repbut: function () {
@@ -204,7 +211,7 @@ function initializationAll() {
                     this.consoleObj.tournament.arrowsUp = 4;
                     break;
                 case "mixed":
-                    this.consoleObj.tournament.gametime = 20;
+                    this.consoleObj.tournament.gametime = 80;
                     this.consoleObj.tournament.setnum = 4;
                     this.consoleObj.tournament.arrowsUp = 4;
                     break;
@@ -248,27 +255,51 @@ function initializationAll() {
                 this.showToast();
             }, // todo watch gamestatus
             'status.gameStatus': function (val) {
+                var isTournament = (this.consoleObj.timermode == "tournament");
                 switch (val) {
                 case "Standby":
                     this.status.statusColor = "shoot";
+                        if(!isTournament){
+                            this.doubleLineDotmatrixs.setColor("warn");
+                            this.doubleLineDotmatrixs.tikatika(true);
+                            this.dotmatrixs.dotstatus.changeValue('Standby!!');
+                            this.dotmatrixs.dotstatus.moveLine(300);
+                        }
                     break;
                 case "Ready":
                     this.sound.play("ready");
                     this.status.statusColor = "warn";
+                        if(!isTournament){
+                            this.doubleLineDotmatrixs.setColor("warn");
+                            this.dotmatrixs.dotstatus.changeValue('Ready'+String.fromCharCode(201));
+                        }
                     break;
                 case "Shoot":
                     this.sound.play("start");
                     this.status.statusColor = "shoot";
+                        if(!isTournament){
+                            this.doubleLineDotmatrixs.setColor("shoot");
+                            this.dotmatrixs.dotstatus.changeValue('Shoot!');
+                            this.dotmatrixs.dotstatus.blink([5000, 300, 300, 300, 3000],false);
+                        }
                     break;
                 case "Caution":
                     this.status.statusColor = "caution";
+                        if(!isTournament)this.doubleLineDotmatrixs.setColor("caution");
                     break;
                 case "Warn":
                     this.status.statusColor = "warn";
+                        if(!isTournament)this.doubleLineDotmatrixs.setColor("warn");
                     break;
                 case "ArrowsUp":
                     this.sound.play("end");
                     this.status.statusColor = "warn";
+                        if(!isTournament){
+                            this.doubleLineDotmatrixs.setColor("warn");
+                            this.doubleLineDotmatrixs.tikatika(true);
+                            this.dotmatrixs.dotstatus.changeValue('Cease Fire'+String.fromCharCode(201));
+                            this.dotmatrixs.dotstatus.moveLine(300);
+                        }
                     break;
                 }
                 if (this.consoleObj.timermode == 'default') return;
@@ -352,10 +383,11 @@ function initializationAll() {
             }
             , 'display.min': function (val) {}, //todo watch
             'display.mmin': function (val) {
-                //todo あとで変更
-                if (this.consoleObj.timerMode == "tournament") {
                     this.dotmatrixs.dropdown.dropDown(val);
-                }
+            }
+            ,'display.stand':function(val){
+                if (this.consoleObj.timermode != "default") return;
+                this.dotmatrixs.standdot.changeValue(val);
             }
             , 'consoleObj.tournament.firstStand': function (val) {
                 this.initGameProperty.firstStand = val;
@@ -391,6 +423,13 @@ function initializationAll() {
                         this[key] = {};
                     }
                 }, this.dotmatrixs)
+                if(this.doubleLineDotmatrixs.stop)
+                this.doubleLineDotmatrixs.stop();
+            }
+            ,changeFirstShooter: function(tnum){
+                if(this.status.gameStatus==""||this.status.gameStatus == "Standby"){
+                    this.consoleObj.tournament.firstStand=tnum;
+                }
             }
             , setFirstShooter: function () {
                 if (this.consoleObj.timermode == 'default') return;
@@ -413,12 +452,35 @@ function initializationAll() {
                     clockFace: 'Counter'
                 });
                 this.flipclock.setTime(0);
-                this.dotmatrixs.endnum = new DotMatrixStyler("endnum", util.getStringNum(0, digit), {
-                    colorOn: "#ff8b17"
-                    , colorOff: "#4b2a12"
-                    , digit: digit
-                });
-                if (this.consoleObj.timermode == "tournament") {
+                var isTournament = (this.consoleObj.timermode == "tournament");
+                    this.dotmatrixs.endnum = new DotMatrixStyler("endnum", util.getStringNum(0, digit), {
+                        colorOn: "#ff8b17"
+                        , colorOff: "#4b2a12"
+                        , digit: digit
+                    });
+                
+                    this.dotmatrixs.dropdown = new DotMatrixStyler(isTournament?"tournamentDropDown":"dropDown", " ", {
+                        colorOn: "#ff8b17"
+                        , colorOff: "#4b2a12"
+                        , digit: 1
+                        , shape: 'square'
+                    });
+                    this.dotmatrixs.dropdown.dropDownInit();
+                if (!isTournament) {//通常タイマー時
+                    this.dotmatrixs.dotstatus = new DotMatrixStyler('dotStatus','  ',{
+                        colorOn: "#ff8b17"
+                        , colorOff: "#4b2a12"
+                        , digit:6
+                    });
+                    this.doubleLineDotmatrixs = new DoubleLineDotMatrixCtrl(['lamp1','lamp2'],this);
+                    
+                    this.dotmatrixs.standdot = new DotMatrixStyler('dotStand','  ',{
+                        colorOn: "#ff8b17"
+                        , colorOff: "#4b2a12"
+                        , digit:2
+                    })
+                }
+                if (isTournament) {
                     this.dotmatrixs.remdot1 = new DotMatrixStyler("remdot1", "000", {
                         colorOn: "#ff8b17"
                         , colorOff: "#4b2a12"
@@ -441,14 +503,6 @@ function initializationAll() {
                         , digit: 7
                         , shape: 'square'
                     });
-                    //todo あとで修正
-                    this.dotmatrixs.dropdown = new DotMatrixStyler("dropDown", " ", {
-                        colorOn: "#ff8b17"
-                        , colorOff: "#4b2a12"
-                        , digit: 1
-                        , shape: 'square'
-                    });
-                    this.dotmatrixs.dropdown.dropDownInit();
                 }
             }
             , showCopy: function (b) {
@@ -733,7 +787,10 @@ function TimerCore(vueIns) {
     }
 }
 TimerCore.prototype.rejectGameinfo = function () {
+    
     clearInterval(this.intervalID);
+    
+    this.status.gameStatus = '';
     this.status.inCount = false;
     this.status.timerStatus = "timeup";
     this.status.auxTimer = false;
@@ -749,7 +806,6 @@ TimerCore.prototype.rejectGameinfo = function () {
     this.display.end = 0;
     this.display.remdot1 = 0;
     this.display.remdot2 = 0;
-    this.display.stand = '';
     this.initGameProperty.arrowsUp = 0;
     this.initGameProperty.orderOfPlay = [];
 }
@@ -791,7 +847,7 @@ TimerCore.prototype.setReady = function (bool, obj) { //timer設定obj,bool一�
         this.countConf.gameTime = obj.gameTime;
         this.countConf.caution = obj.caution;
         this.countConf.warn = obj.warn;
-        this.display.stand = "Special";
+        this.display.stand = "--";
         this.status.lastPosition = this.status.gameStatus;
         this.status.gameStatus = "Standby";
     }
@@ -1224,6 +1280,7 @@ function DotMatrixStyler(targetID, val, param) {
     this.blinkID = -1;
     this.suicideID = -1;
     this.dot = new DotMatrix(targetID);
+    this.dot.CODE_SEG_TABLE[201] = [64, 0, 64, 0, 64];
     this.dot.target.innerHTML = '';
     this.inAnimation = false;
     this.isDropDown = false;
@@ -1388,4 +1445,59 @@ DotMatrixStyler.prototype.dropDown = function (nn) {
         this.frame = 0;
     }
     this.dot.changeValue(this.STRS[frame]);
+}
+function DoubleLineDotMatrixCtrl(ary,v){//設定上原則2個固定,v=vue
+    for(var i=0;i<ary.length;i++){
+        v.dotmatrixs["defaultLampLine"+(i+1)]=new DotMatrixStyler(ary[i],'   ',{
+                        colorOn: "#ff1c1c"
+                        , colorOff: "#343434"
+                        , digit:3
+                        , shape: 'square'
+                    });
+        v.dotmatrixs["defaultLampLine"+(i+1)].dot.CODE_SEG_TABLE[200] = [127, 127, 127, 127, 127];
+    }
+    this.dtmLamp = [v.dotmatrixs.defaultLampLine1,v.dotmatrixs.defaultLampLine2];
+    this.intervalID = 0;
+}
+DoubleLineDotMatrixCtrl.prototype.setColor = function(comandID){
+    this.stop();
+    var dispFlash = String.fromCharCode(200)+String.fromCharCode(200)+String.fromCharCode(200);
+    switch(comandID){
+        case 'warn':
+            this.dtmLamp[0].changeValue(dispFlash,"#ff1c1c","#343434");
+            this.dtmLamp[1].changeValue(dispFlash,"#ff1c1c","#343434");
+            break;
+        case 'caution':
+            this.dtmLamp[0].changeValue(dispFlash,"#efe601","#343434");
+            this.dtmLamp[1].changeValue(dispFlash,"#efe601","#343434");
+            break;
+        case 'shoot':
+            this.dtmLamp[0].changeValue(dispFlash,"#367bff","#343434");
+            this.dtmLamp[1].changeValue(dispFlash,"#367bff","#343434");
+            break;
+    }
+}
+DoubleLineDotMatrixCtrl.prototype.stop = function(){
+    clearInterval(this.intervalID);
+}
+DoubleLineDotMatrixCtrl.prototype.tikatika = function(){
+    clearInterval(this.intervalID);
+    var self = this;
+    var t = tika(true);
+    this.intervalID = setInterval(function(b){
+        t();
+    },500);
+    function tika(b){
+        var bool = b;
+        return function(){
+            if(bool){
+                self.dtmLamp[0].changeValue(' '+String.fromCharCode(200)+' ');
+                self.dtmLamp[1].changeValue(String.fromCharCode(200)+' '+String.fromCharCode(200));
+            }else{
+                self.dtmLamp[1].changeValue(' '+String.fromCharCode(200)+' ');
+                self.dtmLamp[0].changeValue(String.fromCharCode(200)+' '+String.fromCharCode(200));
+            }
+            bool = !bool;
+        }
+    }
 }

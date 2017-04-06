@@ -151,7 +151,7 @@ DotMatrix.prototype = {
 		var viewBoxHeight = margin + 70;
 
 		var container = document.createElement("div");
-		container.setAttribute("style", "display: inline-block; height: 100%; width: 100%;");
+		container.setAttribute("style", "display: inline-block; height: 100%; width: 100%;font-size: 0;line-height: 0;");
 		container.setAttribute("title", value);
 
 		var svg = document.createElementNS(DotMatrix.SVGNS, "svg");

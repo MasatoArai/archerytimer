@@ -101,27 +101,31 @@ body {
 #tournament {
     width: 100vw;
     height: 100vh;
-    
+    background-image: url(../images/transparent/diamond-upholstery.png);
+    background-size: 40vmin;
+    background-color: #000;
     &.warn {
-        background-color: #ff4f4f;
+        background-color: #ff1c1c;
     }
     &.caution {
         background-color: #ffe44f;
     }
     &.shoot {
-        background-color: white;
+        background-color: #000;
     }
-    .ondisplayCtrl{
-        bottom: 21vmin;
-        left: 50%;
-        border-radius: 2vmin 2vmin 0 0;
-        transform: translateX(-50%);
-        height: 5vmin;
-        ul{
+    .ondisplayCtrl {
+        bottom: 20vmin;
+    left: 50%;
+    border-radius: 2vmin 2vmin 0 0;
+    transform: translateX(-50%);
+    height: 7vmin;
+    border: #494949 outset 2px;
+    border-bottom-color: transparent;
+        ul {
             padding: 0.002vmin;
         }
     }
-    #tournament-timebox{
+    #tournament-timebox {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
@@ -131,69 +135,75 @@ body {
             margin-left: 0.5vmin;
         }
     }
-    #tournamentMatrixBase{
-    position: absolute;
-    bottom: 0;
-    height: 21vmin;
-    width: 100%;
-    background-color: #333333;
+    #tournamentMatrixBase {
+        position: absolute;
+        bottom: 0;
+        height: 21vmin;
+        width: 100%;
+        background-color: #333333;
         padding: 0.5vmin;
-    .endbox {
-        background-color: #000;
-        top: inherit;
-        height: 20vmin;
-        border-radius: 2vmin;
-        width: 16vmax;
-        left: 50%;
-        transform: translateX(-50%);
-        ul.standtip{
+        border-top: 2px solid #565656;
+        .tournament_endbox {
             position: absolute;
-            top: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            width: 2vmin;
-            &.l{
-                left: 0;
-            }
-            &.r{
-                right: 0;
-            }
-            li{
-                display: block;
+            background-color: #000;
+            top: inherit;
+            height: 20vmin;
+            border-radius: 2vmin;
+            width: 16vmax;
+            left: 50%;
+            transform: translateX(-50%);
+            border: rgb(82, 82, 82) inset 2px;
+            ul.standtip {
+                position: absolute;
+                top: 0;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
                 width: 2vmin;
-                height: 2vmin;
-                background-color: #4b2a12;
-                margin-bottom: 2vmin;
-                &.active{
-                    background-color:#ff8b17;
+                &.l {
+                    left: 0;
+                }
+                &.r {
+                    right: 0;
+                }
+                li {
+                    display: block;
+                    width: 2vmin;
+                    height: 2vmin;
+                    background-color: #4b2a12;
+                    margin-bottom: 2vmin;
+                    &.active {
+                        background-color: #ff8b17;
+                    }
                 }
             }
-            
+            .subd {
+                font-size: 4vmin;
+                font-weight: bold;
+                line-height: 4vmin;
+                color: white;
+                text-align: center;
+                padding-top: 1vmin;
+            }
+            .endnum {
+                height: 14vmin;
+            }
         }
-        .subd {
-            font-size: 4vmin;
-            line-height: 4vmin;
-        }
-        .endnum {
-            height: 14vmin;
-        }
-    }
-        .tnum{
+        .tnum {
             position: absolute;
             font-size: 6vh;
             font-weight: bold;
             color: white;
             bottom: 1vmin;
-            &.l{
+            &.l {
                 left: 42vmin;
             }
-            &.r{
+            &.r {
                 right: 42vmin;
             }
         }
-        .dotlamp{
+        .dotlamp {
             position: absolute;
             background-color: #000;
             border-radius: 2vmin;
@@ -202,14 +212,14 @@ body {
             top: 2vmin;
             overflow: hidden;
             padding: 0.5vmin;
-            &.l1{
+            &.l1 {
                 left: 39vmin;
             }
-            &.l2{
+            &.l2 {
                 right: 39vmin;
             }
         }
-        .remtimebox{
+        .remtimebox {
             position: absolute;
             background-color: #333333;
             width: 36vmin;
@@ -217,17 +227,17 @@ body {
             border-radius: 2vmin;
             top: 2vmin;
             overflow: hidden;
-            &.t1{
-                left:2vmin;
+            &.t1 {
+                left: 2vmin;
             }
-            &.t2{
-                right:2vmin;
+            &.t2 {
+                right: 2vmin;
             }
         }
     }
-    #dropDown{
+    #tournamentDropDown {
         position: absolute;
-        left: 30.5vmin;
+        left: -10vmin;
         top: 26vmin;
         padding: 3vmin 1vmin;
         width: 9vmin;
@@ -235,39 +245,45 @@ body {
         background-color: #333333;
         border-radius: 2vmin;
         overflow: hidden;
-        &.r{
+        &.r {
             left: inherit;
             right: 0;
-            border-radius:　2vmin 0 0 2vmin;
+            border-radius: 2vmin 0 0 2vmin;
         }
     }
     #mmc {
-    position: absolute;
-    top: 56vmin;
-    left: 0;
+        position: absolute;
+        top: 56vmin;
+        left: 0;
     }
 }
 
 #default {
+    
+    perspective: 200vmin;
     width: 100vmax;
     height: 100vmin;
     transition: background 0.4s ease 0s;
     position: absolute;
-    background-color: #fff;
+    background-color: #000;
     top: 0;
     left: 0;
+    background-image: url(../images/transparent/diamond-upholstery.png);
+    background-size: 40vmin;
     &.warn {
-        background-color: #ff4f4f;
+        background-color: #ff1c1c;
     }
     &.caution {
         background-color: #ffe44f;
     }
     &.shoot {
-        background-color: white;
+        background-color: #000;
     }
-    .ondisplayCtrl{
-    top: 44.5vmin;
-    left: 0.694vmin;
+    .ondisplayCtrl {
+        left: 84vmin;
+        bottom: 4vmin;
+        border-radius: 2vmin;
+        width: 39vmin;
     }
 }
 
@@ -276,135 +292,179 @@ body {
     position: relative;
     width: 100%;
     height: 80.5vmin;
-    .clock{
+    #inner {
         position: absolute;
-        top: 5vmin;
         left: 30vmin;
+        top: 12vmin;
+    }
+    .clock {
+        position: relative;
     }
     #mmc {
-    position: absolute;
-    top: 55vmin;
-    left: 5vmin;
+        position: absolute;
+        top: 55vmin;
+        left: 5vmin;
     }
 }
 
-    #configbut {
-        position: absolute;
-        top: 2.777vmin;
-        left: 1.389vmin;
-        width: 8.33vmin;
-        height: 8.33vmin;
+#configbut {
+    position: absolute;
+    bottom: 5vmin;
+    left: 1.389vmin;
+    width: 10vmin;
+    height: 10vmin;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    border: 1vmin solid rgb(75, 42, 18);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.48), rgba(255, 255, 255, 0.28));
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: -1px -1px 1px 0px rgba(0, 0, 0, 0.38), 1px 1px 1px 0px rgba(255, 255, 255, 0.38), inset 1px 1px 1px 0px rgba(255, 255, 255, 0.3), inset -1px -1px 1px 0px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    &.tournament{
+    bottom: inherit;
+    top: 6vmin;
+    left: 5vmin;
+    }
+    &:active,
+    &:focus,
+    &.active {
+        outline: 0;
+        border-color: #ff8b17;
+    }
+    .butInner {
+        width: 100%;
+        height: 100%;
         background-repeat: no-repeat;
         background-position: center;
-        background-size: contain;
-        background-image: url(../images/equalizer.svg);
-        opacity: 0.2;
-        cursor: pointer;
-        border-radius: 50%;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0)!important;
-        &:active,
-        &:focus,
-        &.active {
-            outline: 0;
-            opacity: 1;
-        }
+        background-size: 105%;
+        opacity: 0.6;
+        background-image: url(../images/chronometer.svg);
     }
-    #timerconfigbut {
-        position: absolute;
-        top: 2.777vmin;
-        left: 18.06vmin;
-        width: 8.33vmin;
-        height: 8.33vmin;
+}
+
+#timerconfigbut {
+    position: absolute;
+    bottom: 5vmin;
+    left: 18vmin;
+    width: 10vmin;
+    height: 10vmin;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    border: 1vmin solid rgb(75, 42, 18);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.48), rgba(255, 255, 255, 0.28));
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: -1px -1px 1px 0px rgba(0, 0, 0, 0.38), 1px 1px 1px 0px rgba(255, 255, 255, 0.38), inset 1px 1px 1px 0px rgba(255, 255, 255, 0.3), inset -1px -1px 1px 0px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    &:active,
+    &:focus,
+    &.active {
+        outline: 0;
+        border-color: #ff8b17;
+    }
+    .butInner {
+        width: 100%;
+        height: 100%;
         background-repeat: no-repeat;
         background-position: center;
-        background-size: contain;
-        background-image: url(../images/chronometer_b.svg);
-        opacity: 0.2;
-        cursor: pointer;
-        border-radius: 50%;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0)!important;
-        &.tournament{
-            left: inherit;
-            right: 1.389vmin;
-        }
-        &:active,
-        &:focus,
-        &.active {
-            outline: 0;
-            opacity: 1;
-        }
+        background-size: 105%;
+        opacity: 0.6;
+        background-image: url(../images/plus.svg);
     }
+}
+
 .endbox {
     position: absolute;
-    top: 12.5vmin;
+    top: 12vmin;
     left: 0.694vmin;
     width: 28.472vmin;
-    height: 31vmin;
+    height: 88vmin;
     text-align: center;
     background-color: #333333;
     color: #fff;
     padding-top: 1.389vmin;
-    border-radius: 0 4.167vmin;
+    border-radius: 0 3vmin 0 0;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
+    box-shadow: 1px 1px 4px 1px black;
     .subd {
-        font-size: 5.555vmin;
+        font-size: 4vmin;
     }
-    .endnum {
-            height: 17vmin;
-    }
-}
-
-ul#standset {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    list-style: none;
-    position: absolute;
-    width: 100%;
-    height: 16.667vmin;
-    bottom: 0;
-    li {
-        flex-grow: 1;
+    #endnumWrapper{
         position: relative;
-        line-height: 16.667vmin;
-        font-size: 12.5vmin;
-        padding: 0.694vmin 2.777vmin 0;
-        font-weight: bold;
-        color: rgba(51, 51, 51, 0.2);
-        &.byRignt {
-            text-align: right;
-            &.active {
-                background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.15) 100%);
+    .endnum {
+        height: 17vmin;
+    }
+        
+            ul.standtip {
+                position: absolute;
+                top: 0;
+                height: 100%;
+                display: flex;
+                flex-direction: column-reverse;
+                justify-content: space-around;
+                width: 2vmin;
+                &.l {
+                    left: 0;
+                }
+                &.r {
+                    right: 0;
+                }
+                li {
+                    display: block;
+                    width: 2vmin;
+                    height: 2vmin;
+                    background-color: #4b2a12;
+                    &.active {
+                        background-color: #ff8b17;
+                    }
+                }
             }
-        }
-        &.active {
-            border-bottom: 1.389vmin solid #333333;
-            background: linear-gradient(to right, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
-        }
-        span.active {
-            color: #333333;
-        }
+    }
+    #dotStatus{
+        position: absolute;
+        top: 44vmin;
+        width: 100%;
+        height: 9vmin;
+        background-color: #000000;
+        padding: 0 2.5vmin;
+    }
+    .dotstand {
+        height: 17vmin;
+        top: 53vmin;
+        width: 100%;
+        background-color: #000;
+        position: absolute;
     }
 }
 
-ul#dotindex {
-    width: 55.555vmin;
-    list-style: none;
-    display: flex;
-    justify-content: center;
+#dropDown {
     position: absolute;
-    bottom: 12.5vmin;
-    left: 50%;
-    transform: translateX(-50%);
-    li {
-        width: 2.777vmin;
-        height: 2.777vmin;
-        border-radius: 50%;
-        background-color: rgba(51, 51, 51, 0.2);
-        margin: 2.777vmin;
-        &.active {
-            background-color: #333333;
-        }
+    left: 19vmin;
+    top: 24vmin;
+    padding: 3vmin 1vmin;
+    width: 9vmin;
+    height: 19vmin;
+    background-color: #333333;
+    overflow: hidden;
+    border: #494949 outset 2px;
+}
+
+#playlamp {
+    position: absolute;
+    left: 1.3vmin;
+    top: 24vmin;
+    width: 17vmin;
+    height: 19vmin;
+    background-color: #000;
+    border-radius: 2vmin;
+    border: 2px inset #474747;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    &>div{
+    font-size: 0;
+    line-height: 0;
     }
 }
 
@@ -412,7 +472,8 @@ ul#dotindex {
     height: 41.667vmin;
     width: 100%;
     position: absolute;
-    top: 18.06vmin;
+    top: 50vmin;
+    transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0.7);
     color: #fff;
     text-align: center;
@@ -447,27 +508,47 @@ ul#dotindex {
         ul {
             display: flex;
             justify-content: center;
-            flex-direction: row-reverse;
+            flex-direction: row-reverse; 
+            padding-top: 1vmin;
+    background-color: #333;
+    border-radius: 2vmin;
+    border-style: outset;
+    border-width: 2px;
+    border-color: #575757;
             li {}
         }
     }
 }
 
 .console {
+    @include animation(spin 0.8s ease 0s);
+    background-image: url(../images/transparent/carbon-fibre.png);
+    background-size: 8vmin;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #333333;
+    background-color: #808080;
     width: 86vmin;
     color: #fff;
     z-index: 1200;
-    border-radius: 6.944vmin;
-    border: 1.111vmin solid #fff;
+    border-radius: 3vmin;
+    border: 1.111vmin solid #393939;
     padding: 2vmin 5vmin 7vmin 5vmin;
     font-size: 3.472vmin;
     box-shadow: 0px 0px 2.777vmin 6px rgba(0, 0, 0, 0.35);
+    transform-origin: left;
     //overflow: hidden;
+    #endnums {
+        &>ul {
+            padding-top: 1vmin;
+            background-color: #333;
+            border-radius: 2vmin;
+            border-style: outset;
+            border-width: 2px;
+            border-color: #575757;
+        }
+    }
     dl dt {
         padding: 2.777vmin 0 1.389vmin;
         font-size: 3.472vmin;
@@ -493,14 +574,16 @@ ul#dotindex {
     }
     .flipup {
         &:before {
-            border-width: 0 2.777vmin 2.777vmin 2.777vmin;
+            border-width: 0 1.777vmin 1.777vmin 1.777vmin;
             border-color: transparent transparent #fff transparent;
         }
     }
     .flipdown {
         &:before {
-            border-width: 2.777vmin 2.777vmin 0 2.777vmin;
+            border-width: 1.777vmin 1.777vmin 0 1.777vmin;
             border-color: #fff transparent transparent transparent;
+            position: relative;
+            top: -1.3vmin;
         }
     }
     .flipnum {
@@ -512,7 +595,7 @@ ul#dotindex {
         width: 6.944vmin;
         border-radius: 1.389vmin;
         color: #000;
-        margin: 2.777vmin 0.694vmin;
+        margin: 1vmin 0.694vmin;
         position: relative;
         overflow: hidden;
         display: inline-block;
@@ -529,35 +612,40 @@ ul#dotindex {
             background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, rgba(0, 0, 0, 0.2)));
         }
     }
-    .ctrltoggle{
+    .ctrltoggle {
         text-align: center;
         width: 30vmin;
     }
     .togglebase {
-        display: inline-block;
-        width: 16.667vmin;
-        height: 8.33vmin;
-        background-color: #343434;
-        border-radius: 4.167vmin;
-        border: 0.555vmin solid #fff;
-        padding-left: 4.167vmin;
-        position: relative;
-        transition: background-color 0.3s ease 0s;
+    display: inline-block;
+    width: 16.667vmin;
+    height: 8.33vmin;
+    background-color: #343434;
+    border-radius: 4.167vmin;
+    border: 0.555vmin inset #656565;
+    padding-left: 4.167vmin;
+    position: relative;
+    transition: background-color 0.3s ease 0s;
     }
     .togglebase.active {
         background-color: #fff;
     }
     .togglebase .togglenob {
         position: absolute;
-        width: 8.33vmin;
-        height: 8.33vmin;
-        background-color: #fff;
-        border-radius: 50%;
-        border: 1px solid #ccc;
-        left: 50%;
-        top: -0.555vmin;
-        transition: left 0.3s ease 0s;
-        box-shadow: 0 0 0.694vmin 1px rgba(0, 0, 0, 0.23);
+    width: 8.33vmin;
+    height: 8.33vmin;
+    left: 50%;
+    top: -0.555vmin;
+    background-color: #979797;
+    transition: left 0.3s ease 0s;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+        
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.48), rgba(255, 255, 255, 0.28));
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: inset 1px 1px 0px 1px rgba(255, 255, 255, 0.3), inset -1px -1px 0px 1px rgba(0, 0, 0, 0.3), 2px 2px 4px 0px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
     }
     .togglebase.active .togglenob {
         left: 0;
@@ -574,6 +662,12 @@ ul#dotindex {
             display: flex;
             justify-content: center;
             flex-direction: row-reverse;
+            padding-top: 1vmin;
+            background-color: #333;
+            border-radius: 2vmin;
+            border-style: outset;
+            border-width: 2px;
+            border-color: #575757;
             li {}
         }
     }
@@ -633,16 +727,28 @@ ul#dotindex {
         height: 11.111vmin;
         top: 17vmin;
         right: -6vmin;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-image: url(../images/copyright.svg);
-        background-size: 80%;
         cursor: pointer;
         background-color: #333333;
-        border: 1.2vmin solid #fff;
+        transition: left 0.3s ease 0s;
         border-radius: 50%;
+        border: 0.5vmin solid #626262;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.48), rgba(255, 255, 255, 0.28));
         -webkit-tap-highlight-color: transparent !important;
+        box-shadow: inset -1px -1px 0px 1px rgba(0, 0, 0, 0.3), inset 1px 1px 0px 1px rgba(255, 255, 255, 0.3), 3px 3px 5px 0px rgba(0, 0, 0, 0.8);
+        overflow: hidden;
+        &:after{
+content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../images/copyright.svg);
+    background-size: 56%;
+        }
         &:active,
         &:focus {
             outline: 0;
@@ -650,47 +756,84 @@ ul#dotindex {
         }
     }
     #selectmode {
-        position: absolute;
-        width: 14vmin;
-        height: 14vmin;
-        top: 34vmin;
-        right: -7vmin;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-size: 100%;
-        cursor: pointer;
-        background-color: #fff;
-        border: 1.2vmin solid #fff;
-        border-radius: 50%;
-        -webkit-tap-highlight-color: transparent !important;
+    position: absolute;
+    width: 14vmin;
+    height: 14vmin;
+    top: 34vmin;
+    right: -7vmin;
+    cursor: pointer;
+    background-color: #333333;
+    transition: left 0.3s ease 0s;
+    border-radius: 50%;
+    border: 0.5vmin solid #626262;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.48), rgba(255, 255, 255, 0.28));
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: inset -1px -1px 0px 1px rgba(0, 0, 0, 0.3), inset 1px 1px 0px 1px rgba(255, 255, 255, 0.3), 3px 3px 5px 0px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
         &:active,
         &:focus {
             outline: 0;
             background-color: #c7c7c7;
         }
-        &.default{
-        background-image: url(../images/medal.svg);
+        &.default {
+            &:after{
+             content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.7;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 80%;
+            background-image: url(../images/medal.svg);
+            }
         }
-        &.tournament{
-        background-image: url(../images/rank.svg);
+        &.tournament {
+            &:after{
+             content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.7;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 80%;
+            background-image: url(../images/rank.svg);
+            }
         }
     }
     .closeconfig {
-        position: absolute;
-        width: 11.111vmin;
-        height: 11.111vmin;
-        top: 0;
-        right: -6vmin;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-image: url(../images/close.svg);
-        cursor: pointer;
-        background-color: #333333;
-        border: 1.2vmin solid #fff;
-        border-radius: 50%;
-        -webkit-tap-highlight-color: transparent !important;
+position: absolute;
+    width: 11.111vmin;
+    height: 11.111vmin;
+    top: 0;
+    right: -6vmin;
+    cursor: pointer;
+    background-color: #333333;
+    transition: left 0.3s ease 0s;
+    border-radius: 50%;
+    border: 0.5vmin solid #626262;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.48), rgba(255, 255, 255, 0.28));
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: inset -1px -1px 0px 1px rgba(0, 0, 0, 0.3), inset 1px 1px 0px 1px rgba(255, 255, 255, 0.3), 3px 3px 5px 0px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+        &:after{
+            content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    background-image: url(../images/close.svg);
+        }
         &:active,
         &:focus {
             outline: 0;
@@ -698,60 +841,90 @@ ul#dotindex {
         }
     }
     .setconfig {
-        position: absolute;
-        width: 16.667vmin;
-        height: 16.667vmin;
-        bottom: 5vmin;
-        right: 5vmin;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-image: url(../images/chronometer.svg);
-        cursor: pointer;
-        opacity: 1;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0)!important;
+    position: absolute;
+    width: 16.667vmin;
+    height: 16.667vmin;
+    bottom: 5vmin;
+    right: 5vmin;
+    cursor: pointer;
+    background-color: #333333;
+    transition: left 0.3s ease 0s;
+    border-radius: 50%;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.48), rgba(255, 255, 255, 0.28));
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: inset 2px 2px 0px 2px rgba(255, 255, 255, 0.3), inset -2px -2px 0px 2px rgba(0, 0, 0, 0.3), 3px 3px 5px 0px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
         &:active,
         &:focus {
             outline: 0;
-            opacity: 0.3;
+        }
+        &:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 80%;
+    opacity: 0.7;
+    background-repeat: no-repeat;
+    background-image: url(../images/chronometer.svg);
+    background-position: center;
         }
     }
     .selectsound {
-        position: absolute;
-        height: 5vmax;
-        width: 5vmax;
-        background-image: url(../images/sound.svg);
-        background-repeat: no-repeat;
-        background-size: contain;
-        right: 16vmax;
-        bottom: 4.5vmax;
+    position: absolute;
+    height: 8vmin;
+    width: 15vmin;
+    right: 16vmax;
+    bottom: 4.5vmax;
+    background-color: #333333;
+    transition: left 0.3s ease 0s;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 4vmin;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.48), rgba(255, 255, 255, 0.28));
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: inset 1px 1px 0px 1px rgba(255, 255, 255, 0.3), inset -1px -1px 0px 1px rgba(0, 0, 0, 0.3), 1px 1px 2px 0px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+        &:after{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/sound.svg);
+    background-repeat: no-repeat;
+    background-size: 40%;
+    background-position: center;
+            opacity: 0.7;
+        }
     }
-    
-    #tournamentkind{
+    #tournamentkind {
         display: flex;
         justify-content: center;
         flex-direction: column;
-        ul{
+        ul {
             width: 80%;
             margin: 0 auto;
-            li{       
-    width: 100%;
-    height: 10vmin;
+            li {
+                width: 100%;
+                height: 10vmin;
                 text-align: center;
                 line-height: 10vmin;
                 border: 0.277vmin solid #fff;
                 border-bottom: none;
-            &:first-child {
-                border-radius: 1.389vmin 1.389vmin 0 0;
-            }
-            &:nth-last-of-type(1) {
-                border-radius: 0 0 1.389vmin 1.389vmin;
-                border-bottom: 0.277vmin solid #fff;
-            }
-            &.active {
-                background-color: #fff;
-                color: #333333;
-            }
+                &:first-child {
+                    border-radius: 1.389vmin 1.389vmin 0 0;
+                }
+                &:nth-last-of-type(1) {
+                    border-radius: 0 0 1.389vmin 1.389vmin;
+                    border-bottom: 0.277vmin solid #fff;
+                }
+                &.active {
+                    background-color: #fff;
+                    color: #333333;
+                }
             }
         }
     }
@@ -765,7 +938,7 @@ ul#dotindex {
     height: 27vmin;
     z-index: 1000;
     border-radius: 6.944vmin 6.944vmin 0 0;
-    border: 1.111vmin solid #fff;
+    border: 1.111vmin solid #575757;
     border-bottom: none;
     padding: 2.777vmin;
     ul {
@@ -793,7 +966,15 @@ ul#dotindex {
         }
     }
 }
-
+.buttonbase{
+    position: absolute;
+    left: 4vmin;
+    top: 5vmin;
+    width: 12vmin;
+    height: 12vmin;
+    border-radius: 50%;
+    background-color: #333;
+}
 .ondisplayCtrl {
     position: absolute;
     z-index: 1000;
@@ -961,6 +1142,55 @@ ul#dotindex {
     }
 }
 
+#keyinfo {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.8);
+    ul {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        div {
+            text-align: center;
+            font-size: 120%;
+            margin-bottom: 4vmin;
+        }
+        hr {
+            margin: 1vmin 0;
+        }
+        li {
+            white-space: nowrap;
+            padding-bottom: 1vmin;
+            i {
+                font-style: normal;
+                font-size: 2.5vmin;
+                display: inline-block;
+                padding: 1vmin 2vmin;
+                border-radius: 1vmin;
+                border: #fff 1px solid;
+                min-width: 5vmin;
+                height: 5vmin;
+                margin-right: 5vmin;
+            }
+        }
+    }
+}
+
+.flipmask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
 @include keyframes(zoom) {
     0% {
         opacity: 0;
@@ -976,5 +1206,14 @@ ul#dotindex {
     }
     100% {
         @include pre(transform, rotate(20deg));
+    }
+}
+
+@include keyframes(spin) {
+    0% {
+        transform:rotateY(-90deg) translate(-50%, -50%) scale(0.6);
+    }
+    100% {
+        transform:rotateY(0deg) translate(-50%, -50%) scale(1);
     }
 }
