@@ -382,12 +382,6 @@ body {
   border-color: #575757; }
 
 .console {
-  -webkit-animation: spin 0.8s ease 0s;
-  -moz-animation: spin 0.8s ease 0s;
-  animation: spin 0.8s ease 0s;
-  -webkit-animation-fill-mode: both;
-  -moz-animation-fill-mode: both;
-  animation-fill-mode: both;
   background-image: url(../images/transparent/carbon-fibre.png);
   background-size: 8vmin;
   position: absolute;

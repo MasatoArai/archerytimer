@@ -521,7 +521,7 @@ body {
 }
 
 .console {
-    @include animation(spin 0.8s ease 0s);
+    //@include animation(spin 0.8s ease 0s);
     background-image: url(../images/transparent/carbon-fibre.png);
     background-size: 8vmin;
     position: absolute;
