@@ -93,7 +93,7 @@ body {
 }
 
 @media screen and (orientation: portrait) {
-    #default {
+    #default,#tournament {
         display: none;
     }
 }
