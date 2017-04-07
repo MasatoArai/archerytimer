@@ -193,8 +193,8 @@ function initializationAll() {
             , 'consoleObj.timermode': function (val) {
                 if (!this.isLoaded) return;
                 this.rejectAnimationDotMatrix();
-                Vue.nextTick(function () {
                     this.timerCore.rejectGameinfo();
+                Vue.nextTick(function () {
                     this.counterInit();
                 }, this);
             }
@@ -379,14 +379,16 @@ function initializationAll() {
             }
             , 'display.end': function (val) {
                 var digit = this.consoleObj.timermode == 'default' ? 2 : 1;
+                if(!this.dotmatrixs.endnum.changeValue)return;
                 this.dotmatrixs.endnum.changeValue(util.getStringNum(val, digit));
             }
             , 'display.min': function (val) {}, //todo watch
             'display.mmin': function (val) {
+                if(!this.dotmatrixs.dropdown.dropDown)return;
                     this.dotmatrixs.dropdown.dropDown(val);
             }
             ,'display.stand':function(val){
-                if (this.consoleObj.timermode != "default") return;
+                if (this.consoleObj.timermode != "default"||!this.dotmatrixs.standdot.changeValue) return;
                 this.dotmatrixs.standdot.changeValue(val);
             }
             , 'consoleObj.tournament.firstStand': function (val) {
