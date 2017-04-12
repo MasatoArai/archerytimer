@@ -11,6 +11,29 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 vueApp.doNextAct();
             }
         }
+        if(keycode == 112||keycode == 80){
+            if(vueApp){
+                vueApp.doPause();
+            }
+        }
+        
+        if(keycode == 190){
+            if(vueApp){
+                vueApp.doNextStand();
+            }
+        }
+        
+        if(keycode == 39){
+            if(vueApp){
+                vueApp.changeFirstShooter(2);
+            }
+        }
+        if(keycode == 37){
+            if(vueApp){
+                vueApp.changeFirstShooter(1);
+            }
+        }
+        
     });
 });
 
@@ -44,7 +67,8 @@ function initializationAll() {
             isShowCopy: false
             , consoleObj: {
                 timermode: 'default'
-                ,canBGchange:false
+                , canBGchange:false
+                , background:'black'
                 , addgametime: {
                     digit1: 0
                     , digit2: 0
@@ -139,6 +163,11 @@ function initializationAll() {
             , doubleLineDotmatrixs:{}
         }
         , computed: {
+            background: function(){
+                var base = this.consoleObj.background;
+                var bg = (this.consoleObj.canBGchange?this.status.statusColor:'');
+                return bg==''||bg=='standby'?base:bg;
+            },
             repbut: function () {
                 if (this.status.time == 0) {
                     return "disable";
@@ -258,7 +287,7 @@ function initializationAll() {
                 var isTournament = (this.consoleObj.timermode == "tournament");
                 switch (val) {
                 case "Standby":
-                    this.status.statusColor = "shoot";
+                    this.status.statusColor = "standby";
                         if(!isTournament){
                             this.doubleLineDotmatrixs.setColor("warn");
                             this.doubleLineDotmatrixs.tikatika(true);
@@ -429,6 +458,7 @@ function initializationAll() {
                 this.doubleLineDotmatrixs.stop();
             }
             ,changeFirstShooter: function(tnum){
+                if(this.consoleObj.timermode == 'default')return;
                 if(this.status.gameStatus==""||this.status.gameStatus == "Standby"){
                     this.consoleObj.tournament.firstStand=tnum;
                 }
@@ -561,6 +591,16 @@ function initializationAll() {
                     this.playpause();
                 }
                 else if (this.status.gameStatus != 'Standby' && this.nextbut != 'disable') {
+                    this.nextEnd();
+                }
+            }
+            , doPause: function() {
+                if (this.status.gameStatus != 'Standby' && this.playbut != 'disable') {
+                    this.playpause();
+                }
+            }
+            , doNextStand: function(){
+                if (this.status.gameStatus == 'Standby' && this.nextbut != 'disable') {
                     this.nextEnd();
                 }
             }
