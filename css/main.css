@@ -32,7 +32,13 @@ body {
   width: 100vw; }
 
 #app {
-  display: none; }
+  display: none;
+  overflow: hidden;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  left: 0;
+  position: absolute; }
 
 @media screen and (orientation: portrait) {
   #default, #tournament {
