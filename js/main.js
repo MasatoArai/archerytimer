@@ -4,6 +4,19 @@ var util;
 var vueApp;
 document.addEventListener('DOMContentLoaded', function (event) {
     initializationAll();
+    window.addEventListener('resize', function (event) {
+        var rat = $(document).height()/$(document).width();
+        if(rat<0.5625){
+            $('#app').css({
+                transform:'translateY(-50%) scale('+(rat/0.5625)+')'
+            });
+        }else{
+            $('#app').css({
+                transform:'translateY(-50%)'
+            });
+            
+        }
+    });
     document.addEventListener('keydown', function (ev) {
         var keycode = ev.keyCode;
         if (keycode == 13) {

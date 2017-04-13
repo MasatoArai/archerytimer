@@ -37,13 +37,13 @@
 
 /* Main */4
 .flip-clock-wrapper {
-  font: normal 1.528vmin "Helvetica Neue", Helvetica, sans-serif;
+  font: normal 0.86vmax "Helvetica Neue", Helvetica, sans-serif;
   -webkit-user-select: none; }
 
 .flip-clock-meridium {
   background: none !important;
   box-shadow: 0 0 0 !important;
-  font-size: 5vmin !important; }
+  font-size: 2.813vmax !important; }
 
 .flip-clock-meridium a { color: #313333; }
 
@@ -58,14 +58,14 @@ display: flex;
 /* Skeleton */
 .flip-clock-wrapper ul {
 position: relative;
-margin: 0.694vmin;
-margin-right: 1vmin;
-    width: 47.222vmin;
-    height: 70vmin;
-font-size: 41.667vmin;
+margin: 0.39vmax;
+margin-right: 0.563vmax;
+    width: 26.562vmax;
+    height: 39.375vmax;
+font-size: 23.438vmax;
 font-weight: bold;
-line-height: 70vmin;
-border-radius:  2.778vmin;
+line-height: 39.375vmax;
+border-radius:  1.563vmax;
 background: #000;
     margin-top:0;
 }
@@ -77,7 +77,7 @@ background: #000;
   top: 0;
   width: 100%;
   height: 100%;
-  line-height: 70vmin;
+  line-height: 39.375vmax;
   text-decoration: none !important;
 }
 
@@ -87,9 +87,9 @@ background: #000;
 .flip-clock-wrapper ul li a {
   display: block;
   height: 100%;
-  -webkit-perspective: 263.889vmin;
-  -moz-perspective: 263.889vmin;
-  perspective: 263.889vmin;
+  -webkit-perspective: 148.438vmax;
+  -moz-perspective: 148.438vmax;
+  perspective: 148.438vmax;
   margin: 0 !important;
   overflow: visible !important;
   cursor: default !important; }
@@ -100,7 +100,7 @@ background: #000;
   left: 0;
   width: 100%;
   height: 50%;
-  font-size: 11.111vmin;
+  font-size: 6.25vmax;
   overflow: hidden; 
   outline: 1px solid transparent; }
 
@@ -121,11 +121,11 @@ background: #000;
 .flip-clock-wrapper ul li a div.up:after {
   content: "";
   position: absolute;
-  top: calc(100% - 0.694vmin);
+  top: calc(100% - 0.39vmax);
   left: 0;
 	z-index: 5;
 	width: 100%;
-	height: 1.389vmin;
+	height: 0.781vmax;
   background-color: #000;
   background-color: rgba(0, 0, 0, 0.4); }
 
@@ -136,8 +136,8 @@ background: #000;
   -o-transform-origin: 50% 0;
   transform-origin: 50% 0;
   bottom: 0;
-  border-bottom-left-radius:  2.778vmin;
-  border-bottom-right-radius:  2.778vmin;
+  border-bottom-left-radius:  1.563vmax;
+  border-bottom-right-radius:  1.563vmax;
 }
 
 .flip-clock-wrapper ul li a div div.inn {
@@ -150,8 +150,8 @@ color: #fff;
 text-shadow: 0 1px 2px #000;
 text-align: center;
 background-color: #212121;
-border-radius:  2.778vmin;
-font-size: 76.389vmin;
+border-radius:  1.563vmax;
+font-size: 42.969vmax;
 }
 
 .flip-clock-wrapper ul li a div.up div.inn {
@@ -164,7 +164,7 @@ font-size: 76.389vmin;
 .flip-clock-wrapper ul.play li.flip-clock-before {
   z-index: 3; }
 
-.flip-clock-wrapper .flip {   box-shadow: 0 2px 0.694vmin rgba(0, 0, 0, 0.7); }
+.flip-clock-wrapper .flip {   box-shadow: 0 2px 0.39vmax rgba(0, 0, 0, 0.7); }
 
 .flip-clock-wrapper ul.play li.flip-clock-active {
   -webkit-animation: asd 0.3s 0.3s linear both;
@@ -176,8 +176,8 @@ font-size: 76.389vmin;
   float: left;
   display: inline-block;
   position: relative;
-  width:  2.778vmin;
-  height: 13.889vmin; }
+  width:  1.563vmax;
+  height: 7.813vmax; }
 
 .flip-clock-divider:first-child {
   width: 0; }
@@ -185,31 +185,31 @@ font-size: 76.389vmin;
 .flip-clock-dot {
   display: block;
   background: #323434;
-  width: 1.389vmin;
-  height: 1.389vmin;
+  width: 0.781vmax;
+  height: 0.781vmax;
   position: absolute;
   border-radius: 50%;
-  box-shadow: 0 0 0.694vmin rgba(0, 0, 0, 0.5);
-  left: 0.694vmin; }
+  box-shadow: 0 0 0.39vmax rgba(0, 0, 0, 0.5);
+  left: 0.39vmax; }
 
 .flip-clock-divider .flip-clock-label {
   position: absolute;
   top: -1.5em;
-  right: -11.944vmin;
+  right: -6.719vmax;
   color: black;
   text-shadow: none; }
 
 .flip-clock-divider.minutes .flip-clock-label {
-  right: -12.222vmin; }
+  right: -6.875vmax; }
 
 .flip-clock-divider.seconds .flip-clock-label {
-  right: -12.639vmin; }
+  right: -7.109vmax; }
 
 .flip-clock-dot.top {
-  top: 4.167vmin; }
+  top: 2.344vmax; }
 
 .flip-clock-dot.bottom {
-  bottom: 4.167vmin; }
+  bottom: 2.344vmax; }
 
 @-webkit-keyframes asd {
   0% {
