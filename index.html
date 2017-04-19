@@ -52,7 +52,7 @@
             <div id="tournament-timebox">
                 <div class="clock"></div>
                 <div class="flipmask"></div>
-                <div id="tournamentDropDown" class="dropDown"> </div>
+                <div id="tournamentDropDown" :class="status.stand==1||status.stand==0?'l':'r'"></div>
             </div>
             <div id="tournamentMatrixBase">
                 <div id="remdot1" class="remtimebox t1"></div>
@@ -61,7 +61,6 @@
                 <div id="dotlamp2" class="dotlamp l2"></div>
                 <div class="tnum l">TARGET1</div>
                 <div class="tnum r">TARGET2</div>
-            
                 <div class="tournament_endbox">
                     <div class="subd">SET</div>
                     <ul class="standtip l">
@@ -90,7 +89,8 @@
             <div class="butInner"></div>
         </div>
         <div id="keyinfobut" v-on:click="showKeyinfo=!showKeyinfo" v-bind:class="consoleObj.timermode">
-        <div class="inner"></div></div>
+            <div class="inner"></div>
+        </div>
         <div id="belt" v-if="toast.visibleBelt">
             <div v-html="toast.toastMessage"> </div>
         </div>
@@ -179,7 +179,7 @@
                     <dd id="arrowsup">
                         <ul>
                             <li :class="{active:consoleObj.arrowsUp==1}" v-on:click="consoleObj.arrowsUp=1"> Per 1play </li>
-                            <li :class="{active:consoleObj.arrowsUp==2}" v-on:click="if(consoleObj.orderOfPlay!=1)consoleObj.arrowsUp=2"> Per 2play </li>
+                            <li :class="{active:consoleObj.arrowsUp==2}" v-on:click="consoleObj.arrowsUp=(consoleObj.orderOfPlay!=1)?2:consoleObj.arrowsUp"> Per 2play </li>
                         </ul>
                     </dd>
                 </dl>
@@ -217,7 +217,7 @@
             </div>
             <div id="selectSoundbut" v-on:click="selectSound=true" class="selectsound"></div>
             <div id="setConfigbut" v-on:click="setConfig()" class="setconfig"></div>
-                <!--<svg viewBox="0 0 60 60" class="coloseconfigBac">
+            <!--<svg viewBox="0 0 60 60" class="coloseconfigBac">
                 <defs>
                     <path id ="tp" d="M 30,30 m 0,-20 a 20,20 0 1,1 -1,0 h 1" stroke="none" fill="none"/>
                 </defs>
@@ -231,15 +231,12 @@
                         </textPath>
                     </text>
                 </svg>-->
-            <div id="closeconfig" v-on:click="showConfig=false" class="closeconfig">
-            </div>
+            <div id="closeconfig" v-on:click="showConfig=false" class="closeconfig"> </div>
             <div id="copy" v-on:click="showCopy(true)" class="copybut"></div>
             <div id="selectmode" @click="consoleObj.timermode=consoleObj.timermode=='default'?'tournament':'default'" v-bind:class="consoleObj.timermode"></div>
-            
             <div id="cblack" v-on:click="consoleObj.background='black'" class="cbase cblack" :class="{active:consoleObj.background=='black'}"></div>
             <div id="cwhite" v-on:click="consoleObj.background='white'" class="cbase cwhite" :class="{active:consoleObj.background=='white'}"></div>
             <div id="ccolor" v-on:click="consoleObj.canBGchange=!consoleObj.canBGchange" class="cbase ccolor" :class="{active:consoleObj.canBGchange}"></div>
-            
             <div id="selectSoundBase" v-if="(selectSound&&showConfig)">
                 <dl> <dt>
                         通知音
@@ -269,7 +266,6 @@
                 <li><i>&larr;</i>TARGET1 to first</li>
                 <li><i>&rarr;</i>TARGET2 to first</li>
             </ul>
-            
             <div id="closeKeyinfo" class="closekeyinfo" v-on:click="showKeyinfo=false"></div>
         </div>
         <div id="orientationinfo"></div>

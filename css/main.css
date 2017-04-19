@@ -167,7 +167,6 @@ body {
         right: 1.125vmax; }
   #tournament #tournamentDropDown {
     position: absolute;
-    left: -5.625vmax;
     top: 14.625vmax;
     padding: 1.688vmax 0.563vmax;
     width: 5.063vmax;
@@ -176,10 +175,10 @@ body {
     border-radius: 1.125vmax;
     overflow: hidden;
     box-shadow: inset 0.113vmax 0.113vmax 0vmax 0.113vmax rgba(255, 255, 255, 0.15), inset -0.112vmax -0.112vmax 0vmax 0.113vmax rgba(0, 0, 0, 0.3), 0.152vmax 0.152vmax 0.304vmax 0vmax rgba(0, 0, 0, 0.7); }
+    #tournament #tournamentDropDown.l {
+      left: -5.625vmax; }
     #tournament #tournamentDropDown.r {
-      left: inherit;
-      right: 0;
-      border-radius: 1.125vmax 0 0 1.125vmax; }
+      right: -5.625vmax; }
   #tournament #mmc {
     position: absolute;
     top: 31.5vmax;
