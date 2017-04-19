@@ -46,6 +46,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 vueApp.changeFirstShooter(1);
             }
         }
+        if(keycode == 82){
+            if(vueApp){
+                vueApp.reset();
+            }
+        }
         
     });
 });

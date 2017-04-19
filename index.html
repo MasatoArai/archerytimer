@@ -73,7 +73,8 @@
                     <div id="endnum" class="endnum"></div>
                 </div>
             </div>
-            <div class="buttonbase"></div>
+            <div id="t1but" class="fbut l" v-if="(consoleObj.timermode != 'default'&&status.gameStatus == 'Standby')" :class="{active:consoleObj.tournament.firstStand==1}" v-on:click="changeFirstShooter(1)"></div>
+            <div id="t2but" class="fbut r" v-if="(consoleObj.timermode != 'default'&&status.gameStatus == 'Standby')" :class="{active:consoleObj.tournament.firstStand==2}" v-on:click="changeFirstShooter(2)"></div>
             <div class="ondisplayCtrl" v-show="onCtrl">
                 <ul>
                     <li class="rep" v-bind:class="repbut" v-on:click="reset()"> </li>
@@ -85,7 +86,7 @@
         <div id="configbut" v-on:click="showConfig=!showConfig" v-bind:class="{active:showConfig,tournament:consoleObj.timermode=='tournament'}">
             <div class="butInner"></div>
         </div>
-        <div id="timerconfigbut" v-on:click="showTimerConfig=!showTimerConfig" v-bind:class="{active:showTimerConfig,tournament:consoleObj.timermode=='tournament'}" v-show="consoleObj.timermode!='tournament'&&(status.gameStatus=='Standby'||status.gameStatus=='ArrowsUp'||status.gameStatus=='')">
+        <div id="timerconfigbut" v-on:click="showTimerConfig=!showTimerConfig" v-bind:class="{active:showTimerConfig,tournament:consoleObj.timermode=='tournament'}" v-show="consoleObj.timermode!='tournament'&&(status.gameStatus=='Standby'||status.gameStatus=='ArrowsUp')">
             <div class="butInner"></div>
         </div>
         <div id="keyinfobut" v-on:click="showKeyinfo=!showKeyinfo" v-bind:class="consoleObj.timermode">
@@ -216,7 +217,22 @@
             </div>
             <div id="selectSoundbut" v-on:click="selectSound=true" class="selectsound"></div>
             <div id="setConfigbut" v-on:click="setConfig()" class="setconfig"></div>
-            <div id="closeconfig" v-on:click="showConfig=false" class="closeconfig"></div>
+                <!--<svg viewBox="0 0 60 60" class="coloseconfigBac">
+                <defs>
+                    <path id ="tp" d="M 30,30 m 0,-20 a 20,20 0 1,1 -1,0 h 1" stroke="none" fill="none"/>
+                </defs>
+                    <use xlink:href="#tp"/>
+                    <text fill="#fff" font-family="sans-serif" font-size="10" font-weight="bold">
+                    <textPath xlink:href="#tp" startOffset="20%" stroke="#626262" stroke-width="5">
+                        Close
+                        </textPath>
+                    <textPath xlink:href="#tp" startOffset="20%">
+                        Close
+                        </textPath>
+                    </text>
+                </svg>-->
+            <div id="closeconfig" v-on:click="showConfig=false" class="closeconfig">
+            </div>
             <div id="copy" v-on:click="showCopy(true)" class="copybut"></div>
             <div id="selectmode" @click="consoleObj.timermode=consoleObj.timermode=='default'?'tournament':'default'" v-bind:class="consoleObj.timermode"></div>
             
@@ -244,9 +260,10 @@
         <div id="keyinfo" v-if="showKeyinfo">
             <ul>
                 <div>Shortcut key reference</div>
-                <li><i>ENTER</i>Start >> Go forward >> Ceasefire >>Next</li>
+                <li><i>ENTER</i>Countdown start >> Next stand >> Ceasefire >>Next END</li>
                 <li><i>P</i>Pause and Redume</li>
                 <li><i>></i>Next Stand(at "Standby")</li>
+                <li><i>R</i>Return to the beginning of the round</li>
                 <hr>
                 <div>Selection of first target at tournament</div>
                 <li><i>&larr;</i>TARGET1 to first</li>
