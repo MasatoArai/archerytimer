@@ -469,6 +469,9 @@ function initializationAll() {
             }
             ,'display.stand':function(val){
                 if (this.consoleObj.timermode != "default"||!this.dotmatrixs.standdot.changeValue) return;
+                if(val.length==0){
+                    val = "  ";
+                }
                 this.dotmatrixs.standdot.changeValue(val);
             }
             , 'consoleObj.tournament.firstStand': function (val) {
