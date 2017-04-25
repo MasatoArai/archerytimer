@@ -85,6 +85,7 @@ function initializationAll() {
             isShowCopy: false
             , consoleObj: {
                 timermode: 'default'
+                , onCtrl:false
                 , canBGchange:false
                 , background:'black'
                 , addgametime: {
@@ -160,7 +161,7 @@ function initializationAll() {
             }
             , onCtrl: false
             , showConfig: false
-            , selectSound: false
+            , showAdvanced: false
             , showTimerConfig: false
             , showKeyinfo: false
             , timerCore: {}
@@ -280,14 +281,42 @@ function initializationAll() {
                     case "team":
                         this.consoleObj.tournament.gametime = 60;
                         this.consoleObj.tournament.setnum = 1;
-                        this.consoleObj.tournament.arrowsUp = 6;
+                        this.consoleObj.tournament.arrowsUp = 2;
                         break;
                     case "mixed":
                         this.consoleObj.tournament.gametime = 80;
                         this.consoleObj.tournament.setnum = 1;
-                        this.consoleObj.tournament.arrowsUp = 4;
+                        this.consoleObj.tournament.arrowsUp = 2;
                         break;
                     }
+                    
+                this.timerCore.rejectGameinfo();
+                this.rejectAnimationDotMatrix();
+                this.counterInit();
+                }else{
+                    //setのSを上書きしなおす
+                    //this.dotmatrixs.endnum.changeValue(this.display.end+"");
+                    
+                this.timerCore.rejectGameinfo();
+                this.rejectAnimationDotMatrix();
+                this.counterInit();
+                    switch (this.consoleObj.tournament.mode) {
+                    case "single":
+                        this.consoleObj.tournament.gametime = 20;
+                        this.consoleObj.tournament.setnum = 5;
+                        this.consoleObj.tournament.arrowsUp = 6;
+                        break;
+                    case "team":
+                        this.consoleObj.tournament.gametime = 120;
+                        this.consoleObj.tournament.setnum = 4;
+                        this.consoleObj.tournament.arrowsUp = 4;
+                        break;
+                    case "mixed":
+                        this.consoleObj.tournament.gametime = 80;
+                        this.consoleObj.tournament.setnum = 4;
+                        this.consoleObj.tournament.arrowsUp = 4;
+                        break;
+                }
                 }
             }
             , 'consoleObj.orderOfPlay': function (val) {
@@ -427,7 +456,11 @@ function initializationAll() {
             , 'display.end': function (val) {
                 var digit = this.consoleObj.timermode == 'default' ? 2 : 1;
                 if(!this.dotmatrixs.endnum.changeValue)return;
-                this.dotmatrixs.endnum.changeValue(util.getStringNum(val, digit));
+                if(this.consoleObj.timermode == 'tournament'&&this.consoleObj.tournament.shootOff){
+                    this.dotmatrixs.endnum.changeValue('S')
+                }else{
+                    this.dotmatrixs.endnum.changeValue(util.getStringNum(val, digit));
+                }
             }
             , 'display.min': function (val) {}, //todo watch
             'display.mmin': function (val) {
