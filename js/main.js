@@ -116,6 +116,7 @@ function initializationAll() {
                     arrowsUp: 6, //4 4
                     firstStand: 1
                     , shootOff: false
+                    , soundOnSwitching:false
                 }
             }
             , initTimerObj: {
@@ -330,7 +331,7 @@ function initializationAll() {
                 if (this.toast.toastMessage === "") return;
                 this.showToast();
             }, // todo watch gamestatus
-            'status.gameStatus': function (val) {
+            'status.gameStatus': function (val,oldval) {
                 var isTournament = (this.consoleObj.timermode == "tournament");
                 switch (val) {
                 case "Standby":
@@ -351,7 +352,9 @@ function initializationAll() {
                         }
                     break;
                 case "Shoot":
-                    this.sound.play("start");
+                        if (!(oldval == "continue" && this.initGameProperty.timerMode == "tournament" && !this.consoleObj.tournament.soundOnSwitching)){
+                            this.sound.play("start");
+                        }
                     this.status.statusColor = "shoot";
                         if(!isTournament){
                             this.doubleLineDotmatrixs.setColor("shoot");
@@ -953,7 +956,11 @@ TimerCore.prototype.setReady = function (bool, obj) { //timer設定obj,bool一�
             this.display.remdot2 = 0;
             return false;
         }
-        this.status.gameStatus = "Standby";
+        if(this.status.timerStatus == "counting"){
+            this.status.gameStatus = "continue";
+        }else{
+            this.status.gameStatus = "Standby";
+        }
         this.status.auxTimer = false;
         this.countConf.readyTime = this.initTimerObj.readyTime;
         this.countConf.gameTime = this.initTimerObj.gameTime;

@@ -494,6 +494,8 @@ body {
       top: -1.7vmax;
       right: -5.5vmax;
   }*/ }
+  .console > .tournament {
+    position: relative; }
   .console #endnums > ul {
     padding-top: 0.563vmax;
     background-color: #212121;
@@ -680,6 +682,16 @@ body {
       background-color: #fff;
       bottom: -1.35vmax;
       right: 3.5vmax; }
+  .console #soundOnSwitchingBack {
+    position: absolute;
+    bottom: 4.3vmax;
+    left: -1.5vmax;
+    width: 8vmax;
+    height: 8vmax;
+    padding: .87vmax;
+    border-radius: 50%;
+    background-color: #3c3c3c;
+    box-shadow: inset -0.112vmax -0.112vmax 0vmax 0.113vmax rgba(255, 255, 255, 0.3), inset 0.113vmax 0.113vmax 0vmax 0.113vmax rgba(0, 0, 0, 0.3); }
   .console .cbase {
     position: relative;
     display: inline-block;
@@ -694,6 +706,12 @@ body {
     -webkit-tap-highlight-color: transparent !important;
     box-shadow: inset -0.112vmax -0.112vmax 0vmax 0.113vmax rgba(0, 0, 0, 0.3), inset 0.113vmax 0.113vmax 0vmax 0.113vmax rgba(255, 255, 255, 0.3), 0.225vmax 0.225vmax 0.383vmax 0vmax rgba(0, 0, 0, 0.8);
     overflow: hidden; }
+    .console .cbase.switching {
+      background-position: center;
+      background-image: url(../images/sound.svg);
+      background-size: 63%;
+      background-repeat: no-repeat;
+      margin: 0; }
     .console .cbase.cblack {
       background-color: #000; }
     .console .cbase.cwhite {

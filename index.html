@@ -210,7 +210,11 @@
                             <div class="togglenob"></div>
                         </div>
                 </div>
+            <div id="soundOnSwitchingBack" class="cbaseback">
+                <div id="soundOnSwitching" class="cbase switching" :class="{active:consoleObj.tournament.soundOnSwitching}" @click="consoleObj.tournament.soundOnSwitching = !consoleObj.tournament.soundOnSwitching"></div>
             </div>
+            </div>
+            
             <hr>
             <div class="ctrltoggle">
                         <div id="ctrltoggle" class="togglebase" v-bind:class="{active:consoleObj.onCtrl}" v-on:click="consoleObj.onCtrl=!consoleObj.onCtrl">
