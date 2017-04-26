@@ -663,7 +663,7 @@ function initializationAll() {
             }
             , showToast: function (ss) {
                 clearTimeout(this.toast.timeoutId);
-                var ct = 3000;
+                var ct = 2000;
                 if (typeof ss === 'number') ct = ss;
                 this.toast.visibleBelt = true;
                 var self = this;

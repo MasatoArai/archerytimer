@@ -585,15 +585,21 @@ body {
 
 #belt {
     height: 23.438vmax;
-    width: 100%;
+    width: 86%;
     position: absolute;
-    top: 28.125vmax;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.7);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: #fff;
     text-align: center;
     z-index: 300;
-    animation: toast 0.5s cubic-bezier(.13, .6, .25, 1) 0s;
+    @include background-image(linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.9) 20%,rgba(0,0,0,0.9) 80%,rgba(0,0,0,0) 100%));
+    &.toast-enter-active{
+        animation: toast 0.4s cubic-bezier(.31, .58, .39, .99) 0s;
+    }
+    &.toast-leave-active{
+        animation: toastHide 0.6s cubic-bezier(.54, -0.01, .63, .62) 0s;
+    }
     &>div {
         font-size: 5.469vmax;
         line-height: 130%;
@@ -607,10 +613,22 @@ body {
 
 @keyframes toast {
     0% {
+        transform: translate(-50%,-50%) scale(0.8);
         opacity: 0;
     }
     100% {
+        transform: translate(-50%,-50%) scale(1);
         opacity: 1;
+    }
+}
+@keyframes toastHide {
+    0% {
+        transform: translate(-50%,-50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%,-50%) scale(1);
+        opacity: 0;
     }
 }
 
@@ -877,16 +895,16 @@ body {
         color: #b3b3b3;
         font-size: 1.6vmax;
         line-height: 2.3vmax;
-        padding: 0 2vmax 0 1vmax;
+        padding: 0 2vmax 0 2vmax;
         &.close {
             top: -1.35vmax;
-            right: 2vmax;
+            right: 1vmax;
         }
         &.set {
             color: #000;
             background-color: #fff;
             bottom: -1.35vmax;
-            right: 3.5vmax;
+            right: 2.5vmax;
         }
     }
     #soundOnSwitchingBack {
@@ -1103,21 +1121,21 @@ body {
     }
     .setconfig {
         position: absolute;
-        width: 9.375vmax;
-        height: 9.375vmax;
+        width: 8.375vmax;
+        height: 8.375vmax;
         bottom: -4.187vmax;
         right: -4.187vmax;
         cursor: pointer;
         background-color: #212121;
         transition: left 0.3s ease 0s;
         border-radius: 50%;
-        border: 0.8vmax double #d9d9d9;
+        border: 0.8vmax solid #efefef;
         -webkit-tap-highlight-color: transparent !important;
         box-shadow: inset 0.152vmax 0vmax 0.152vmax rgba(255, 255, 255, 0.3), inset -0.152vmax -0.152vmax 0vmax 0.152vmax rgba(0, 0, 0, 0.3), 0.225vmax 0.225vmax 0.383vmax 0vmax rgba(0, 0, 0, 0.8);
         background-repeat: no-repeat;
         background-image: url(../images/chronometer.svg);
         background-position: center;
-        background-size: 80%;
+        background-size: 90%;
         overflow: hidden;
         &:active,
         &:focus {
@@ -1425,11 +1443,11 @@ body {
 #keyinfo {
     position: absolute;
     width: 100vw;
-    height: 56.25vmax;
+    height: 100vh;
     top: 0;
     left: 0;
     color: #fff;
-    z-index: 1000;
+    z-index: 1500;
     background-color: rgba(0, 0, 0, 0.8);
     ul {
         display: block;

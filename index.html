@@ -91,9 +91,11 @@
         <div id="keyinfobut" v-on:click="showKeyinfo=!showKeyinfo" v-bind:class="consoleObj.timermode">
             <div class="inner"></div>
         </div>
+        <transition name="toast">
         <div id="belt" v-if="toast.visibleBelt">
             <div v-html="toast.toastMessage"> </div>
         </div>
+        </transition>
         <div id="timerconsole" v-show="showTimerConfig" class="console">
             <dl style="width:60%"> <dt>
                     行射補充時間
@@ -239,7 +241,7 @@
                         </textPath>
                     </text>
                 </svg>-->
-            <div class="backtitler close">Close</div>
+            <div class="backtitler close">Close configuration</div>
             <div id="closeconfig" v-on:click="showConfig=false;showAdvanced=false" class="closeconfig"> </div>
             <div class="backtitle selectmode">Toggle {{consoleObj.timermode=='tournament'?'LANKING':'TOURNAMENT'}}</div>
             <div id="selectmode" @click="consoleObj.timermode=consoleObj.timermode=='default'?'tournament':'default'" v-bind:class="consoleObj.timermode"></div>
